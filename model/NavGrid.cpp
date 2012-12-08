@@ -1,5 +1,21 @@
+/*
+Copyright (C) 2012 William James Dyce and Guillaume Surroca
+
+This program is free software: you can redistribute it and/or modify
+it under he terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "NavGrid.h"
-#include "NavProperty.h"
 
 namespace Troopy {
 namespace Navigation {
@@ -64,14 +80,15 @@ fV3 NavGrid::getAbsoluteCellPosition(uV2 position) const {
 
 uRect NavGrid::getApproximateFootprint(GameObject& o) {
 
-  fV3 position = o.getPosition(), size = o.getSize();
+  /*fV3 position = o.getPosition(), size = o.getSize();
 
   unsigned int end_x = position.x + size.x + 1,
                end_y = position.y + size.x + 1,
                w = end_x - (unsigned int)position.x,
                h = end_y - (unsigned int)position.y;
 
-  return uRect(position.x, position.y, w, h);
+  return uRect(position.x, position.y, w, h);*/
+  return uRect();
 }
 
 NavCell NavGrid::getCell(uV2 position) {

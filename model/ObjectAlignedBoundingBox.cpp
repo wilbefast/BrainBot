@@ -15,36 +15,12 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#pragma once
+//! CONSTRUCTORS, DESTRUCTORS
 
-#include "../model/ObjectAlignedBoundingBox.hpp"
+#include "ObjectAlignedBoundingBox.hpp"
 
-#include "../engine/math/V4.hpp"
-#include "../engine/math/M44.hpp"
-
-#include "../engine/graphics/3D/Mesh3D.hpp"
-
-namespace Troopy {
-namespace Navigation {
-
-class GameObject {
-
-
-//! METHODS
-public:
-  GameObject(fV4 position_);
-  virtual ~GameObject();
-  bool isColliding(GameObject& other) const;
-
-
-//! ATTRIBUTES
-protected:
-  fM44 transform; // position, rotation
-  ObjectAlignedBoundingBox boundingBox;
-
-public:
-  Mesh3D* mesh;
-};
-
-}
+ObjectAlignedBoundingBox::ObjectAlignedBoundingBox(fV4 size_) :
+size(size_)
+{
+  offset_transform.toIdentity();
 }

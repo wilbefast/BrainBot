@@ -268,7 +268,7 @@
 		<Unit filename="../model/NavCell.hpp" />
 		<Unit filename="../model/NavGrid.cpp" />
 		<Unit filename="../model/NavGrid.h" />
-		<Unit filename="../model/NavProperty.h" />
+		<Unit filename="../model/ObjectAlignedBoundingBox.cpp" />
 		<Unit filename="../model/ObjectAlignedBoundingBox.hpp" />
 		<Unit filename="../view/NavGridView.cpp" />
 		<Unit filename="../view/NavGridView.hpp" />

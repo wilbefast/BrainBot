@@ -17624,20 +17624,21 @@
 	"IntrusiveLinked.hpp"
 	<stdlib.h>
 
-1354966731 source:/home/william/Documents/Programming/TroopixMassMovement/model/GameObject.cpp
+1354986386 source:/home/william/Documents/Programming/TroopixMassMovement/model/GameObject.cpp
 	"GameObject.h"
 
-1354978807 /home/william/Documents/Programming/TroopixMassMovement/model/GameObject.h
-	"NavProperty.h"
-	"../engine/math/V3.hpp"
+1354986130 /home/william/Documents/Programming/TroopixMassMovement/model/GameObject.h
+	"../model/ObjectAlignedBoundingBox.hpp"
+	"../engine/math/V4.hpp"
+	"../engine/math/M44.hpp"
+	"../engine/graphics/3D/Mesh3D.hpp"
 
 1354980175 /home/william/Documents/Programming/TroopixMassMovement/model/NavProperty.h
 
-1354981060 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.cpp
+1354986191 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.cpp
 	"NavGrid.h"
-	"NavProperty.h"
 
-1354980677 /home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.h
+1354985314 /home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.h
 	<vector>
 	"../engine/math/V3.hpp"
 	"../engine/math/Rect.hpp"
@@ -18052,7 +18053,7 @@
 	<assert.h>
 	<string.h>
 
-1354983861 source:/home/william/Documents/Programming/TroopixMassMovement/engine/io/MeshManager.cpp
+1354983948 source:/home/william/Documents/Programming/TroopixMassMovement/engine/io/MeshManager.cpp
 	<iostream>
 	<fstream>
 	<sstream>
@@ -18189,7 +18190,7 @@
 	"IntrusiveLinked.hpp"
 	<stdlib.h>
 
-1354981085 source:/home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.cpp
+1354985155 source:/home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.cpp
 	"../view/NavGridView.hpp"
 	"../engine/opengl.h"
 	<stdio.h>
@@ -18197,7 +18198,7 @@
 1354969557 /home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.hpp
 	"../model/NavGrid.h"
 
-1354981519 source:/home/william/Documents/Programming/TroopixMassMovement/view/StrategyCamera.cpp
+1354985159 source:/home/william/Documents/Programming/TroopixMassMovement/view/StrategyCamera.cpp
 	"StrategyCamera.hpp"
 	"../engine/opengl.h"
 	<stdio.h>
@@ -18221,7 +18222,7 @@
 	"NavGridView.hpp"
 	"StrategyCamera.hpp"
 
-1354983566 source:/home/william/Documents/Programming/TroopixMassMovement/MassMovement.cpp
+1354985149 source:/home/william/Documents/Programming/TroopixMassMovement/MassMovement.cpp
 	"MassMovement.hpp"
 	"engine/debug/assert.h"
 	"engine/debug/log.h"
@@ -18229,7 +18230,7 @@
 	"engine/io/MeshManager.hpp"
 	"engine/graphics/draw.hpp"
 
-1354978488 /home/william/Documents/Programming/TroopixMassMovement/MassMovement.hpp
+1354985323 /home/william/Documents/Programming/TroopixMassMovement/MassMovement.hpp
 	"engine/math/V3.hpp"
 	"engine/scenes/GameState.hpp"
 	"model/NavGrid.h"
@@ -18238,6 +18239,21 @@
 
 1354981002 /home/william/Documents/Programming/TroopixMassMovement/model/NavCell.hpp
 
-1354980461 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavCell.cpp
+1354985173 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavCell.cpp
 	"NavCell.hpp"
+
+1354986402 /home/william/Documents/Programming/TroopixMassMovement/model/ObjectAlignedBoundingBox.hpp
+	"../engine/math/M44.hpp"
+	"../engine/math/V4.hpp"
+
+1351455950 /home/william/Documents/Programming/TroopixMassMovement/engine/math/M44.hpp
+	<iostream>
+	"V4.hpp"
+	"M44.inl"
+
+1351456050 /home/william/Documents/Programming/TroopixMassMovement/engine/math/M44.inl
+	"wjd_math.h"
+
+1354986377 source:/home/william/Documents/Programming/TroopixMassMovement/model/ObjectAlignedBoundingBox.cpp
+	"ObjectAlignedBoundingBox.hpp"
 
