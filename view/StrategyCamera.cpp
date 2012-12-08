@@ -3,7 +3,10 @@
 #include "../engine/opengl.h"
 
 #define PITCH 30
+#define MAX_Z -30
 
+
+#include <stdio.h>
 
 //! CONSTRUCTORS, DESTRUCTORS
 
@@ -21,13 +24,11 @@ StrategyCamera::~StrategyCamera()
 
 //! MUTATORS
 
-
-static int rot = 0;
-
 void StrategyCamera::pan(fV3 amount)
 {
-  rot++;
   position += amount;
+  if(position.z > MAX_Z)
+    position.z = MAX_Z;
 }
 
 

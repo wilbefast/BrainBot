@@ -205,7 +205,6 @@
 		<Unit filename="graphics/Texture.hpp" />
 		<Unit filename="graphics/draw.cpp" />
 		<Unit filename="graphics/draw.hpp" />
-		<Unit filename="io/AudioManager.hpp" />
 		<Unit filename="io/GraphicsManager.cpp" />
 		<Unit filename="io/GraphicsManager.hpp" />
 		<Unit filename="io/MeshManager.cpp" />
@@ -265,9 +264,10 @@
 		<Unit filename="utils/IntrusiveLinked.hpp" />
 		<Unit filename="../model/GameObject.cpp" />
 		<Unit filename="../model/GameObject.h" />
+		<Unit filename="../model/NavCell.cpp" />
+		<Unit filename="../model/NavCell.hpp" />
 		<Unit filename="../model/NavGrid.cpp" />
 		<Unit filename="../model/NavGrid.h" />
-		<Unit filename="../model/NavProperty.cpp" />
 		<Unit filename="../model/NavProperty.h" />
 		<Unit filename="../model/ObjectAlignedBoundingBox.hpp" />
 		<Unit filename="../view/NavGridView.cpp" />

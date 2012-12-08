@@ -86,7 +86,7 @@ n_groups(1)
 {
 }
 
-int Mesh3D::load_obj(const char* filename)
+int Mesh3D::load(const char* filename)
 {
   // open the file
   ifstream in(filename, ios::in);

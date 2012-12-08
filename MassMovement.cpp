@@ -19,6 +19,8 @@ using namespace std;
 
 /// CREATION, DESTRUCTION
 
+Mesh3D* knight = NULL;
+
 MassMovement::MassMovement() :
 GameState(),
 camera(),
@@ -41,7 +43,8 @@ int MassMovement::startup()
 
   // load the 3D scene
   draw::use3D();
-  MeshManager::getInstance()->mesh.load_obj("assets/knight.obj");
+  MeshManager::getInstance()->startup();
+  knight = MeshManager::getInstance()->get_mesh("knight");
 
   // all clear
   return EXIT_SUCCESS;
@@ -114,7 +117,7 @@ void MassMovement::draw()
     glScalef(0.4f, 0.4f, 0.4f);
     glTranslatef(0.0f, 0.0f, 3.0f);
     glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-    MeshManager::getInstance()->mesh.draw();
+    knight->draw();
   glPopMatrix();
 
   // Draw dynamic game objects

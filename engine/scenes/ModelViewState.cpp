@@ -42,7 +42,6 @@ int ModelViewState::startup()
 
   // load the 3D scene
   draw::use3D();
-  MeshManager::getInstance()->mesh.load_obj("assets/rubik.obj");
 
   // all clear
   return EXIT_SUCCESS;

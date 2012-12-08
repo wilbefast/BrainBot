@@ -17753,7 +17753,7 @@
 1350227148 /home/william/Documents/Programming/TroopixMassMovement/engine/math/V3.inl
 	"wjd_math.h"
 
-1351356890 /home/william/Documents/Programming/TroopixMassMovement/engine/io/GraphicsManager.hpp
+1354983279 /home/william/Documents/Programming/TroopixMassMovement/engine/io/GraphicsManager.hpp
 	<map>
 	"../math/numerise.h"
 	"ResourceManager.hpp"
@@ -17769,11 +17769,13 @@
 	"../Texture.hpp"
 	"../../math/Rect.hpp"
 
-1351356896 /home/william/Documents/Programming/TroopixMassMovement/engine/io/MeshManager.hpp
+1354982411 /home/william/Documents/Programming/TroopixMassMovement/engine/io/MeshManager.hpp
 	"ResourceManager.hpp"
 	"../graphics/3D/Mesh3D.hpp"
+	"../math/numerise.h"
+	<map>
 
-1354373914 /home/william/Documents/Programming/TroopixMassMovement/engine/graphics/3D/Mesh3D.hpp
+1354982176 /home/william/Documents/Programming/TroopixMassMovement/engine/graphics/3D/Mesh3D.hpp
 	"vertex.hpp"
 	"MaterialLibrary.hpp"
 	"../../utils/IntrusiveLinked.hpp"
@@ -17983,7 +17985,7 @@
 1351350146 /home/william/Documents/Programming/TroopixMassMovement/engine/io/file.hpp
 	<string>
 
-1354376013 source:/home/william/Documents/Programming/TroopixMassMovement/engine/graphics/3D/Mesh3D.cpp
+1354982190 source:/home/william/Documents/Programming/TroopixMassMovement/engine/graphics/3D/Mesh3D.cpp
 	<iostream>
 	<fstream>
 	"Mesh3D.hpp"
@@ -18050,7 +18052,7 @@
 	<assert.h>
 	<string.h>
 
-1354959112 source:/home/william/Documents/Programming/TroopixMassMovement/engine/io/MeshManager.cpp
+1354983861 source:/home/william/Documents/Programming/TroopixMassMovement/engine/io/MeshManager.cpp
 	<iostream>
 	<fstream>
 	<sstream>
@@ -18059,8 +18061,9 @@
 	"../debug/warn.h"
 	"../math/V3.hpp"
 	"file.hpp"
+	"tinyxml/tinyxml.h"
 
-1350222950 source:/home/william/Documents/Programming/TroopixMassMovement/engine/io/ResourceManager.cpp
+1354983518 source:/home/william/Documents/Programming/TroopixMassMovement/engine/io/ResourceManager.cpp
 	"ResourceManager.hpp"
 	"file.hpp"
 	"../debug/assert.h"
@@ -18164,7 +18167,7 @@
 	"../io/GraphicsManager.hpp"
 	"Game.hpp"
 
-1354969969 source:/home/william/Documents/Programming/TroopixMassMovement/engine/scenes/ModelViewState.cpp
+1354982421 source:/home/william/Documents/Programming/TroopixMassMovement/engine/scenes/ModelViewState.cpp
 	"ModelViewState.hpp"
 	"../debug/assert.h"
 	"../global.hpp"
@@ -18186,7 +18189,7 @@
 	"IntrusiveLinked.hpp"
 	<stdlib.h>
 
-1354981037 source:/home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.cpp
+1354981085 source:/home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.cpp
 	"../view/NavGridView.hpp"
 	"../engine/opengl.h"
 	<stdio.h>
@@ -18194,9 +18197,10 @@
 1354969557 /home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.hpp
 	"../model/NavGrid.h"
 
-1354976531 source:/home/william/Documents/Programming/TroopixMassMovement/view/StrategyCamera.cpp
+1354981519 source:/home/william/Documents/Programming/TroopixMassMovement/view/StrategyCamera.cpp
 	"StrategyCamera.hpp"
 	"../engine/opengl.h"
+	<stdio.h>
 
 1354974950 /home/william/Documents/Programming/TroopixMassMovement/view/StrategyCamera.hpp
 	"../engine/math/V3.hpp"
@@ -18217,7 +18221,7 @@
 	"NavGridView.hpp"
 	"StrategyCamera.hpp"
 
-1354979903 source:/home/william/Documents/Programming/TroopixMassMovement/MassMovement.cpp
+1354983566 source:/home/william/Documents/Programming/TroopixMassMovement/MassMovement.cpp
 	"MassMovement.hpp"
 	"engine/debug/assert.h"
 	"engine/debug/log.h"
