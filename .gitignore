@@ -1,0 +1,26 @@
+# Codeblocks project files
+#**.cbp
+**.depend
+**.layout
+
+# Backup files
+**~
+
+# Compiled files
+**/bin/**
+**/obj/**
+**.slo
+**.lo
+**.o
+
+# Compiled Dynamic libraries
+**.so
+**.dll
+
+# Compiled Static libraries
+**.lai
+**.la
+**.a
+
+# Arrogance out-generated files
+engine/arrogance_mesh.obj

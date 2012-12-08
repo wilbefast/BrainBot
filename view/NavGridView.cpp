@@ -3,6 +3,8 @@
 
 #include "../engine/opengl.h"
 
+#include <stdio.h>
+
 namespace Troopy {
 namespace Navigation {
 
@@ -24,25 +26,12 @@ void NavGridView::render() {
       static fV3 vertex;
         vertex = navGrid->getAbsoluteCellPosition(grid_pos);
 
-      int obstructed = (navGrid->getCell(grid_pos) == OBSTACLE) ? 1 : 0;
+      int obstructed = (navGrid->getCell(grid_pos).obstacle) ? 1 : 0;
 
       // Draw the tiles
       glColor3f(obstructed, 0.0f, 1.0f-obstructed);
-      glBegin(GL_TRIANGLE_FAN);
-        glVertex3fv(vertex.front());
-        vertex.x += cell_size;
-        glVertex3fv(vertex.front());
-        vertex.y += cell_size;
-        glVertex3fv(vertex.front());
-        vertex.x -= cell_size;
-        glVertex3fv(vertex.front());
-        vertex.y -= cell_size;
-      glEnd();
 
-      // Outline the tiles
-      vertex.z++;
-      glColor3f(1.0f, 1.0f, 1.0f);
-      glBegin(GL_LINE_LOOP);
+      glBegin(GL_TRIANGLE_FAN);
         glVertex3fv(vertex.front());
         vertex.x += cell_size;
         glVertex3fv(vertex.front());

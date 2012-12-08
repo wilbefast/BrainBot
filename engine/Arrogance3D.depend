@@ -17631,18 +17631,18 @@
 	"NavProperty.h"
 	"../engine/math/V3.hpp"
 
-1354978798 /home/william/Documents/Programming/TroopixMassMovement/model/NavProperty.h
+1354980175 /home/william/Documents/Programming/TroopixMassMovement/model/NavProperty.h
 
-1354979111 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.cpp
+1354981060 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.cpp
 	"NavGrid.h"
 	"NavProperty.h"
 
-1354978978 /home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.h
+1354980677 /home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.h
 	<vector>
 	"../engine/math/V3.hpp"
 	"../engine/math/Rect.hpp"
 	"GameObject.h"
-	"NavProperty.h"
+	"NavCell.hpp"
 
 1354966090 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavProperty.cpp
 	"NavProperty.h"
@@ -18186,9 +18186,10 @@
 	"IntrusiveLinked.hpp"
 	<stdlib.h>
 
-1354979336 source:/home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.cpp
+1354981037 source:/home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.cpp
 	"../view/NavGridView.hpp"
 	"../engine/opengl.h"
+	<stdio.h>
 
 1354969557 /home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.hpp
 	"../model/NavGrid.h"
@@ -18216,7 +18217,7 @@
 	"NavGridView.hpp"
 	"StrategyCamera.hpp"
 
-1354979396 source:/home/william/Documents/Programming/TroopixMassMovement/MassMovement.cpp
+1354979903 source:/home/william/Documents/Programming/TroopixMassMovement/MassMovement.cpp
 	"MassMovement.hpp"
 	"engine/debug/assert.h"
 	"engine/debug/log.h"
@@ -18230,4 +18231,9 @@
 	"model/NavGrid.h"
 	"view/NavGridView.hpp"
 	"view/StrategyCamera.hpp"
+
+1354981002 /home/william/Documents/Programming/TroopixMassMovement/model/NavCell.hpp
+
+1354980461 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavCell.cpp
+	"NavCell.hpp"
 

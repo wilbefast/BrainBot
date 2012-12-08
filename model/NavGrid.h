@@ -5,7 +5,7 @@
 #include "../engine/math/Rect.hpp"
 
 #include "GameObject.h"
-#include "NavProperty.h"
+#include "NavCell.hpp"
 
 namespace Troopy {
 namespace Navigation {
@@ -18,7 +18,7 @@ class NavGrid {
 
 		void generateGrid(std::vector<GameObject>& objects);
 		fV3 getAbsoluteCellPosition(uV2 position) const;
-		ObjectNavProperty getCell(uV2 position);
+		NavCell getCell(uV2 position);
 		uV2 whatCell(fV2 position) const;
 		uRect getApproximateFootprint(GameObject& o);
 		uV2 getSize() const;
@@ -31,7 +31,7 @@ class NavGrid {
 		unsigned int numberOfCols;
     float cellHeight;
 		float cellSize;
-		ObjectNavProperty **grid;
+		NavCell **grid;
 		float yMargin;
 };
 

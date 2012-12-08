@@ -17,10 +17,16 @@ NavGrid::NavGrid(fV3 origin_, unsigned int numberOfCols_,
 	: origin(origin_), numberOfRows(numberOfRows_), numberOfCols(numberOfCols_),
     cellHeight(cellHeight_), cellSize(cellSize_) {
 
-    grid = new ObjectNavProperty*[numberOfRows];
-
+    grid = new NavCell*[numberOfRows];
     for(unsigned int r = 0; r < numberOfRows; r++)
-      grid[r] = new ObjectNavProperty[numberOfCols];
+      grid[r] = new NavCell[numberOfCols];
+
+
+  for(size_t row = 0; row < numberOfRows; row++)
+  for(size_t col = 0; col < numberOfCols; col++)
+  {
+      grid[row][col].obstacle = ((rand()%5 == 1));
+  }
 }
 
 fV3 NavGrid::getOrigin() const {
@@ -28,13 +34,6 @@ fV3 NavGrid::getOrigin() const {
 }
 
 void NavGrid::generateGrid(std::vector<GameObject>& objects) {
-
-  for(size_t row = 0; row < numberOfRows; row++)
-  for(size_t col = 0; col < numberOfCols; col++)
-  {
-      grid[row][col] = WALKABLE; //(rand()%2) ? OBSTACLE : WALKABLE;
-  }
-
 
 	/*for(unsigned int o = 0; 0 < objects.size(); o++) {
 
@@ -75,7 +74,7 @@ uRect NavGrid::getApproximateFootprint(GameObject& o) {
   return uRect(position.x, position.y, w, h);
 }
 
-ObjectNavProperty NavGrid::getCell(uV2 position) {
+NavCell NavGrid::getCell(uV2 position) {
 	return grid[position.y][position.x];
 }
 

@@ -5,8 +5,8 @@ namespace Navigation {
 
 typedef enum ObjectNavProperty
 {
-	WALKABLE,
-	OBSTACLE
+	WALKABLE = 0,
+	OBSTACLE = 1
 }
 ObjectNavProperty;
 
