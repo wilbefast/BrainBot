@@ -6,7 +6,7 @@
 namespace Troopy {
 namespace Navigation {
 
-class GameObject : public Navigation::NavProperty {
+class GameObject {
 	public:
 		GameObject(fV3 position_, fV3 size_, ObjectNavProperty = OBSTACLE);
 		virtual ~GameObject();

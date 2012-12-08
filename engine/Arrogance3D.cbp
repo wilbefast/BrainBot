@@ -131,6 +131,8 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="../MassMovement.cpp" />
+		<Unit filename="../MassMovement.hpp" />
 		<Unit filename="Android.mk" />
 		<Unit filename="Application.cpp" />
 		<Unit filename="Application.hpp" />
@@ -268,8 +270,6 @@
 		<Unit filename="../model/NavProperty.cpp" />
 		<Unit filename="../model/NavProperty.h" />
 		<Unit filename="../model/ObjectAlignedBoundingBox.hpp" />
-		<Unit filename="../view/MassMovement.cpp" />
-		<Unit filename="../view/MassMovement.hpp" />
 		<Unit filename="../view/NavGridView.cpp" />
 		<Unit filename="../view/NavGridView.hpp" />
 		<Unit filename="../view/StrategyCamera.cpp" />

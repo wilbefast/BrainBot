@@ -17627,17 +17627,17 @@
 1354966731 source:/home/william/Documents/Programming/TroopixMassMovement/model/GameObject.cpp
 	"GameObject.h"
 
-1354966715 /home/william/Documents/Programming/TroopixMassMovement/model/GameObject.h
+1354978807 /home/william/Documents/Programming/TroopixMassMovement/model/GameObject.h
 	"NavProperty.h"
 	"../engine/math/V3.hpp"
 
-1354957682 /home/william/Documents/Programming/TroopixMassMovement/model/NavProperty.h
+1354978798 /home/william/Documents/Programming/TroopixMassMovement/model/NavProperty.h
 
-1354970097 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.cpp
+1354979111 source:/home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.cpp
 	"NavGrid.h"
 	"NavProperty.h"
 
-1354969244 /home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.h
+1354978978 /home/william/Documents/Programming/TroopixMassMovement/model/NavGrid.h
 	<vector>
 	"../engine/math/V3.hpp"
 	"../engine/math/Rect.hpp"
@@ -17655,7 +17655,7 @@
 	"../graphics/draw.hpp"
 	"../debug/log.h"
 
-1354958832 source:/home/william/Documents/Programming/TroopixMassMovement/engine/Application.cpp
+1354978244 source:/home/william/Documents/Programming/TroopixMassMovement/engine/Application.cpp
 	"Application.hpp"
 	"SDL_image.h"
 	"global.hpp"
@@ -18021,7 +18021,7 @@
 	"../debug/warn.h"
 	"../math/wjd_math.h"
 
-1354976465 source:/home/william/Documents/Programming/TroopixMassMovement/engine/graphics/draw.cpp
+1354979656 source:/home/william/Documents/Programming/TroopixMassMovement/engine/graphics/draw.cpp
 	"draw.hpp"
 	"../global.hpp"
 	"../opengl.h"
@@ -18186,7 +18186,7 @@
 	"IntrusiveLinked.hpp"
 	<stdlib.h>
 
-1354976490 source:/home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.cpp
+1354979336 source:/home/william/Documents/Programming/TroopixMassMovement/view/NavGridView.cpp
 	"../view/NavGridView.hpp"
 	"../engine/opengl.h"
 
@@ -18215,4 +18215,19 @@
 	"../model/NavGrid.h"
 	"NavGridView.hpp"
 	"StrategyCamera.hpp"
+
+1354979396 source:/home/william/Documents/Programming/TroopixMassMovement/MassMovement.cpp
+	"MassMovement.hpp"
+	"engine/debug/assert.h"
+	"engine/debug/log.h"
+	"engine/global.hpp"
+	"engine/io/MeshManager.hpp"
+	"engine/graphics/draw.hpp"
+
+1354978488 /home/william/Documents/Programming/TroopixMassMovement/MassMovement.hpp
+	"engine/math/V3.hpp"
+	"engine/scenes/GameState.hpp"
+	"model/NavGrid.h"
+	"view/NavGridView.hpp"
+	"view/StrategyCamera.hpp"
 

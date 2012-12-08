@@ -14,13 +14,17 @@ NavGridView::~NavGridView() {
 
 void NavGridView::render() {
   float cell_size = navGrid->getCellSize();
-  static fV3 vertex;
 
-  for(unsigned int x = 0; x < navGrid->getSize().x; x++) {
-    for(unsigned int y = 0; y < navGrid->getSize().y; y++) {
 
-      int obstructed = (navGrid->getCell(uV2(x, y)).getProperty() == OBSTACLE);
-      vertex = navGrid->getAbsoluteCellPosition(uV2(x, y));
+
+  static uV2 grid_pos;
+  for(grid_pos.x = 0; grid_pos.x < navGrid->getSize().x; grid_pos.x++) {
+    for(grid_pos.y = 0; grid_pos.y < navGrid->getSize().y; grid_pos.y++) {
+
+      static fV3 vertex;
+        vertex = navGrid->getAbsoluteCellPosition(grid_pos);
+
+      int obstructed = (navGrid->getCell(grid_pos) == OBSTACLE) ? 1 : 0;
 
       // Draw the tiles
       glColor3f(obstructed, 0.0f, 1.0f-obstructed);

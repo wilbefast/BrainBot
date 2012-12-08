@@ -356,14 +356,16 @@ int Application::treatEvents()
       #if USE_MOUSE
       // mouse events
       case SDL_MOUSEBUTTONDOWN:
-        if(event.button.button == SDL_BUTTON_RIGHT)
-          return Application::BACK;
-        clicking = true;
+        if(event.button.button == SDL_BUTTON_LEFT)
+          clicking = true;
+        scene->getState()->trigger(event.button.button, true);
+
       break;
 
       case SDL_MOUSEBUTTONUP:
         if(event.button.button == SDL_BUTTON_LEFT)
           clicking = false;
+        scene->getState()->trigger(event.button.button, false);
       break;
 
       case SDL_MOUSEMOTION:

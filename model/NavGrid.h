@@ -18,7 +18,7 @@ class NavGrid {
 
 		void generateGrid(std::vector<GameObject>& objects);
 		fV3 getAbsoluteCellPosition(uV2 position) const;
-		NavProperty getCell(uV2 position);
+		ObjectNavProperty getCell(uV2 position);
 		uV2 whatCell(fV2 position) const;
 		uRect getApproximateFootprint(GameObject& o);
 		uV2 getSize() const;
@@ -29,9 +29,9 @@ class NavGrid {
     fV3 origin;
     unsigned int numberOfRows;
 		unsigned int numberOfCols;
+    float cellHeight;
 		float cellSize;
-		float cellHeight;
-		NavProperty **grid;
+		ObjectNavProperty **grid;
 		float yMargin;
 };
 
