@@ -26,22 +26,22 @@ origin(origin_),
 n_cells(n_cells_)
 {
   // allocate memory for cells
-  grid = new NavCell*[n_cells.y];
+  cells = new NavCell*[n_cells.y];
   for(unsigned int r = 0; r < n_cells.y; r++)
-    grid[r] = new NavCell[n_cells.x];
+    cells[r] = new NavCell[n_cells.x];
 
   // set values of cells
   for(size_t row = 0; row < n_cells.y; row++)
   for(size_t col = 0; col < n_cells.x; col++)
-      grid[row][col].obstacle = ((rand()%5 == 1));
+      cells[row][col].obstacle = ((rand()%5 == 1));
 }
 
 NavGrid::~NavGrid()
 {
   // allocate memory from cells
   for(unsigned int r = 0; r < n_cells.y; r++)
-    delete[] grid[r];
-  delete[] grid;
+    delete[] cells[r];
+  delete[] cells;
 }
 
 
@@ -56,7 +56,7 @@ fV3 NavGrid::getOrigin() const
 
 NavCell const& NavGrid::getCell(uV2 grid_position) const
 {
-	return grid[grid_position.y][grid_position.x];
+	return cells[grid_position.y][grid_position.x];
 }
 
 uV2 const& NavGrid::getNCells() const
@@ -76,30 +76,43 @@ fV3 NavGrid::getCellPosition(uV2 position) const
              origin.z);
 }
 
-uRect NavGrid::getApproximateFootprint(GameObject& o)
+
+//! ----------------------------------------------------------------------------
+//! PATHING
+//! ----------------------------------------------------------------------------
+
+
+std::list<NavCell*> NavGrid::getPath(uV2 source, uV2 destination)
+{
+  //! TODO
+}
+
+
+//! ----------------------------------------------------------------------------
+//! NOT YET IMPLEMENTED
+//! ----------------------------------------------------------------------------
+
+
+
+/*uRect NavGrid::getApproximateFootprint(GameObject& o)
 {
 
-  /*fV3 position = o.getPosition(), size = o.getSize();
+  fV3 position = o.getPosition(), size = o.getSize();
 
   unsigned int end_x = position.x + size.x + 1,
                end_y = position.y + size.x + 1,
                w = end_x - (unsigned int)position.x,
                h = end_y - (unsigned int)position.y;
 
-  return uRect(position.x, position.y, w, h);*/
+  return uRect(position.x, position.y, w, h);
   return uRect();
 }
 
 
-
-//! ----------------------------------------------------------------------------
-//! MUTATORS
-//! ----------------------------------------------------------------------------
-
 void NavGrid::generateGrid(std::vector<GameObject>& objects)
 {
 
-	/*for(unsigned int o = 0; 0 < objects.size(); o++) {
+	for(unsigned int o = 0; 0 < objects.size(); o++) {
 
 	  GameObject& obstacle = objects[o];
 		uRect approximateFootprint = getApproximateFootprint(obstacle);
@@ -114,9 +127,9 @@ void NavGrid::generateGrid(std::vector<GameObject>& objects)
                           fV3(cellSize, cellSize, cellHeight));
 
           if(cell.isColliding(obstacle))
-            grid[r][c]->setProperty(ObjectNavProperty.OBSTACLE);
+            cells[r][c]->setProperty(ObjectNavProperty.OBSTACLE);
 
         }
 		}
-  }*/
 }
+*/

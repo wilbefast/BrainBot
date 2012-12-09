@@ -133,6 +133,10 @@
 		</Compiler>
 		<Unit filename="../MassMovement.cpp" />
 		<Unit filename="../MassMovement.hpp" />
+		<Unit filename="../ai/PathSearch.cpp" />
+		<Unit filename="../ai/PathSearch.hpp" />
+		<Unit filename="../ai/SearchState.cpp" />
+		<Unit filename="../ai/SearchState.hpp" />
 		<Unit filename="Android.mk" />
 		<Unit filename="Application.cpp" />
 		<Unit filename="Application.hpp" />
@@ -238,6 +242,8 @@
 		<Unit filename="math/V4.inl" />
 		<Unit filename="math/numerise.h" />
 		<Unit filename="math/numerise.inl" />
+		<Unit filename="math/opengl_matrix.cpp" />
+		<Unit filename="math/opengl_matrix.hpp" />
 		<Unit filename="math/wjd_math.cpp" />
 		<Unit filename="math/wjd_math.h" />
 		<Unit filename="opengl.h" />

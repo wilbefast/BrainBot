@@ -18,6 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef NAVGRID_HPP_INCLUDED
 #define NAVGRID_HPP_INCLUDED
 
+#include <list>
+
 #include "../engine/math/V3.hpp"
 #include "../engine/math/Rect.hpp"
 
@@ -28,14 +30,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class NavGrid
 {
   //! FRIENDS
-  friend class NavGridView;
-
+friend class NavGridView;
+friend class PathSearch;
 
   //! ATTRIBUTES
 private:
   fV3 origin;
   uV2 n_cells;
-  NavCell **grid;
+  NavCell **cells;
 
   //! METHODS
 public:
@@ -49,10 +51,14 @@ public:
   uV2 const& getNCells() const;
   uV2 getGridPosition(fV2 position) const;
   fV3 getCellPosition(uV2 position) const;
-  uRect getApproximateFootprint(GameObject& o);
 
-  // mutators
-  void generateGrid(std::vector<GameObject>& objects);
+  // pathing
+  std::list<NavCell*> getPath(uV2 source, uV2 destination);
+
+
+  //! not yet implemented
+  /* uRect getApproximateFootprint(GameObject& o);
+  void generateGrid(std::vector<GameObject>& objects); */
 
 };
 
