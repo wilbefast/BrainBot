@@ -22,8 +22,6 @@ using namespace std;
 ModelViewState::ModelViewState() :
 GameState(),
 camera(),
-grid(GRID_ORIGIN, GRID_N_COLS, GRID_N_ROWS, GRID_H, GRID_CELL_SIZE),
-gridView(&grid),
 left(false),
 right(false),
 up(false),
@@ -123,7 +121,6 @@ void ModelViewState::draw()
   // clear and reset
   glPushMatrix();
     camera.lookThrough();
-    gridView.render();
   glPopMatrix();
 
   // Draw dynamic game objects

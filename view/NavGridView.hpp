@@ -1,23 +1,21 @@
 #ifndef NAVGRIDVIEW_HPP_INCLUDED
 #define NAVGRIDVIEW_HPP_INCLUDED
 
-#include "../model/NavGrid.h"
+#include "../model/NavGrid.hpp"
 
-namespace Troopy {
-namespace Navigation {
+class NavGridView
+{
+  //! ATTRIBUTES
+private:
+  NavGrid * navGrid;
 
-class NavGridView {
-  private:
-    NavGrid * navGrid;
-
-  public:
-    NavGridView(NavGrid * navGrid_);
-    virtual ~NavGridView();
-
-    void render();
+  //! METHODS
+public:
+  // constructors, destructors
+  NavGridView(NavGrid * navGrid_);
+  virtual ~NavGridView();
+  // mutators
+  void render();
 };
-
-}
-}
 
 #endif // NAVGRIDVIEW_HPP_INCLUDED

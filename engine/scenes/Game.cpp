@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../debug/assert.h"      // ASSERT
 #include "MainMenu.hpp"           // previous scene
 
-#include "../../view/MassMovement.hpp"
+#include "../../MassMovement.hpp"
 
 /// CREATION & DESTRUCTION
 

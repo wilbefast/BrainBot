@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine/math/V3.hpp"
 #include "engine/scenes/GameState.hpp"
 
-#include "model/NavGrid.h"
+#include "model/NavGrid.hpp"
 
 #include "view/NavGridView.hpp"
 #include "view/StrategyCamera.hpp"
@@ -31,8 +31,8 @@ class MassMovement : public GameState
   /// ATTRIBUTES
 private:
   StrategyCamera camera;
-  Troopy::Navigation::NavGrid grid;
-  Troopy::Navigation::NavGridView gridView;
+  NavGrid grid;
+  NavGridView gridView;
   bool left, right, up, down, forward, backward;
 
   /// METHODS

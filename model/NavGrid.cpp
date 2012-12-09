@@ -15,18 +15,11 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "NavGrid.h"
+#include "NavGrid.hpp"
 
-namespace Troopy {
-namespace Navigation {
-
-uV2 NavGrid::getSize() const {
-  return uV2(numberOfCols, numberOfRows);
-}
-
-unsigned int NavGrid::getCellSize() const {
-  return cellSize;
-}
+//! ----------------------------------------------------------------------------
+//! CONSTRUCTORS, DESTRUCTORS
+//! ----------------------------------------------------------------------------
 
 NavGrid::NavGrid(fV3 origin_, unsigned int numberOfCols_,
                  unsigned int numberOfRows_, float cellHeight_, float cellSize_)
@@ -45,11 +38,70 @@ NavGrid::NavGrid(fV3 origin_, unsigned int numberOfCols_,
   }
 }
 
-fV3 NavGrid::getOrigin() const {
+NavGrid::~NavGrid()
+{
+  for(unsigned int r = 0; r < numberOfRows; r++)
+    delete[] grid[r];
+  delete[] grid;
+}
+
+
+//! ----------------------------------------------------------------------------
+//! ACCESSORS
+//! ----------------------------------------------------------------------------
+
+uV2 NavGrid::getSize() const
+{
+  return uV2(numberOfCols, numberOfRows);
+}
+
+unsigned int NavGrid::getCellSize() const
+{
+  return cellSize;
+}
+
+fV3 NavGrid::getOrigin() const
+{
   return origin;
 }
 
-void NavGrid::generateGrid(std::vector<GameObject>& objects) {
+fV3 NavGrid::getAbsoluteCellPosition(uV2 position) const
+{
+  return fV3(origin.x + position.x*cellSize,
+             origin.y + position.y*cellSize, origin.z);
+}
+
+uRect NavGrid::getApproximateFootprint(GameObject& o)
+{
+
+  /*fV3 position = o.getPosition(), size = o.getSize();
+
+  unsigned int end_x = position.x + size.x + 1,
+               end_y = position.y + size.x + 1,
+               w = end_x - (unsigned int)position.x,
+               h = end_y - (unsigned int)position.y;
+
+  return uRect(position.x, position.y, w, h);*/
+  return uRect();
+}
+
+NavCell NavGrid::getCell(uV2 position)
+{
+	return grid[position.y][position.x];
+}
+
+uV2 NavGrid::whatCell(fV2 position) const
+{
+	return uV2(position.x/cellSize, position.y/cellSize);
+}
+
+
+//! ----------------------------------------------------------------------------
+//! MUTATORS
+//! ----------------------------------------------------------------------------
+
+void NavGrid::generateGrid(std::vector<GameObject>& objects)
+{
 
 	/*for(unsigned int o = 0; 0 < objects.size(); o++) {
 
@@ -72,39 +124,3 @@ void NavGrid::generateGrid(std::vector<GameObject>& objects) {
 		}
   }*/
 }
-
-fV3 NavGrid::getAbsoluteCellPosition(uV2 position) const {
-  return fV3(origin.x + position.x*cellSize,
-             origin.y + position.y*cellSize, origin.z);
-}
-
-uRect NavGrid::getApproximateFootprint(GameObject& o) {
-
-  /*fV3 position = o.getPosition(), size = o.getSize();
-
-  unsigned int end_x = position.x + size.x + 1,
-               end_y = position.y + size.x + 1,
-               w = end_x - (unsigned int)position.x,
-               h = end_y - (unsigned int)position.y;
-
-  return uRect(position.x, position.y, w, h);*/
-  return uRect();
-}
-
-NavCell NavGrid::getCell(uV2 position) {
-	return grid[position.y][position.x];
-}
-
-uV2 NavGrid::whatCell(fV2 position) const {
-	return uV2(position.x/cellSize, position.y/cellSize);
-}
-
-NavGrid::~NavGrid() {
-
-  for(unsigned int r = 0; r < numberOfRows; r++)
-    delete[] grid[r];
-  delete[] grid;
-}
-
-} // namespace Navigation
-} // namespace Troopy

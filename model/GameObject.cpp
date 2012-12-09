@@ -15,17 +15,20 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "GameObject.h"
+#include "GameObject.hpp"
 
-namespace Troopy
-{
-namespace Navigation
-{
+#include "../engine/io/MeshManager.hpp"
 
-GameObject::GameObject(fV4 position_) :
-boundingBox(fV4(10, 10, 10))
+//! ----------------------------------------------------------------------------
+//! CONSTRUCTORS, DESTRUCTORS
+//! ----------------------------------------------------------------------------
+
+GameObject::GameObject(fV4 position_, const char* mesh_name) :
+bbox(fV4(10, 10, 10))
 {
   transform[3] = position_;
+
+  mesh = MeshManager::getInstance()->get_mesh(mesh_name);
 }
 
 
@@ -34,12 +37,22 @@ GameObject::~GameObject()
 }
 
 
+//! ----------------------------------------------------------------------------
+//! ACCESSORS
+//! ----------------------------------------------------------------------------
+
 bool GameObject::isColliding(GameObject& other) const
 {
   //! FIXME
   return false;
 }
 
-} // namespace Troopy
 
-} // namespace Navigation
+//! ----------------------------------------------------------------------------
+//! RENDER
+//! ----------------------------------------------------------------------------
+
+void GameObject::draw() const
+{
+
+}

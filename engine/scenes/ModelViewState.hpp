@@ -22,8 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../math/V3.hpp"
 
 #include "../graphics/3D/Camera.hpp"
-#include "../../model/NavGrid.h"
-#include "../../view/NavGridView.hpp"
 
 #include "GameState.hpp"
 
@@ -32,8 +30,6 @@ class ModelViewState : public GameState
   /// ATTRIBUTES
 private:
   Camera camera;
-  Troopy::Navigation::NavGrid grid;
-  Troopy::Navigation::NavGridView gridView;
   bool left, right, up, down, alt, space, ctrl;
 
   /// METHODS

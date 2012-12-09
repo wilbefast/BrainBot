@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="Arrogance3D" />
+		<Option title="MassMovement" />
 		<Option pch_mode="2" />
 		<Option compiler="gcc" />
 		<Build>
 			<Target title="LIN_Debug_SDL_2_0">
-				<Option output="bin/Debug/Arrogance3D" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/MassMovement" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -26,7 +26,7 @@
 				</Linker>
 			</Target>
 			<Target title="LIN_Release_SDL_2_0">
-				<Option output="bin/Release/Arrogance3D" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/MassMovement" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -46,7 +46,7 @@
 				</Linker>
 			</Target>
 			<Target title="LIN_Debug_SDL_1_6">
-				<Option output="bin/Debug/Arrogance3D" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/MassMovement" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -64,7 +64,7 @@
 				</Linker>
 			</Target>
 			<Target title="LIN_Release_SDL_1_6">
-				<Option output="bin/Release/Arrogance3D" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/MassMovement" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -82,7 +82,7 @@
 				</Linker>
 			</Target>
 			<Target title="WIN_Debug_SDL_1_6">
-				<Option output="bin/Debug/Arrogance3D" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Debug/MassMovement" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -105,7 +105,7 @@
 				</Linker>
 			</Target>
 			<Target title="WIN_Release_SDL_1_6">
-				<Option output="bin/Release/Arrogance3D" prefix_auto="1" extension_auto="1" />
+				<Option output="bin/Release/MassMovement" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Release/" />
 				<Option type="1" />
 				<Option compiler="gcc" />
@@ -262,14 +262,14 @@
 		<Unit filename="utils/Bounded.inl" />
 		<Unit filename="utils/IntrusiveLinked.cpp" />
 		<Unit filename="utils/IntrusiveLinked.hpp" />
+		<Unit filename="../model/BoundingBox.cpp" />
+		<Unit filename="../model/BoundingBox.hpp" />
 		<Unit filename="../model/GameObject.cpp" />
-		<Unit filename="../model/GameObject.h" />
+		<Unit filename="../model/GameObject.hpp" />
 		<Unit filename="../model/NavCell.cpp" />
 		<Unit filename="../model/NavCell.hpp" />
 		<Unit filename="../model/NavGrid.cpp" />
-		<Unit filename="../model/NavGrid.h" />
-		<Unit filename="../model/ObjectAlignedBoundingBox.cpp" />
-		<Unit filename="../model/ObjectAlignedBoundingBox.hpp" />
+		<Unit filename="../model/NavGrid.hpp" />
 		<Unit filename="../view/NavGridView.cpp" />
 		<Unit filename="../view/NavGridView.hpp" />
 		<Unit filename="../view/StrategyCamera.cpp" />

@@ -15,11 +15,13 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+//! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
+//! ----------------------------------------------------------------------------
 
-#include "ObjectAlignedBoundingBox.hpp"
+#include "BoundingBox.hpp"
 
-ObjectAlignedBoundingBox::ObjectAlignedBoundingBox(fV4 size_) :
+BoundingBox::BoundingBox(fV4 size_) :
 size(size_)
 {
   offset_transform.toIdentity();

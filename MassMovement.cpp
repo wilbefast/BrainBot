@@ -24,9 +24,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine/io/MeshManager.hpp"
 #include "engine/graphics/draw.hpp"
 
-#include "model/GameObject.h"
+#include "model/GameObject.hpp"
 
-#define TURN_SPEED 1
+#define PAN_SPEED 3
+#define ZOOM_SPEED 7
 
 #define GRID_N_ROWS 64
 #define GRID_N_COLS 64
@@ -41,11 +42,11 @@ using namespace std;
 
 //! FIXME ----------------------------------------------------------------------
 Mesh3D* knight = NULL;
-Troopy::Navigation::GameObject objects[3] =
+GameObject objects[3] =
 {
-  Troopy::Navigation::GameObject(fV4(100, 100, 0)),
-  Troopy::Navigation::GameObject(fV4(200, 200, 0)),
-  Troopy::Navigation::GameObject(fV4(200, 200, 0)),
+  GameObject(fV4(100, 100, 0), "knight"),
+  GameObject(fV4(200, 200, 0), "knight"),
+  GameObject(fV4(200, 200, 0), "knight"),
 };
 //! ----------------------------------------------------------------------------
 
@@ -96,12 +97,12 @@ int MassMovement::update(float delta)
   static fV3 camera_move;
     camera_move = fV3(0, 0, 0);
 
-  if(up) camera_move.z -= 5;
-  if(down) camera_move.z += 5;
-  if(forward) camera_move.y -= 1;
-  if(backward) camera_move.y += 1;
-  if(left) camera_move.x += 1;
-  if(right) camera_move.x -= 1;
+  if(up) camera_move.z -= ZOOM_SPEED;
+  if(down) camera_move.z += ZOOM_SPEED;
+  if(forward) camera_move.y -= PAN_SPEED;
+  if(backward) camera_move.y += PAN_SPEED;
+  if(left) camera_move.x += PAN_SPEED;
+  if(right) camera_move.x -= PAN_SPEED;
 
   // Apply the camera movement
   camera.pan(camera_move);

@@ -21,20 +21,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdio.h>
 
-namespace Troopy {
-namespace Navigation {
 
-NavGridView::NavGridView(NavGrid * navGrid_) : navGrid(navGrid_) {
+NavGridView::NavGridView(NavGrid * navGrid_) : navGrid(navGrid_)
+{
 }
 
-NavGridView::~NavGridView() {
+NavGridView::~NavGridView()
+{
 }
 
-void NavGridView::render() {
+void NavGridView::render()
+ {
   float cell_size = navGrid->getCellSize();
-
-
-
   static uV2 grid_pos;
   for(grid_pos.x = 0; grid_pos.x < navGrid->getSize().x; grid_pos.x++) {
     for(grid_pos.y = 0; grid_pos.y < navGrid->getSize().y; grid_pos.y++) {
@@ -46,7 +44,6 @@ void NavGridView::render() {
 
       // Draw the tiles
       glColor3f(obstructed, 0.0f, 1.0f-obstructed);
-
       glBegin(GL_TRIANGLE_FAN);
         glVertex3fv(vertex.front());
         vertex.x += cell_size;
@@ -58,7 +55,4 @@ void NavGridView::render() {
       glEnd();
     }
   }
-}
-
-}
 }

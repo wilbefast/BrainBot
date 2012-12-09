@@ -15,24 +15,33 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef OBJECTALIGNEDBOUNDINGBOX_HPP_INCLUDED
-#define OBJECTALIGNEDBOUNDINGBOX_HPP_INCLUDED
+#ifndef GAMEOBJECT_HPP_INCLUDED
+#define GAMEOBJECT_HPP_INCLUDED
 
-#include "../engine/math/M44.hpp"
+#include "../model/BoundingBox.hpp"
+
 #include "../engine/math/V4.hpp"
+#include "../engine/math/M44.hpp"
 
-class ObjectAlignedBoundingBox
+#include "../engine/graphics/3D/Mesh3D.hpp"
+
+class GameObject
 {
-  //! ATTRIBUTES
-private:
-  fM44 offset_transform;
-  fV4 size;
+//! ATTRIBUTES
+protected:
+  fM44 transform; // position, rotation
+  BoundingBox bbox;
+  Mesh3D* mesh;
 
-  //! METHODS
+//! METHODS
 public:
-  // constructors
-  ObjectAlignedBoundingBox(fV4 size_);
-
+  // constructors, destructors
+  GameObject(fV4 position_, const char* mesh_name);
+  virtual ~GameObject();
+  // accessors
+  bool isColliding(GameObject& other) const;
+  // render
+  void draw() const;
 };
 
-#endif // OBJECTALIGNEDBOUNDINGBOX_HPP_INCLUDED
+#endif // GAMEOBJECT_HPP_INCLUDED
