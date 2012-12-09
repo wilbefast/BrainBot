@@ -1,17 +1,23 @@
-#ifndef NAVCELL_H
-#define NAVCELL_H
+#ifndef NAVCELL_H_INCLUDED
+#define NAVCELL_H_INCLUDED
+
+#include "../engine/math/V3.hpp"
 
 class NavCell
 {
-  public:
-    NavCell(bool obstacle_ = false, unsigned int cost_ = 0);
-    virtual ~NavCell();
+  //! CONSTANTS
+public:
+  static const fV3 size;
 
+  //! ATTRIBUTES
+public:
+  unsigned int cost;
+  bool obstacle;
 
-  protected:
-  public:
-    unsigned int cost;
-    bool obstacle;
+  //! METHODS
+public:
+  NavCell(bool obstacle_ = false, unsigned int cost_ = 0);
+  virtual ~NavCell();
 };
 
-#endif // NAVCELL_H
+#endif // NAVCELL_H_INCLUDED

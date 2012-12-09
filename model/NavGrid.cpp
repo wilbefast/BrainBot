@@ -21,26 +21,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-NavGrid::NavGrid(fV3 origin_, unsigned int numberOfCols_,
-                 unsigned int numberOfRows_, float cellHeight_, float cellSize_)
-	: origin(origin_), numberOfRows(numberOfRows_), numberOfCols(numberOfCols_),
-    cellHeight(cellHeight_), cellSize(cellSize_) {
+NavGrid::NavGrid(fV3 origin_, uV2 n_cells_) :
+origin(origin_),
+n_cells(n_cells_)
+{
+  // allocate memory for cells
+  grid = new NavCell*[n_cells.y];
+  for(unsigned int r = 0; r < n_cells.y; r++)
+    grid[r] = new NavCell[n_cells.x];
 
-    grid = new NavCell*[numberOfRows];
-    for(unsigned int r = 0; r < numberOfRows; r++)
-      grid[r] = new NavCell[numberOfCols];
-
-
-  for(size_t row = 0; row < numberOfRows; row++)
-  for(size_t col = 0; col < numberOfCols; col++)
-  {
+  // set values of cells
+  for(size_t row = 0; row < n_cells.y; row++)
+  for(size_t col = 0; col < n_cells.x; col++)
       grid[row][col].obstacle = ((rand()%5 == 1));
-  }
 }
 
 NavGrid::~NavGrid()
 {
-  for(unsigned int r = 0; r < numberOfRows; r++)
+  // allocate memory from cells
+  for(unsigned int r = 0; r < n_cells.y; r++)
     delete[] grid[r];
   delete[] grid;
 }
@@ -50,25 +49,31 @@ NavGrid::~NavGrid()
 //! ACCESSORS
 //! ----------------------------------------------------------------------------
 
-uV2 NavGrid::getSize() const
-{
-  return uV2(numberOfCols, numberOfRows);
-}
-
-unsigned int NavGrid::getCellSize() const
-{
-  return cellSize;
-}
-
 fV3 NavGrid::getOrigin() const
 {
   return origin;
 }
 
-fV3 NavGrid::getAbsoluteCellPosition(uV2 position) const
+NavCell const& NavGrid::getCell(uV2 grid_position) const
 {
-  return fV3(origin.x + position.x*cellSize,
-             origin.y + position.y*cellSize, origin.z);
+	return grid[grid_position.y][grid_position.x];
+}
+
+uV2 const& NavGrid::getNCells() const
+{
+  return n_cells;
+}
+
+uV2 NavGrid::getGridPosition(fV2 position) const
+{
+	return uV2(position.x/NavCell::size.x, position.y/NavCell::size.y);
+}
+
+fV3 NavGrid::getCellPosition(uV2 position) const
+{
+  return fV3(origin.x + position.x*NavCell::size.x,
+             origin.y + position.y*NavCell::size.y,
+             origin.z);
 }
 
 uRect NavGrid::getApproximateFootprint(GameObject& o)
@@ -85,15 +90,6 @@ uRect NavGrid::getApproximateFootprint(GameObject& o)
   return uRect();
 }
 
-NavCell NavGrid::getCell(uV2 position)
-{
-	return grid[position.y][position.x];
-}
-
-uV2 NavGrid::whatCell(fV2 position) const
-{
-	return uV2(position.x/cellSize, position.y/cellSize);
-}
 
 
 //! ----------------------------------------------------------------------------

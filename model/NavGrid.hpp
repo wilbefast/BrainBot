@@ -27,34 +27,33 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class NavGrid
 {
+  //! FRIENDS
+  friend class NavGridView;
+
+
   //! ATTRIBUTES
 private:
   fV3 origin;
-  unsigned int numberOfRows;
-  unsigned int numberOfCols;
-  float cellHeight;
-  float cellSize;
+  uV2 n_cells;
   NavCell **grid;
-  float yMargin;
 
   //! METHODS
 public:
   // constructors, destructors
-  NavGrid(fV3 origin_, unsigned int numberOfCols_, unsigned int numberOfRows_,
-          float cellHeight_, float cellSize_);
+  NavGrid(fV3 origin_, uV2 grid_size_);
   virtual ~NavGrid();
 
   // accessors
-  uV2 whatCell(fV2 position) const;
-  fV3 getAbsoluteCellPosition(uV2 position) const;
-  uV2 getSize() const;
   fV3 getOrigin() const;
-  unsigned int getCellSize() const;
-  NavCell getCell(uV2 position);
+  NavCell const& getCell(uV2 position) const;
+  uV2 const& getNCells() const;
+  uV2 getGridPosition(fV2 position) const;
+  fV3 getCellPosition(uV2 position) const;
+  uRect getApproximateFootprint(GameObject& o);
 
   // mutators
   void generateGrid(std::vector<GameObject>& objects);
-  uRect getApproximateFootprint(GameObject& o);
+
 };
 
 #endif // NAVGRID_HPP_INCLUDED

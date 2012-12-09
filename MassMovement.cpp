@@ -26,14 +26,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "model/GameObject.hpp"
 
-#define PAN_SPEED 3
-#define ZOOM_SPEED 7
+#define PAN_SPEED 10
+#define ZOOM_SPEED 20
 
 #define GRID_N_ROWS 64
 #define GRID_N_COLS 64
-#define GRID_H 32.0f
 #define GRID_ORIGIN fV3(0, 0, 0)
-#define GRID_CELL_SIZE 2.0f
 
 using namespace std;
 
@@ -42,7 +40,7 @@ using namespace std;
 MassMovement::MassMovement() :
 GameState(),
 // grid
-grid(GRID_ORIGIN, GRID_N_COLS, GRID_N_ROWS, GRID_H, GRID_CELL_SIZE),
+grid(GRID_ORIGIN, uV2(GRID_N_COLS, GRID_N_ROWS)),
 gridView(&grid),
 // objects
 first_object(NULL),

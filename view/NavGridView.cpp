@@ -21,6 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include <stdio.h>
 
+//! ----------------------------------------------------------------------------
+//! CONSTRUCTORS, DESTRUCTORS
+//! ----------------------------------------------------------------------------
 
 NavGridView::NavGridView(NavGrid * navGrid_) : navGrid(navGrid_)
 {
@@ -30,15 +33,19 @@ NavGridView::~NavGridView()
 {
 }
 
+//! ----------------------------------------------------------------------------
+//! DRAW
+//! ----------------------------------------------------------------------------
+
 void NavGridView::draw()
  {
-  float cell_size = navGrid->getCellSize();
   static uV2 grid_pos;
-  for(grid_pos.x = 0; grid_pos.x < navGrid->getSize().x; grid_pos.x++) {
-    for(grid_pos.y = 0; grid_pos.y < navGrid->getSize().y; grid_pos.y++) {
-
+  for(grid_pos.x = 0; grid_pos.x < navGrid->n_cells.x; grid_pos.x++)
+  {
+    for(grid_pos.y = 0; grid_pos.y < navGrid->n_cells.y; grid_pos.y++)
+    {
       static fV3 vertex;
-        vertex = navGrid->getAbsoluteCellPosition(grid_pos);
+      vertex = navGrid->getCellPosition(grid_pos);
 
       int obstructed = (navGrid->getCell(grid_pos).obstacle) ? 1 : 0;
 
@@ -46,11 +53,11 @@ void NavGridView::draw()
       glColor3f(obstructed, 0.0f, 1.0f-obstructed);
       glBegin(GL_TRIANGLE_FAN);
         glVertex3fv(vertex.front());
-        vertex.y += cell_size;
+        vertex.y += NavCell::size.y;
         glVertex3fv(vertex.front());
-        vertex.x += cell_size;
+        vertex.x += NavCell::size.x;
         glVertex3fv(vertex.front());
-        vertex.y -= cell_size;
+        vertex.y -= NavCell::size.y;
         glVertex3fv(vertex.front());
       glEnd();
     }
