@@ -30,7 +30,7 @@ NavGridView::~NavGridView()
 {
 }
 
-void NavGridView::render()
+void NavGridView::draw()
  {
   float cell_size = navGrid->getCellSize();
   static uV2 grid_pos;
@@ -46,11 +46,11 @@ void NavGridView::render()
       glColor3f(obstructed, 0.0f, 1.0f-obstructed);
       glBegin(GL_TRIANGLE_FAN);
         glVertex3fv(vertex.front());
-        vertex.x += cell_size;
-        glVertex3fv(vertex.front());
         vertex.y += cell_size;
         glVertex3fv(vertex.front());
-        vertex.x -= cell_size;
+        vertex.x += cell_size;
+        glVertex3fv(vertex.front());
+        vertex.y -= cell_size;
         glVertex3fv(vertex.front());
       glEnd();
     }

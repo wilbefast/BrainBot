@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "GameObject.hpp"
 
 #include "../engine/io/MeshManager.hpp"
+#include "../engine/math/opengl_matrix.hpp"
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
@@ -27,7 +28,6 @@ GameObject::GameObject(fV4 position_, const char* mesh_name) :
 bbox(fV4(10, 10, 10))
 {
   transform[3] = position_;
-
   mesh = MeshManager::getInstance()->get_mesh(mesh_name);
 }
 
@@ -52,7 +52,12 @@ bool GameObject::isColliding(GameObject& other) const
 //! RENDER
 //! ----------------------------------------------------------------------------
 
+#include <iostream>
+using namespace std;
 void GameObject::draw() const
 {
-
+  glPushMatrix();
+    applyTransform(transform);
+    mesh->draw();
+  glPopMatrix();
 }

@@ -15,7 +15,7 @@ public:
   NavGridView(NavGrid * navGrid_);
   virtual ~NavGridView();
   // mutators
-  void render();
+  void draw();
 };
 
 #endif // NAVGRIDVIEW_HPP_INCLUDED

@@ -30,9 +30,15 @@ class MassMovement : public GameState
 {
   /// ATTRIBUTES
 private:
-  StrategyCamera camera;
+  // grid
   NavGrid grid;
   NavGridView gridView;
+
+  // objects
+  GameObject *first_object, *current_object;
+
+  // camera controls
+  StrategyCamera camera;
   bool left, right, up, down, forward, backward;
 
   /// METHODS

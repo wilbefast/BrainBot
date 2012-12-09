@@ -25,7 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "../engine/graphics/3D/Mesh3D.hpp"
 
-class GameObject
+#include "../engine/utils/IntrusiveLinked.hpp"
+
+class GameObject : public IntrusiveLinked
 {
 //! ATTRIBUTES
 protected:

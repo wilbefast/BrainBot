@@ -21,15 +21,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "math/Rect.hpp"
 
-#define WINDOW_DEFAULT_W 1280    // size used by Desktop version
-#define WINDOW_DEFAULT_H 800
+#define WINDOW_DEFAULT_W 640    // size used by Desktop version
+#define WINDOW_DEFAULT_H 480
 #define MAX_FPS 30
 #define APP_NAME "Arrogance"
 
 namespace global
 {
-    extern iV2 viewport;
-    extern fV2 scale;
+  extern iV2 viewport;
+  extern fV2 scale;
 };
 
 

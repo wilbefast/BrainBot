@@ -39,22 +39,15 @@ using namespace std;
 
 /// CREATION, DESTRUCTION
 
-
-//! FIXME ----------------------------------------------------------------------
-Mesh3D* knight = NULL;
-GameObject objects[3] =
-{
-  GameObject(fV4(100, 100, 0), "knight"),
-  GameObject(fV4(200, 200, 0), "knight"),
-  GameObject(fV4(200, 200, 0), "knight"),
-};
-//! ----------------------------------------------------------------------------
-
 MassMovement::MassMovement() :
 GameState(),
-camera(),
+// grid
 grid(GRID_ORIGIN, GRID_N_COLS, GRID_N_ROWS, GRID_H, GRID_CELL_SIZE),
 gridView(&grid),
+// objects
+first_object(NULL),
+// camera controls
+camera(),
 left(false),
 right(false),
 up(false),
@@ -73,7 +66,15 @@ int MassMovement::startup()
   // load the 3D scene
   draw::use3D();
   MeshManager::getInstance()->startup();
-  knight = MeshManager::getInstance()->get_mesh("knight");
+
+  // create the objects
+  fV4 p(0, 0, 0), d(0, 0, 0);
+  first_object = current_object = new GameObject(p, "knight");
+  for(int i = 1; i < 10; i++)
+  {
+    p += d;
+    first_object->newNext(new GameObject(p, "knight"));
+  }
 
   // all clear
   return EXIT_SUCCESS;
@@ -97,12 +98,12 @@ int MassMovement::update(float delta)
   static fV3 camera_move;
     camera_move = fV3(0, 0, 0);
 
-  if(up) camera_move.z -= ZOOM_SPEED;
-  if(down) camera_move.z += ZOOM_SPEED;
+  if(up) camera_move.z += ZOOM_SPEED;
+  if(down) camera_move.z -= ZOOM_SPEED;
   if(forward) camera_move.y -= PAN_SPEED;
   if(backward) camera_move.y += PAN_SPEED;
-  if(left) camera_move.x += PAN_SPEED;
-  if(right) camera_move.x -= PAN_SPEED;
+  if(left) camera_move.x -= PAN_SPEED;
+  if(right) camera_move.x += PAN_SPEED;
 
   // Apply the camera movement
   camera.pan(camera_move);
@@ -140,13 +141,17 @@ void MassMovement::draw()
   // clear and reset
   glPushMatrix();
     camera.lookThrough();
-    gridView.render();
+    gridView.draw();
 
     glColor3f(0, 1, 0);
-    glScalef(0.4f, 0.4f, 0.4f);
-    glTranslatef(0.0f, 0.0f, 3.0f);
-    glRotatef(90.0f, 1.0f, 0.0f, 0.0f);
-    knight->draw();
+
+    current_object = first_object;
+    do
+    {
+      current_object->draw();
+      current_object = (GameObject*)current_object->getNext();
+    }
+    while(current_object != first_object);
   glPopMatrix();
 
   // Draw dynamic game objects

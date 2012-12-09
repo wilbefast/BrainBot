@@ -28,7 +28,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! CONSTRUCTORS, DESTRUCTORS
 
 StrategyCamera::StrategyCamera() :
-position(0, 0, -200)
+position(0, 0, 100)
 {
   //ctor
 }
@@ -44,16 +44,21 @@ StrategyCamera::~StrategyCamera()
 void StrategyCamera::pan(fV3 amount)
 {
   position += amount;
-  if(position.z > MAX_Z)
-    position.z = MAX_Z;
+  //if(position.z > MAX_Z)
+    //position.z = MAX_Z;
 }
 
 
 //! OPENGL
 
+static int turn = 0;
+
 void StrategyCamera::lookThrough() const
 {
-glRotatef(-PITCH, 1.0f, 0.0f, 0.0f);
+  turn = (turn + 1)%360;
+
+  glRotatef(180, 0.0f, 1.0f, 0.0f);
+  //glRotatef(PITCH, 1.0f, 0.0f, 0.0f);
   glTranslatef(position.x, position.y, position.z);
 
 }
