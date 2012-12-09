@@ -26,8 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "model/GameObject.hpp"
 
-#define PAN_SPEED 10
-#define ZOOM_SPEED 20
+#define PAN_SPEED 20
+#define ZOOM_SPEED 40
 
 #define GRID_N_ROWS 64
 #define GRID_N_COLS 64
@@ -66,12 +66,12 @@ int MassMovement::startup()
   MeshManager::getInstance()->startup();
 
   // create the objects
-  fV4 p(0, 0, 0), d(0, 0, 0);
-  first_object = current_object = new GameObject(p, "knight");
+  fV3 p(0, 0, -10), d(32, 32, 0);
+  first_object = current_object = new GameObject(p, "trojan");
   for(int i = 1; i < 10; i++)
   {
     p += d;
-    first_object->newNext(new GameObject(p, "knight"));
+    first_object->newNext(new GameObject(p, "trojan"));
   }
 
   // all clear

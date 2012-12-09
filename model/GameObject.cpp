@@ -24,10 +24,16 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-GameObject::GameObject(fV4 position_, const char* mesh_name) :
-bbox(fV4(10, 10, 10))
+GameObject::GameObject(fV3 position, const char* mesh_name) :
+bbox(fV4(10, 10, 10)) //! FIXME
 {
-  transform[3] = position_;
+  // translate and scale the transform matrix
+  transform.toIdentity();
+  addTranslation(transform, position);
+  addRotation(transform, 90);
+
+
+  // get the mesh based on the identifier
   mesh = MeshManager::getInstance()->get_mesh(mesh_name);
 }
 
@@ -52,8 +58,6 @@ bool GameObject::isColliding(GameObject& other) const
 //! RENDER
 //! ----------------------------------------------------------------------------
 
-#include <iostream>
-using namespace std;
 void GameObject::draw() const
 {
   glPushMatrix();

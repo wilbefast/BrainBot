@@ -144,7 +144,7 @@ int Mesh3D::load(const char* filename)
     else if (key == TAG_SMOOTH_SHADING)
       s >> current_group->smooth;
     else
-      cout << line << ": unrecognised\n";
+      cout << line << ": unrecognised OBJ line.\n";
   }
   current_group->last_face = faces.size()-1;
 
@@ -290,9 +290,9 @@ void Mesh3D::finalise()
   normal_list_t(normals).swap(normals);
   tex_coord_list_t(texture_coordinates).swap(texture_coordinates);
 
-  ofstream f;
-  f.open ("arrogance_mesh.obj");
-  f << (*this);
+  //ofstream f;
+  //f.open ("arrogance_mesh.obj");
+  //f << (*this);
 }
 
 void Mesh3D::unitise()

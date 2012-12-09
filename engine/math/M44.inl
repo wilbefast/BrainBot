@@ -202,9 +202,9 @@ V4<T> M44<T>::operator*(V4<T> const& v) const
 
 // Matrix-matrix multiplication
 template <typename T>
-M44<T>& M44<T>::operator*=(M44<T> const& other) const
+M44<T>& M44<T>::operator*=(M44<T> const& other)
 {
-  (*this) = ((*this)*other);
+  return (*this) = ((*this)*other);
 }
 
 template <typename T>
@@ -327,7 +327,7 @@ inline M44<T> M44<T>::xRotMatrix(double angle)
   double cs = cos(angle), sn = sin(angle);
   return M44<T>(V4<T>(1,0,0),
                 V4<T>(0,cs,-sn),
-                V4<T>(0,cs,sn),
+                V4<T>(0,sn,cs),
                 V4<T>(0,0,0,1));
 }
 

@@ -2,5 +2,6 @@
 <objects3D>
   <mesh_list>
     <mesh name="knight"/>
+    <mesh name="trojan"/>
   </mesh_list>	
 </objects3D>

@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "../model/BoundingBox.hpp"
 
-#include "../engine/math/V4.hpp"
+#include "../engine/math/V3.hpp"
 #include "../engine/math/M44.hpp"
 
 #include "../engine/graphics/3D/Mesh3D.hpp"
@@ -38,7 +38,7 @@ protected:
 //! METHODS
 public:
   // constructors, destructors
-  GameObject(fV4 position_, const char* mesh_name);
+  GameObject(fV3 position, const char* mesh_name);
   virtual ~GameObject();
   // accessors
   bool isColliding(GameObject& other) const;
