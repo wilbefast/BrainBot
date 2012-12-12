@@ -41,7 +41,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
     #define GL_V_MINOR 0
   #endif // WIN32
 
-  #include <GL/glew.h>  // GLEW must be included before OpenGL
+//  #include <GL/glew.h>  // GLEW must be included before OpenGL
 	#include <GL/gl.h>    // PC uses OpenGL rather than OpenGL ES
 
 

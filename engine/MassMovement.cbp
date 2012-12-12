@@ -125,6 +125,23 @@
 					<Add directory="C:/Program Files (x86)/- Software -/SDL/lib" />
 				</Linker>
 			</Target>
+			<Target title="LIN_Debug_SDL_1_6_FAC">
+				<Option output="bin/Debug/MassMovement" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+					<Add directory="/auto_home/wdyce/include/SDL/" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL" />
+					<Add option="-lSDL_image" />
+					<Add option="-lGL" />
+					<Add directory="/auto_home/wdyce/lib" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
