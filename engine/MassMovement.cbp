@@ -59,7 +59,6 @@
 					<Add option="-lSDL" />
 					<Add option="-lSDL_image" />
 					<Add option="-lGL" />
-					<Add option="-lGLEW" />
 					<Add directory="/usr/local/lib" />
 				</Linker>
 			</Target>
@@ -77,7 +76,6 @@
 					<Add option="-lSDL" />
 					<Add option="-lSDL_image" />
 					<Add option="-lGL" />
-					<Add option="-lGLEW" />
 					<Add directory="/usr/local/lib" />
 				</Linker>
 			</Target>
@@ -199,8 +197,6 @@
 		<Unit filename="graphics/3D/MaterialLibrary.hpp" />
 		<Unit filename="graphics/3D/Mesh3D.cpp" />
 		<Unit filename="graphics/3D/Mesh3D.hpp" />
-		<Unit filename="graphics/3D/Shader.cpp" />
-		<Unit filename="graphics/3D/Shader.hpp" />
 		<Unit filename="graphics/3D/Texture.hpp" />
 		<Unit filename="graphics/3D/vertex.hpp" />
 		<Unit filename="graphics/Colour.cpp" />

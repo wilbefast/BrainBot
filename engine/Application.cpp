@@ -231,8 +231,8 @@ int Application::startSDL()
 int Application::startGL()
 {
   // Start the GL extension wrangler (GLEW)
-  GLenum result = glewInit();
-  ASSERT_AUX(result == GLEW_OK, "Starting GLEW", glewGetErrorString(result));
+  //!GLenum result = glewInit();
+  //!ASSERT_AUX(result == GLEW_OK, "Starting GLEW", glewGetErrorString(result));
 
   // Define viewport
   glViewport(0, 0, global::viewport.x, global::viewport.y);
