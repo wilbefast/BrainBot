@@ -22,6 +22,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include <map>
 #include <queue>
 
+#include "../model/NavCell.hpp"
+
+typedef std::deque<NavCell*> path;
+
 #include "../model/NavGrid.hpp"
 
 class PathSearch;
@@ -36,6 +40,7 @@ private:
   SearchState *start, *end, *fallback_plan;
   std::map<NavCell*, SearchState*> states;
   std::priority_queue<SearchState> open;
+  bool has_result;
 
   //! METHODS
 public:
@@ -44,6 +49,7 @@ public:
 
   // query
   unsigned int estimateRemainingCost(NavCell const*) const;
+  path* getPath();
 };
 
 

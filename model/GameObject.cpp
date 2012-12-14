@@ -30,8 +30,7 @@ bbox(fV4(10, 10, 10)) //! FIXME
   // translate and scale the transform matrix
   transform.toIdentity();
   addTranslation(transform, position);
-  addRotation(transform, 90);
-
+  addRotationX(transform, 90);
 
   // get the mesh based on the identifier
   mesh = MeshManager::getInstance()->get_mesh(mesh_name);

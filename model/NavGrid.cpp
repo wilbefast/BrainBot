@@ -33,7 +33,7 @@ n_cells(n_cells_)
   // set values of cells
   for(size_t row = 0; row < n_cells.y; row++)
   for(size_t col = 0; col < n_cells.x; col++)
-      cells[row][col].obstacle = ((rand()%5 == 1));
+    cells[row][col].obstacle = ((rand()%5 == 1));
 }
 
 NavGrid::~NavGrid()

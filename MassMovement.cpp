@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "model/GameObject.hpp"
 
 #define PAN_SPEED 20
-#define ZOOM_SPEED 40
+#define ZOOM_SPEED 90
 
 #define GRID_N_ROWS 64
 #define GRID_N_COLS 64
@@ -66,7 +66,7 @@ int MassMovement::startup()
   MeshManager::getInstance()->startup();
 
   // create the objects
-  fV3 p(0, 0, -10), d(32, 32, 0);
+  fV3 p(0, 0, 10), d(32, 32, 0);
   first_object = current_object = new GameObject(p, "trojan");
   for(int i = 1; i < 10; i++)
   {
@@ -96,16 +96,18 @@ int MassMovement::update(float delta)
   static fV3 camera_move;
     camera_move = fV3(0, 0, 0);
 
-  if(up) camera_move.z += ZOOM_SPEED;
-  if(down) camera_move.z -= ZOOM_SPEED;
+  if(up) camera_move.z -= ZOOM_SPEED;
+  if(down) camera_move.z += ZOOM_SPEED;
   if(forward) camera_move.y -= PAN_SPEED;
   if(backward) camera_move.y += PAN_SPEED;
   if(left) camera_move.x -= PAN_SPEED;
   if(right) camera_move.x += PAN_SPEED;
 
   // Apply the camera movement
-  camera.pan(camera_move);
+  camera.push(camera_move);
   up = down = false;
+
+  camera.update_position();
 
   // Update dynamic game objects
   int result = GameState::update(delta);
@@ -142,7 +144,6 @@ void MassMovement::draw()
     gridView.draw();
 
     glColor3f(0, 1, 0);
-
     current_object = first_object;
     do
     {
@@ -150,6 +151,7 @@ void MassMovement::draw()
       current_object = (GameObject*)current_object->getNext();
     }
     while(current_object != first_object);
+
   glPopMatrix();
 
   // Draw dynamic game objects

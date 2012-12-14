@@ -51,9 +51,19 @@ void addTranslation(M44<GLfloat>& transform, fV3 trans)
   transform[3].z += trans.z;
 }
 
-void addRotation(M44<GLfloat>& transform, float rotation)//, fV3 axis)
+void addRotationX(M44<GLfloat>& transform, float rotation)
 {
   transform *= M44<GLfloat>::xRotMatrix(rotation);
+}
+
+void addRotationY(M44<GLfloat>& transform, float rotation)
+{
+  transform *= M44<GLfloat>::yRotMatrix(rotation);
+}
+
+void addRotationZ(M44<GLfloat>& transform, float rotation)
+{
+  transform *= M44<GLfloat>::zRotMatrix(rotation);
 }
 
 void addScale(M44<GLfloat>& transform, fV3 scale)

@@ -27,7 +27,9 @@ void printGLMatrix(GLenum which_matrix);
 void applyTransform(M44<GLfloat> const& transform);
 
 void addTranslation(M44<GLfloat>& transform, fV3 trans);
-void addRotation(M44<GLfloat>& transform, float angle);
+void addRotationX(M44<GLfloat>& transform, float angle);
+void addRotationY(M44<GLfloat>& transform, float angle);
+void addRotationZ(M44<GLfloat>& transform, float angle);
 void addScale(M44<GLfloat>& transform, fV3 scale);
 
 #endif // OPENGL_MATRIX_HPP_INCLUDED

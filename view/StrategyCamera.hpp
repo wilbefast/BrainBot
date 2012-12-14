@@ -1,15 +1,14 @@
 #ifndef STRATEGYCAMERA_HPP
 #define STRATEGYCAMERA_HPP
 
-
-#include "../engine/math/V3.hpp"
-#include "../engine/math/V2.hpp"
+#include "../engine/math/M44.hpp"
 
 class StrategyCamera
 {
   /* ATTRIBUTES */
 private:
-  fV3 position;
+  fM44 transform;
+  fV3 speed;
 
   /* METHODS */
 public:
@@ -18,11 +17,11 @@ public:
   virtual ~StrategyCamera();
 
   // mutators
-  void pan(fV3 amount);
-  void zoom(float amount);
+  void push(fV3 amount);
+  void update_position();
 
   // opengl
-  void lookThrough() const;
+  void lookThrough(); //const;
 };
 
 #endif // STRATEGYCAMERA_HPP

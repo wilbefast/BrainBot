@@ -18,21 +18,28 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "StrategyCamera.hpp"
 
 #include "../engine/opengl.h"
+#include "../engine/math/opengl_matrix.hpp"
 
 #define PITCH 30
 #define MAX_Z -30
 
+#define MAX_SPEED 10.0f
+#define MIN_SPEED 0.01f
 
 #include <stdio.h>
+using namespace std;
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-StrategyCamera::StrategyCamera() :
-position(-100, -100, 1000)
+StrategyCamera::StrategyCamera()
 {
-  //ctor
+  transform.toIdentity();
+  addTranslation(transform, fV3(0, 0, 600));
+  addRotationX(transform, -2*PI);
+  //addRotationX(transform, 2*PI);
+  //addRotationZ(transform, PI/2);
 }
 
 StrategyCamera::~StrategyCamera()
@@ -44,25 +51,37 @@ StrategyCamera::~StrategyCamera()
 //! MUTATORS
 //! ----------------------------------------------------------------------------
 
-void StrategyCamera::pan(fV3 amount)
+void StrategyCamera::push(fV3 amount)
 {
-  position += amount;
-  //if(position.z > MAX_Z)
-    //position.z = MAX_Z;
+  speed -= amount*0.3f;
+  for(int i = 0; i < 3; i++)
+  {
+    if(speed[i] < -MAX_SPEED) speed[i] = -MAX_SPEED;
+    else if(speed[i] > MAX_SPEED) speed[i] = MAX_SPEED;
+  }
+}
+
+void StrategyCamera::update_position()
+{
+  addTranslation(transform, speed);
+
+  speed *= 0.9f;
+  for(int i = 0; i < 3; i++)
+  {
+    if(speed[i] < 0 && speed[i] > -MIN_SPEED) speed[i] = 0;
+    else if(speed[i] > 0 && speed[i] < MIN_SPEED) speed[i] = 0;
+  }
 }
 
 //! ----------------------------------------------------------------------------
 //! OPENGL
 //! ----------------------------------------------------------------------------
 
-static int turn = 0;
-
-void StrategyCamera::lookThrough() const
+void StrategyCamera::lookThrough() //const
 {
-  turn = (turn + 1)%360;
-
+  //applyTransform(transform);
   glRotatef(180, 0.0f, 1.0f, 0.0f);
+  glRotatef(180, 0.0f, 0.0f, 1.0f);
+  glTranslatef(transform[3].x, transform[3].y, transform[3].z);
   //glRotatef(PITCH, 1.0f, 0.0f, 0.0f);
-  glTranslatef(position.x, position.y, position.z);
-
 }

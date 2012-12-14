@@ -27,7 +27,8 @@ start(new SearchState(&(grid->cells[start_coord.y][start_coord.x]), this)),
 end(new SearchState(&(grid->cells[end_coord.y][end_coord.x]), this)),
 fallback_plan(start),
 states(),
-open()
+open(),
+has_result(false)
 {
   start->totalCostEstimate = estimateRemainingCost(start->cell);
   states[start->cell] = start;
@@ -43,4 +44,19 @@ unsigned int PathSearch::estimateRemainingCost(NavCell const* cell) const
 {
   //! TODO
   return 0;
+}
+
+path *PathSearch::getPath()
+{
+  path *result = new path();
+
+  // start at the end, trace backwards adding vertices
+  SearchState const* current = has_result ? end : fallback_plan;
+  while (current != start)
+  {
+    // add element to front, in order for list to be in the right order
+    result->push_front(current->cell);
+    current = current->previous;
+  }
+  return result;
 }
