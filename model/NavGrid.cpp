@@ -85,6 +85,7 @@ fV3 NavGrid::getCellPosition(uV2 position) const
 std::list<NavCell*> NavGrid::getPath(uV2 source, uV2 destination)
 {
   //! TODO
+  return std::list<NavCell*>();
 }
 
 
