@@ -33,7 +33,7 @@ has_result(false)
   start->totalCostEstimate = estimateRemainingCost(start->cell);
   states[start->cell] = start;
   states[end->cell] = end;
-  open.push((*start));
+  open.push(SearchStateRef(start));
 }
 
 //! ----------------------------------------------------------------------------
@@ -68,29 +68,37 @@ path* PathSearch::getPath()
 //! SUBROUTINES
 //! ----------------------------------------------------------------------------
 
-/*bool PathSearch::search()
+bool PathSearch::search()
 {
   while (!open.empty())
   {
     // expand from the open state that is currently cheapest
-    SearchState x = open.top(); open.pop();
+    SearchState *x = open.top().state; open.pop();
 
     // have we reached the end?
-    if (x == (*end))
+    if (x == end)
       return true;
 
     // try to expand each neighbour
-
-    ///! TODO
-    for (Tile t : grid.getNeighbours(x.tile, false))
-      if(t.isPathable())
-        expand(x, t);
+    iV2 grid_pos, grid_offset;
+    for(grid_offset.x = -1; grid_offset.x < 2; grid_offset.x++)
+    for(grid_offset.y = -1; grid_offset.y < 2; grid_offset.y++)
+    {
+      grid_pos = x->cell->grid_position + grid_offset;
+      if(grid_pos.x >= 0 && grid_pos.y >= 0
+         && grid_pos.x < grid->n_cells.x && grid_pos.y < grid->n_cells.y)
+         {
+            NavCell* neighbour = grid->cells[grid_pos.y][grid_pos.x];
+            if(!neighbour->obstacle)
+              expand(x, neighbour);
+         }
+    }
 
     // remember to close x now that all connections have been expanded
-    x.closed = true;
+    x->closed = true;
 
     // keep the best closed state, just in case the target is inaccessible
-    if(estimateCost(x->tile) < estimateCost(fallback_plan->tile))
+    if(estimateRemainingCost(x->cell) < estimateRemainingCost(fallback_plan->cell))
       fallback_plan = x;
   }
 
@@ -98,21 +106,31 @@ path* PathSearch::getPath()
   return false;
 }
 
-void PathSearch::expand(SearchState src_state, Tile t)
+void PathSearch::expand(SearchState* src_state, NavCell* c)
 {
-  SearchState dest_state = states.get(t);
+  SearchState* dest_state;
+  cellStateMap::const_iterator it;
 
   // create states as needed
-  if(dest_state == null)
+  it = states.find(c);
+
+  if(it == states.end())
   {
-    dest_state = new SearchState(t, this);
-    states.put(t, dest_state);
+    dest_state = new SearchState(c, this);
+    states[c] = dest_state;
+  }
+  else
+  {
+
+    dest_state = (*it).second;
+
+    // closed states are no longer under consideration
+    if (dest_state->closed)
+      return;
   }
 
-  // closed states are no longer under consideration
-  else if (dest_state.closed)
-    return;
 
+/*
   // states not yet opened always link back to x
   if (!open.contains(dest_state))
   {
@@ -127,5 +145,5 @@ void PathSearch::expand(SearchState src_state, Tile t)
     open.remove(dest_state);
     dest_state.setParent(src_state);
     open.add(dest_state);
-  }
-}*/
+  }*/
+}
