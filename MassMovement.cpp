@@ -78,13 +78,23 @@ int MassMovement::startup()
   glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
 
   // create the objects
-  fV2 p(0, 0), d(32, 32);
+  fV2 p(100 + rand()%200, 100 + rand()%200);
   first_bot = current_bot = new BrainBot(p);
   for(int i = 1; i < 10; i++)
   {
-    p += d;
+    p.x = 100 + rand()%200;
+    p.y = 100 + rand()%200;
     first_bot->newNext(new BrainBot(p));
   }
+
+  // add brain bots to king bot's minions
+  current_bot = first_bot;
+  do
+  {
+    player.minions.push_back(current_bot);
+    current_bot = (BrainBot*)current_bot->getNext();
+  }
+  while(current_bot != first_bot);
 
   // all clear
   return EXIT_SUCCESS;

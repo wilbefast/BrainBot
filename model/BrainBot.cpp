@@ -71,6 +71,7 @@ void BrainBot::move(fV2 amount, NavGrid* grid)
 
   speed += amount*0.4f;
 
+
   int xvar = SIGN(speed.x);
   int yvar = SIGN(speed.y);
 
@@ -109,13 +110,14 @@ void BrainBot::move(fV2 amount, NavGrid* grid)
     speed.x = speed.y = 0;
   }
 
-
   position += speed;
+
   speed *= 0.9f;
   if((speed.x > 0 && speed.x < 0.01f) || (speed.x < 0 && speed.x > 0.01f))
     speed.x = 0;
   if((speed.y > 0 && speed.y < 0.01f) || (speed.y < 0 && speed.y > 0.01f))
     speed.y = 0;
+
 }
 
 

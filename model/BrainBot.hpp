@@ -13,16 +13,13 @@ public:
   static void load_texture();
 
 
-
-private:
   fV2 position, speed;
 
-public:
   BrainBot(fV2 position_);
 
   fV2 getPosition() const { return position; }
 
-  void move(fV2 amount, NavGrid* grid);
+  virtual void move(fV2 amount, NavGrid* grid);
   void render();
 
   virtual Texture* get_texture();
