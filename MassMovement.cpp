@@ -45,7 +45,7 @@ GameState(),
 grid(GRID_ORIGIN, uV2(GRID_N_COLS, GRID_N_ROWS)),
 gridView(&grid),
 // objects
-player(fV2(20, 20)),
+player(fV2(300, 300)),
 first_bot(NULL),
 // camera controls
 camera(),

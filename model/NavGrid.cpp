@@ -34,7 +34,8 @@ origin(origin_)
   uV2 grid_pos;
   for(grid_pos.y = 0; grid_pos.y < n_cells.y; grid_pos.y++)
   for(grid_pos.x = 0; grid_pos.x < n_cells.x; grid_pos.x++)
-    cells[grid_pos.y][grid_pos.x] = new NavCell(grid_pos, false);// (rand()%5 == 1));
+    cells[grid_pos.y][grid_pos.x] = new NavCell(grid_pos, grid_pos.x+grid_pos.y > 20
+                                                          && (rand()%5 == 1));
 }
 
 NavGrid::~NavGrid()
