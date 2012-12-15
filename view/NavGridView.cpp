@@ -29,6 +29,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 static Texture* window_t = NULL;
 
+static Colour road_ambient(0.05f, 0.05f, 0.1f),
+              road_diffuse(0.2f, 0.2f, 0.4f),
+              road_specular(0.3f, 0.3f, 0.6f),
+              road_emission(0.0f, 0.0f, 0.0f);
+static float road_shine = 60;
+
+
+static Colour building_ambient(0.4f, 0.3f, 0.3f),
+              building_diffuse(0.7f, 0.6f, 0.6f),
+              building_specular(0.1f, 0.1f, 0.1f),
+              building_emission(0.0f, 0.0f, 0.0f);
+static float building_shine = 128;
+
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
@@ -64,7 +77,12 @@ void NavGridView::draw()
       glBegin(GL_QUADS);
         if(!obstructed)
         {
-          glColor3f(0.4f, 0.3f, 0.3f);
+          glMaterialfv(GL_FRONT, GL_AMBIENT, road_ambient.front());
+          glMaterialfv(GL_FRONT, GL_SPECULAR, road_specular.front());
+          glMaterialfv(GL_FRONT, GL_DIFFUSE, road_diffuse.front());
+          glMaterialfv(GL_FRONT, GL_EMISSION, road_emission.front());
+          glMaterialfv(GL_FRONT, GL_SHININESS, &road_shine);
+          //glColor3f(0.4f, 0.3f, 0.3f);
           glVertex3fv(vertex.front());
           vertex.y += NavCell::size.y;
           glVertex3fv(vertex.front());
@@ -75,7 +93,12 @@ void NavGridView::draw()
         }
         else
         {
-          glColor3f(0.7f, 0.7f, 0.8f);
+          glMaterialfv(GL_FRONT, GL_AMBIENT, building_ambient.front());
+          glMaterialfv(GL_FRONT, GL_SPECULAR, building_specular.front());
+          glMaterialfv(GL_FRONT, GL_DIFFUSE, building_diffuse.front());
+          glMaterialfv(GL_FRONT, GL_EMISSION, building_emission.front());
+          glMaterialfv(GL_FRONT, GL_SHININESS, &building_shine);
+          //glColor3f(0.7f, 0.7f, 0.8f);
           // left face
           glVertex3fv(vertex.front());
           vertex.y += NavCell::size.y;

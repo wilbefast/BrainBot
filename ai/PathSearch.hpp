@@ -33,7 +33,6 @@ typedef std::deque<NavCell*> path;
 class PathSearch;
 
 #include "SearchState.hpp"
-#include "SearchStateRef.hpp"
 
 typedef std::map<NavCell*, SearchState*> cellStateMap;
 
@@ -44,7 +43,7 @@ private:
   NavGrid *grid;
   SearchState *start, *end, *fallback_plan;
   std::map<NavCell*, SearchState*> states;
-  std::priority_queue<SearchState> open;
+  std::priority_queue<SearchState*> open;
   bool has_result;
 
   //! METHODS

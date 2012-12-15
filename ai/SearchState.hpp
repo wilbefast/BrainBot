@@ -22,10 +22,23 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class SearchState;
 
+#include <vector>
+
 #include "PathSearch.hpp"
 
 class SearchState
 {
+  //! NESTING
+public:
+  struct compare_t
+  {
+    bool operator()(SearchState* a, SearchState* b)
+    {
+      return (*a)<(*b);
+    }
+  };
+
+
   //! FRIENDS
 friend class PathSearch;
 
@@ -37,7 +50,7 @@ private:
 
   unsigned int currentCost, remainingCostEstimate, totalCostEstimate;
 
-  bool closed;
+  bool opened, closed;
 
   //! METHODS
 public:
@@ -55,5 +68,8 @@ public:
   bool operator==(SearchState const& other) const;
 
 };
+
+typedef std::priority_queue<SearchState*, std::vector<SearchState*>, SearchState::compare_t>
+          state_queue_t;
 
 #endif // SEARCHSTATE_HPP_INCLUDED

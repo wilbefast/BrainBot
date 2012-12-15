@@ -66,10 +66,16 @@ int MassMovement::startup()
 
 
   BrainBot::load_texture();
+  BrainBotKing::load_texture();
 
   // load the 3D scene
   draw::use3D();
   MeshManager::getInstance()->startup();
+
+  // set up the lighting
+  glShadeModel(GL_SMOOTH);
+  float light_pos[3] = { 300, 300, -1000 };
+  glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
 
   // create the objects
   fV2 p(0, 0), d(32, 32);

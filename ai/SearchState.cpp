@@ -27,7 +27,9 @@ cell(cell_),
 previous(NULL),
 currentCost(0),
 remainingCostEstimate(0),
-totalCostEstimate(0)
+totalCostEstimate(0),
+opened(false),
+closed(false)
 {
 
 }

@@ -33,7 +33,7 @@ has_result(false)
   start->totalCostEstimate = estimateRemainingCost(start->cell);
   states[start->cell] = start;
   states[end->cell] = end;
-  open.push(*start);
+  open.push(start);
 }
 
 //! ----------------------------------------------------------------------------
@@ -67,13 +67,13 @@ path* PathSearch::getPath()
 //! ----------------------------------------------------------------------------
 //! SUBROUTINES
 //! ----------------------------------------------------------------------------
-/*
+
 bool PathSearch::search()
 {
   while (!open.empty())
   {
     // expand from the open state that is currently cheapest
-    SearchState *x = open.top().state; open.pop();
+    SearchState *x = open.top(); open.pop();
 
     // have we reached the end?
     if (x == end)
@@ -121,7 +121,6 @@ void PathSearch::expand(SearchState* src_state, NavCell* c)
   }
   else
   {
-
     dest_state = (*it).second;
 
     // closed states are no longer under consideration
@@ -130,20 +129,19 @@ void PathSearch::expand(SearchState* src_state, NavCell* c)
   }
 
 
-/*
   // states not yet opened always link back to x
-  if (!open.contains(dest_state))
+  if (!dest_state->opened)
   {
     // set cost before adding to heap, or order will be wrong!
-    dest_state.setParent(src_state);
-    open.add(dest_state);
+    dest_state->setPrevious(src_state);
+    dest_state->opened = true;
+    open.push(dest_state);
   }
   // states already open link back to x only if it's better
-  else if (src_state.currentCost < dest_state.currentCost)
+  else if (src_state->currentCost < dest_state->currentCost)
   {
     // remove, reset cost and replace, or order will be wrong!
-    open.remove(dest_state);
-    dest_state.setParent(src_state);
-    open.add(dest_state);
-  }*/
-//}
+    dest_state->setPrevious(src_state);
+    open.push(dest_state);
+  }
+}

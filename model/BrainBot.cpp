@@ -17,7 +17,9 @@
 //! ----------------------------------------------------------------------------
 //! GLOBAL VARIABLES
 //! ----------------------------------------------------------------------------
-static Texture *t1 = NULL, *t2 = NULL;
+static Texture *t = NULL;
+
+static Colour bot_emissive(1.0f, 1.0f, 1.0f);
 
 //! ----------------------------------------------------------------------------
 //! FUNCTIONS
@@ -25,8 +27,7 @@ static Texture *t1 = NULL, *t2 = NULL;
 
 void BrainBot::load_texture()
 {
-  t1 = GraphicsManager::getInstance()->get_texture("alien_bot1");
-  t2 = GraphicsManager::getInstance()->get_texture("alien_bot2");
+  t= GraphicsManager::getInstance()->get_texture("alien_bot1");
 }
 
 bool blocked(int x, int y, NavGrid* grid)
@@ -118,7 +119,10 @@ void BrainBot::move(fV2 amount, NavGrid* grid)
 }
 
 
-
+Texture* BrainBot::get_texture()
+{
+  return t;
+}
 
 void BrainBot::render()
 {
@@ -138,8 +142,9 @@ void BrainBot::render()
               p3 = v4_pos + ox*half_size - oy*half_size,
               p4 = v4_pos - ox*half_size - oy*half_size;
 
-  glColor3f(1.0f, 1.0f, 1.0f);
-  glBindTexture(GL_TEXTURE_2D, t1->getHandle());
+  //glColor3f(1.0f, 1.0f, 1.0f);
+  glMaterialfv(GL_FRONT, GL_EMISSION, bot_emissive.front());
+  glBindTexture(GL_TEXTURE_2D, get_texture()->getHandle());
   glBegin(GL_TRIANGLE_FAN);
     glTexCoord2f(0, 0);
     glVertex3fv(p1.front());

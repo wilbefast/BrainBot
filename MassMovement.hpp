@@ -22,6 +22,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine/scenes/GameState.hpp"
 
 #include "model/NavGrid.hpp"
+#include "model/BrainBotKing.hpp"
 #include "model/BrainBot.hpp"
 
 #include "view/NavGridView.hpp"
@@ -37,7 +38,7 @@ private:
   NavGridView gridView;
 
   // objects
-  BrainBot player;
+  BrainBotKing player;
   BrainBot *first_bot, *current_bot;
 
   // camera controls
