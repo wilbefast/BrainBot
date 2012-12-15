@@ -19,22 +19,22 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef PATHSEARCH_HPP_INCLUDED
 #define PATHSEARCH_HPP_INCLUDED
 
-
-#include <map>
-
-#include <queue>
-
 #include "../model/NavCell.hpp"
-
-typedef std::deque<NavCell*> path;
-
 #include "../model/NavGrid.hpp"
 
 class PathSearch;
 
 #include "SearchState.hpp"
 
-typedef std::map<NavCell*, SearchState*> cellStateMap;
+#include <deque>
+#include <map>
+#include <queue>
+#include <vector>
+
+typedef std::deque<NavCell*> path;
+typedef std::map<NavCell*, SearchState*> state_map_t;
+typedef std::priority_queue<SearchState*, std::vector<SearchState*>, SearchState::compare_t>
+          state_queue_t;
 
 class PathSearch
 {
@@ -42,8 +42,8 @@ class PathSearch
 private:
   NavGrid *grid;
   SearchState *start, *end, *fallback_plan;
-  std::map<NavCell*, SearchState*> states;
-  std::priority_queue<SearchState*> open;
+  state_map_t states;
+  state_queue_t open;
   bool has_result;
 
   //! METHODS
@@ -52,7 +52,6 @@ public:
   PathSearch(NavGrid *grid_, uV2 start_coord, uV2 end_coord);
 
   // query
-  unsigned int estimateRemainingCost(NavCell const*) const;
   path* getPath();
 
 

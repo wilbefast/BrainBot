@@ -16,6 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "NavGrid.hpp"
+#include "../ai/PathSearch.hpp"
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
@@ -35,7 +36,7 @@ origin(origin_)
   for(grid_pos.y = 0; grid_pos.y < n_cells.y; grid_pos.y++)
   for(grid_pos.x = 0; grid_pos.x < n_cells.x; grid_pos.x++)
     cells[grid_pos.y][grid_pos.x] = new NavCell(grid_pos, grid_pos.x+grid_pos.y > 20
-                                                          && (rand()%5 == 1));
+                                                          && (rand()%3 == 1));
 }
 
 NavGrid::~NavGrid()
@@ -84,10 +85,10 @@ fV3 NavGrid::getCellPosition(uV2 position) const
 //! ----------------------------------------------------------------------------
 
 
-std::list<NavCell*> NavGrid::getPath(uV2 source, uV2 destination)
+path* NavGrid::getPath(uV2 source, uV2 destination)
 {
-  //! TODO
-  return std::list<NavCell*>();
+  PathSearch s(this, source, destination);
+  return s.getPath();
 }
 
 

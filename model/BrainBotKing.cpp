@@ -26,16 +26,12 @@ void BrainBotKing::load_texture()
 
 void attract(BrainBotKing* king, BrainBot* minion)
 {
-  std::cout << "before: " << minion->speed << '\t';
-
   fV2 to_me = king->position - minion->position;
 
   if(to_me.getNorm2() > 64*64)
     minion->speed += to_me*0.03f;
   else
     minion->speed -= to_me*0.07f;
-
-  std::cout << "after: " << minion->speed << '\n';
 }
 
 void repulse(BrainBot* a, BrainBot* b)

@@ -23,31 +23,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 PathSearch::PathSearch(NavGrid *grid_, uV2 start_coord, uV2 end_coord) :
 grid(grid_),
-start(new SearchState(grid->cells[start_coord.y][start_coord.x], this)),
-end(new SearchState(grid->cells[end_coord.y][end_coord.x], this)),
+start(new SearchState(grid->cells[start_coord.y][start_coord.x], grid->cells[end_coord.y][end_coord.x])),
+end(new SearchState(grid->cells[end_coord.y][end_coord.x], grid->cells[end_coord.y][end_coord.x])),
 fallback_plan(start),
 states(),
 open(),
 has_result(false)
 {
-  start->totalCostEstimate = estimateRemainingCost(start->cell);
+  start->totalCostEstimate = start->estimateCost(start->cell, end->cell);
   states[start->cell] = start;
   states[end->cell] = end;
   open.push(start);
+
+  has_result = search();
 }
 
 //! ----------------------------------------------------------------------------
 //! QUERY
 //! ----------------------------------------------------------------------------
-
-unsigned int PathSearch::estimateRemainingCost(NavCell const* cell) const
-{
-  fV3 remaining_vector =
-    grid->getCellPosition(cell->grid_position)
-    - grid->getCellPosition(end->cell->grid_position);
-
-  return remaining_vector.getNorm();
-}
 
 path* PathSearch::getPath()
 {
@@ -84,9 +77,12 @@ bool PathSearch::search()
     for(grid_offset.x = -1; grid_offset.x < 2; grid_offset.x++)
     for(grid_offset.y = -1; grid_offset.y < 2; grid_offset.y++)
     {
+      if(abs(grid_offset.x + grid_offset.y) != 1)
+        continue;
       grid_pos = x->cell->grid_position + grid_offset;
       if(grid_pos.x >= 0 && grid_pos.y >= 0
-         && grid_pos.x < grid->n_cells.x && grid_pos.y < grid->n_cells.y)
+         && (size_t)grid_pos.x < (size_t)grid->n_cells.x
+         && (size_t)grid_pos.y < (size_t)grid->n_cells.y)
          {
             NavCell* neighbour = grid->cells[grid_pos.y][grid_pos.x];
             if(!neighbour->obstacle)
@@ -98,7 +94,8 @@ bool PathSearch::search()
     x->closed = true;
 
     // keep the best closed state, just in case the target is inaccessible
-    if(estimateRemainingCost(x->cell) < estimateRemainingCost(fallback_plan->cell))
+    if(x->estimateCost(x->cell, end->cell)
+       < x->estimateCost(x->cell, end->cell))
       fallback_plan = x;
   }
 
@@ -106,17 +103,32 @@ bool PathSearch::search()
   return false;
 }
 
+void resort_queue(state_queue_t& queue)
+{
+  std::queue<SearchState*> temp;
+  while(!queue.empty())
+  {
+    temp.push(queue.top());
+    queue.pop();
+  }
+  while(!temp.empty())
+  {
+    queue.push(temp.front());
+    temp.pop();
+  }
+}
+
 void PathSearch::expand(SearchState* src_state, NavCell* c)
 {
   SearchState* dest_state;
-  cellStateMap::const_iterator it;
+  state_map_t::const_iterator it;
 
   // create states as needed
   it = states.find(c);
 
   if(it == states.end())
   {
-    dest_state = new SearchState(c, this);
+    dest_state = new SearchState(c, end->cell);
     states[c] = dest_state;
   }
   else
@@ -142,6 +154,6 @@ void PathSearch::expand(SearchState* src_state, NavCell* c)
   {
     // remove, reset cost and replace, or order will be wrong!
     dest_state->setPrevious(src_state);
-    open.push(dest_state);
+    resort_queue(open);
   }
 }

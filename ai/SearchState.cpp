@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-SearchState::SearchState(NavCell* cell_, PathSearch const* search_) :
-search(search_),
+SearchState::SearchState(NavCell* cell_, NavCell const* goal_) :
+goal(goal_),
 cell(cell_),
 previous(NULL),
 currentCost(0),
@@ -38,11 +38,12 @@ closed(false)
 //! MUTATORS
 //! ----------------------------------------------------------------------------
 
+
 void SearchState::setPrevious(SearchState *previous_)
 {
   previous = previous_;
   currentCost = previous->currentCost + previous->cell->cost;
-  remainingCostEstimate = search->estimateRemainingCost(cell);
+  remainingCostEstimate = estimateCost(cell, goal);
   totalCostEstimate = currentCost + remainingCostEstimate;
 }
 
@@ -55,7 +56,7 @@ bool SearchState::operator<(SearchState const& other) const
   int delta = (int)totalCostEstimate - (int)other.totalCostEstimate;
   if(!delta)
     delta = (int)remainingCostEstimate - (int)other.remainingCostEstimate;
-  return (delta < 0);
+  return (delta > 0);
 }
 
 bool SearchState::operator>(SearchState const& other) const
@@ -63,7 +64,7 @@ bool SearchState::operator>(SearchState const& other) const
   int delta = (int)totalCostEstimate - (int)other.totalCostEstimate;
   if(!delta)
     delta = (int)remainingCostEstimate - (int)other.remainingCostEstimate;
-  return (delta > 0);
+  return (delta < 0);
 }
 
 bool SearchState::operator<=(SearchState const& other) const
@@ -78,7 +79,21 @@ bool SearchState::operator>=(SearchState const& other) const
 
 bool SearchState::operator==(SearchState const& other) const
 {
-  return (search == other.search
-          && cell == other.cell
+  return (cell == other.cell
+          && goal == other.goal
           && previous == other.previous);
+}
+
+//! ----------------------------------------------------------------------------
+//! SUBROUTINES
+//! ----------------------------------------------------------------------------
+
+float SearchState::estimateCost(NavCell const* a, NavCell const* b)
+{
+
+  fV2 remaining_vector = (fV2)(a->grid_position) - (fV2)(b->grid_position);
+  remaining_vector.x *= NavCell::size.x;
+  remaining_vector.y *= NavCell::size.y;
+
+  return remaining_vector.getNorm();
 }

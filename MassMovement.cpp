@@ -37,6 +37,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 using namespace std;
 
+
+//! GLOBAL VARIABLES
+
+static std::deque<NavCell*>* testpath = NULL;
+
 /// CREATION, DESTRUCTION
 
 MassMovement::MassMovement() :
@@ -95,6 +100,11 @@ int MassMovement::startup()
     current_bot = (BrainBot*)current_bot->getNext();
   }
   while(current_bot != first_bot);
+
+
+  // test path
+  testpath = grid.getPath(uV2(0,0), uV2(45,45));
+
 
   // all clear
   return EXIT_SUCCESS;
@@ -185,6 +195,21 @@ void MassMovement::draw()
     while(current_bot != first_bot);
 
     player.render();
+
+    glLineWidth(2.0f);
+    glColor3f(1,1,0);
+    glBegin(GL_LINE_STRIP);
+    for(std::deque<NavCell*>::iterator i = testpath->begin(); i != testpath->end(); i++)
+    {
+      fV2 node = (*i)->grid_position;
+
+       node.x *= NavCell::size.x; node.x += NavCell::size.x*0.5f;
+       node.y *= NavCell::size.y; node.y += NavCell::size.y*0.5f;
+      glVertex3f(node.x, node.y, -15);
+    }
+
+
+    glEnd();
 
   glPopMatrix();
 

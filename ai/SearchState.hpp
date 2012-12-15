@@ -20,12 +20,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "../model/NavCell.hpp"
 
-class SearchState;
-
-#include <vector>
-
-#include "PathSearch.hpp"
-
 class SearchState
 {
   //! NESTING
@@ -44,7 +38,7 @@ friend class PathSearch;
 
   //! ATTRIBUTES
 private:
-  PathSearch const* search;         // the search call object this path is part of
+  NavCell const* goal;
   NavCell* cell;                    // the end cell of this path
   SearchState const* previous;      // previous state in the path back to the start
 
@@ -55,7 +49,7 @@ private:
   //! METHODS
 public:
   // constructors, destructors
-  SearchState(NavCell* cell, PathSearch const* search);
+  SearchState(NavCell* cell, NavCell const* goal);
 
   // mutators
   void setPrevious(SearchState *previous_);
@@ -67,9 +61,11 @@ public:
   bool operator>=(SearchState const& other) const;
   bool operator==(SearchState const& other) const;
 
-};
 
-typedef std::priority_queue<SearchState*, std::vector<SearchState*>, SearchState::compare_t>
-          state_queue_t;
+  //! SUBROUTINES
+private:
+  float estimateCost(NavCell const* a, NavCell const* b);
+
+};
 
 #endif // SEARCHSTATE_HPP_INCLUDED

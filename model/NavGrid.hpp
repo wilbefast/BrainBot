@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef NAVGRID_HPP_INCLUDED
 #define NAVGRID_HPP_INCLUDED
 
-#include <list>
+#include <deque>
 
 #include "../engine/math/V3.hpp"
 #include "../engine/math/Rect.hpp"
@@ -54,7 +54,7 @@ public:
   fV3 getCellPosition(uV2 position) const;
 
   // pathing
-  std::list<NavCell*> getPath(uV2 source, uV2 destination);
+  std::deque<NavCell*>* getPath(uV2 source, uV2 destination);
 
 
   //! not yet implemented

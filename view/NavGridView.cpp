@@ -82,7 +82,7 @@ void NavGridView::draw()
           glMaterialfv(GL_FRONT, GL_DIFFUSE, road_diffuse.front());
           glMaterialfv(GL_FRONT, GL_EMISSION, road_emission.front());
           glMaterialfv(GL_FRONT, GL_SHININESS, &road_shine);
-          //glColor3f(0.4f, 0.3f, 0.3f);
+          glColor3f(0.4f, 0.3f, 0.3f);
           glVertex3fv(vertex.front());
           vertex.y += NavCell::size.y;
           glVertex3fv(vertex.front());
@@ -98,7 +98,7 @@ void NavGridView::draw()
           glMaterialfv(GL_FRONT, GL_DIFFUSE, building_diffuse.front());
           glMaterialfv(GL_FRONT, GL_EMISSION, building_emission.front());
           glMaterialfv(GL_FRONT, GL_SHININESS, &building_shine);
-          //glColor3f(0.7f, 0.7f, 0.8f);
+          glColor3f(0.7f, 0.7f, 0.8f);
           // left face
           glVertex3fv(vertex.front());
           vertex.y += NavCell::size.y;

@@ -3,6 +3,8 @@
 
 #include "BrainBot.hpp"
 
+#include <list>
+
 class BrainBotKing : public BrainBot
 {
 public:
