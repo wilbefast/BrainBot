@@ -21,7 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../engine/math/opengl_matrix.hpp"
 
 #define PITCH 30
-#define MAX_Z -30
+#define MIN_Z 30
+#define MAX_Z 1000
 
 #define MAX_SPEED 10.0f
 #define MIN_SPEED 0.01f
@@ -53,7 +54,10 @@ StrategyCamera::~StrategyCamera()
 
 void StrategyCamera::push(fV3 amount)
 {
-  speed -= amount*0.3f;
+  // accelerate
+  speed -= amount*0.3f * transform[3].z / (float)(MAX_Z-MIN_Z);
+
+  // cap speed
   for(int i = 0; i < 3; i++)
   {
     if(speed[i] < -MAX_SPEED) speed[i] = -MAX_SPEED;
@@ -63,14 +67,22 @@ void StrategyCamera::push(fV3 amount)
 
 void StrategyCamera::update_position()
 {
+  // move
   addTranslation(transform, speed);
 
+  // slow down and stop
   speed *= 0.9f;
   for(int i = 0; i < 3; i++)
   {
     if(speed[i] < 0 && speed[i] > -MIN_SPEED) speed[i] = 0;
     else if(speed[i] > 0 && speed[i] < MIN_SPEED) speed[i] = 0;
   }
+
+  // don't got through the ground
+  if(transform[3].z < MIN_Z)
+    transform[3].z = MIN_Z;
+  else if(transform[3].z > MAX_Z)
+    transform[3].z = MAX_Z;
 }
 
 //! ----------------------------------------------------------------------------

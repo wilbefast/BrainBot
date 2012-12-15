@@ -23,8 +23,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 PathSearch::PathSearch(NavGrid *grid_, uV2 start_coord, uV2 end_coord) :
 grid(grid_),
-start(new SearchState(&(grid->cells[start_coord.y][start_coord.x]), this)),
-end(new SearchState(&(grid->cells[end_coord.y][end_coord.x]), this)),
+start(new SearchState(grid->cells[start_coord.y][start_coord.x], this)),
+end(new SearchState(grid->cells[end_coord.y][end_coord.x], this)),
 fallback_plan(start),
 states(),
 open(),
@@ -42,11 +42,14 @@ has_result(false)
 
 unsigned int PathSearch::estimateRemainingCost(NavCell const* cell) const
 {
-  //! TODO
-  return 0;
+  fV3 remaining_vector =
+    grid->getCellPosition(cell->grid_position)
+    - grid->getCellPosition(end->cell->grid_position);
+
+  return remaining_vector.getNorm();
 }
 
-path *PathSearch::getPath()
+path* PathSearch::getPath()
 {
   path *result = new path();
 
@@ -60,3 +63,69 @@ path *PathSearch::getPath()
   }
   return result;
 }
+
+//! ----------------------------------------------------------------------------
+//! SUBROUTINES
+//! ----------------------------------------------------------------------------
+
+/*bool PathSearch::search()
+{
+  while (!open.empty())
+  {
+    // expand from the open state that is currently cheapest
+    SearchState x = open.top(); open.pop();
+
+    // have we reached the end?
+    if (x == (*end))
+      return true;
+
+    // try to expand each neighbour
+
+    ///! TODO
+    for (Tile t : grid.getNeighbours(x.tile, false))
+      if(t.isPathable())
+        expand(x, t);
+
+    // remember to close x now that all connections have been expanded
+    x.closed = true;
+
+    // keep the best closed state, just in case the target is inaccessible
+    if(estimateCost(x->tile) < estimateCost(fallback_plan->tile))
+      fallback_plan = x;
+  }
+
+  // fail!
+  return false;
+}
+
+void PathSearch::expand(SearchState src_state, Tile t)
+{
+  SearchState dest_state = states.get(t);
+
+  // create states as needed
+  if(dest_state == null)
+  {
+    dest_state = new SearchState(t, this);
+    states.put(t, dest_state);
+  }
+
+  // closed states are no longer under consideration
+  else if (dest_state.closed)
+    return;
+
+  // states not yet opened always link back to x
+  if (!open.contains(dest_state))
+  {
+    // set cost before adding to heap, or order will be wrong!
+    dest_state.setParent(src_state);
+    open.add(dest_state);
+  }
+  // states already open link back to x only if it's better
+  else if (src_state.currentCost < dest_state.currentCost)
+  {
+    // remove, reset cost and replace, or order will be wrong!
+    open.remove(dest_state);
+    dest_state.setParent(src_state);
+    open.add(dest_state);
+  }
+}*/

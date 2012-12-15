@@ -52,6 +52,7 @@ public:
   bool operator>(SearchState const& other) const;
   bool operator<=(SearchState const& other) const;
   bool operator>=(SearchState const& other) const;
+  bool operator==(SearchState const& other) const;
 
 };
 

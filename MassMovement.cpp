@@ -27,7 +27,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "model/GameObject.hpp"
 
 #define PAN_SPEED 20
-#define ZOOM_SPEED 90
+#define ZOOM_SPEED 200
 
 #define GRID_N_ROWS 64
 #define GRID_N_COLS 64

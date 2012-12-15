@@ -26,14 +26,15 @@ origin(origin_),
 n_cells(n_cells_)
 {
   // allocate memory for cells
-  cells = new NavCell*[n_cells.y];
+  cells = new NavCell**[n_cells.y];
   for(unsigned int r = 0; r < n_cells.y; r++)
-    cells[r] = new NavCell[n_cells.x];
+    cells[r] = new NavCell*[n_cells.x];
 
   // set values of cells
-  for(size_t row = 0; row < n_cells.y; row++)
-  for(size_t col = 0; col < n_cells.x; col++)
-    cells[row][col].obstacle = ((rand()%5 == 1));
+  uV2 grid_pos;
+  for(grid_pos.y = 0; grid_pos.y < n_cells.y; grid_pos.y++)
+  for(grid_pos.x = 0; grid_pos.x < n_cells.x; grid_pos.x++)
+    cells[grid_pos.y][grid_pos.x] = new NavCell(grid_pos, (rand()%5 == 1));
 }
 
 NavGrid::~NavGrid()
@@ -56,7 +57,7 @@ fV3 NavGrid::getOrigin() const
 
 NavCell const& NavGrid::getCell(uV2 grid_position) const
 {
-	return cells[grid_position.y][grid_position.x];
+	return *(cells[grid_position.y][grid_position.x]);
 }
 
 uV2 const& NavGrid::getNCells() const

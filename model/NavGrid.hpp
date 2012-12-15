@@ -37,7 +37,7 @@ friend class PathSearch;
 private:
   fV3 origin;
   uV2 n_cells;
-  NavCell **cells;
+  NavCell ***cells;
 
   //! METHODS
 public:

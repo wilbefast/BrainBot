@@ -73,3 +73,10 @@ bool SearchState::operator>=(SearchState const& other) const
 {
   return !((*this) < other);
 }
+
+bool SearchState::operator==(SearchState const& other) const
+{
+  return (search == other.search
+          && cell == other.cell
+          && previous == other.previous);
+}

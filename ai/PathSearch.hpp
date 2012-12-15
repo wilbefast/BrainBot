@@ -50,6 +50,12 @@ public:
   // query
   unsigned int estimateRemainingCost(NavCell const*) const;
   path* getPath();
+
+
+  //! SUBROUTINES
+private:
+  bool search();
+  void expand();
 };
 
 

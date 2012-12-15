@@ -21,13 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! CONSTANTS
 //! ----------------------------------------------------------------------------
 
-const fV3 NavCell::size = fV3(32, 32, 32);
+const fV3 NavCell::size = fV3(32, 32, 64);
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-NavCell::NavCell(bool obstacle_, unsigned int cost_) :
+NavCell::NavCell(uV2 grid_position_, bool obstacle_, unsigned int cost_) :
+grid_position(grid_position_),
 cost(cost_),
 obstacle(obstacle_)
 {

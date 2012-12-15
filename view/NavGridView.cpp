@@ -50,15 +50,64 @@ void NavGridView::draw()
       int obstructed = (navGrid->getCell(grid_pos).obstacle) ? 1 : 0;
 
       // Draw the tiles
-      glColor3f(obstructed, 0.0f, 1.0f-obstructed);
-      glBegin(GL_TRIANGLE_FAN);
-        glVertex3fv(vertex.front());
-        vertex.y += NavCell::size.y;
-        glVertex3fv(vertex.front());
-        vertex.x += NavCell::size.x;
-        glVertex3fv(vertex.front());
-        vertex.y -= NavCell::size.y;
-        glVertex3fv(vertex.front());
+      glBegin(GL_QUADS);
+        if(!obstructed)
+        {
+          glColor3f(0.4f, 0.3f, 0.3f);
+          glVertex3fv(vertex.front());
+          vertex.y += NavCell::size.y;
+          glVertex3fv(vertex.front());
+          vertex.x += NavCell::size.x;
+          glVertex3fv(vertex.front());
+          vertex.y -= NavCell::size.y;
+          glVertex3fv(vertex.front());
+        }
+        else
+        {
+          glColor3f(0.7f, 0.7f, 0.8f);
+          // left face
+          glVertex3fv(vertex.front());
+          vertex.y += NavCell::size.y;
+          glVertex3fv(vertex.front());
+          vertex.z -= NavCell::size.z;
+          glVertex3fv(vertex.front());
+          vertex.y -= NavCell::size.y;
+          glVertex3fv(vertex.front());
+          // back face
+          glVertex3fv(vertex.front());
+          vertex.x += NavCell::size.x;
+          glVertex3fv(vertex.front());
+          vertex.z += NavCell::size.z;
+          glVertex3fv(vertex.front());
+          vertex.x -= NavCell::size.x;
+          glVertex3fv(vertex.front());
+          vertex.x += NavCell::size.x;
+          // right face
+          glVertex3fv(vertex.front());
+          vertex.z -= NavCell::size.z;
+          glVertex3fv(vertex.front());
+          vertex.y += NavCell::size.y;
+          glVertex3fv(vertex.front());
+          vertex.z += NavCell::size.z;
+          glVertex3fv(vertex.front());
+          // front face
+          glVertex3fv(vertex.front());
+          vertex.z -= NavCell::size.z;
+          glVertex3fv(vertex.front());
+          vertex.x -= NavCell::size.x;
+          glVertex3fv(vertex.front());
+          vertex.z += NavCell::size.z;
+          glVertex3fv(vertex.front());
+          vertex.z -= NavCell::size.z;
+          // top face
+          glVertex3fv(vertex.front());
+          vertex.x += NavCell::size.x;
+          glVertex3fv(vertex.front());
+          vertex.y -= NavCell::size.y;
+          glVertex3fv(vertex.front());
+          vertex.x -= NavCell::size.x;
+          glVertex3fv(vertex.front());
+        }
       glEnd();
     }
   }
