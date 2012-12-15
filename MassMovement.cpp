@@ -69,17 +69,22 @@ int MassMovement::startup()
   ASSERT(GameState::startup() == EXIT_SUCCESS,
         "MassMovement starting GameState");
 
-  BrainBot::load_texture();
-  BrainBotKing::load_texture();
-
   // load the 3D scene
   draw::use3D();
   MeshManager::getInstance()->startup();
 
+  // grab assets for objects
+  BrainBot::load_assets();
+  BrainBotKing::load_assets();
+
+
+
   // set up the lighting
   glShadeModel(GL_SMOOTH);
-  float light_pos[3] = { 300, 300, -1000 };
+  GLfloat light_pos[3] = { 300, 300, -1000 };
   glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
+  GLfloat lmodel_ambient[] = { 0.2, 0.2, 0.2, 1.0 };
+  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
 
   // create the objects
   fV2 p(100 + rand()%200, 100 + rand()%200);

@@ -322,9 +322,8 @@ void Mesh3D::draw()
   do
 	{
 		// activate the current group's material
-		bool bink;
 		if(current_group->material)
-       bink=  current_group->material->activate();
+       current_group->material->activate();
 
     if(current_group->smooth)
       glShadeModel(GL_SMOOTH);
@@ -339,19 +338,6 @@ void Mesh3D::draw()
 			{
 				// cache the current triangle
 				face_t const& face = faces[face_i];
-
-        static bool first = true;
-        if(first && bink)
-        {
-          cout << face.uv_i << endl;
-
-          for(size_t v_i = 0; v_i < 3; v_i++)
-            cout << texture_coordinates[face.uv_i[v_i]] << endl;
-
-          first = false;
-        }
-
-
 				for(size_t v_i = 0; v_i < 3; v_i++)
 				{
 				  // vertex position

@@ -25,7 +25,7 @@ static Colour bot_emissive(1.0f, 1.0f, 1.0f);
 //! FUNCTIONS
 //! ----------------------------------------------------------------------------
 
-void BrainBot::load_texture()
+void BrainBot::load_assets()
 {
   t= GraphicsManager::getInstance()->get_texture("alien_bot1");
 }

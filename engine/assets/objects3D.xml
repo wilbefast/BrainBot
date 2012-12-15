@@ -3,5 +3,6 @@
   <mesh_list>
     <mesh name="knight"/>
     <mesh name="trojan"/>
+    <mesh name="spider"/>
   </mesh_list>	
 </objects3D>

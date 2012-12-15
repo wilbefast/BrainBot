@@ -140,7 +140,7 @@ Mesh3D* MeshManager::get_mesh(const char* name)
   MeshI i = meshes.find(hash);
   // make sure that it is found
   if(i == meshes.end())
-    WARN_RTN("MeshManager::get_texture invalid identifier", name, NULL);
+    WARN_RTN("MeshManager::get_mesh invalid identifier", name, NULL);
 
   // return the texture we recovered
   return (*i).second;

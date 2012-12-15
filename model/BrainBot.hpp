@@ -10,7 +10,7 @@
 class BrainBot : public IntrusiveLinked
 {
 public:
-  static void load_texture();
+  static void load_assets();
 
   // attributes
   fV2 position, speed;

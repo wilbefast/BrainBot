@@ -8,7 +8,7 @@
 class BrainBotKing : public BrainBot
 {
 public:
-  static void load_texture();
+  static void load_assets();
 
 
   /* ATTRIBUTES */
@@ -21,6 +21,7 @@ public:
   // override
   void move(fV2 amount, NavGrid* grid);
   Texture* get_texture();
+  //void render();
 };
 
 #endif // BRAINBOTKING_HPP_INCLUDED
