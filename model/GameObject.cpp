@@ -31,8 +31,7 @@ static Texture* t = NULL;
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-GameObject::GameObject(fV3 position, const char* mesh_name) :
-bbox(fV4(10, 10, 10)) //! FIXME
+GameObject::GameObject(fV3 position, const char* mesh_name)
 {
   if(t == NULL)
     t = GraphicsManager::getInstance()->get_texture("alien_bot2");

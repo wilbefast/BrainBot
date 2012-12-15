@@ -32,7 +32,6 @@ class GameObject : public IntrusiveLinked
 //! ATTRIBUTES
 protected:
   fM44 transform; // position, rotation
-  BoundingBox bbox;
   Mesh3D* mesh;
 
 //! METHODS

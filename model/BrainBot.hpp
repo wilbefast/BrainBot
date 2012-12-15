@@ -1,11 +1,13 @@
-#ifndef PLAYER_HPP_INCLUDED
-#define PLAYER_HPP_INCLUDED
+#ifndef BRAINBOT_HPP_INCLUDED
+#define BRAINBOT_HPP_INCLUDED
 
 #include "../engine/math/V2.hpp"
 
+#include "../engine/utils/IntrusiveLinked.hpp"
+
 #include "NavGrid.hpp"
 
-class Player
+class BrainBot : public IntrusiveLinked
 {
 public:
   static void load_texture();
@@ -16,7 +18,7 @@ private:
   fV2 position, speed;
 
 public:
-  Player(fV2 position_);
+  BrainBot(fV2 position_);
 
   fV2 getPosition() const { return position; }
 
@@ -25,4 +27,4 @@ public:
 
 };
 
-#endif // PLAYER_HPP_INCLUDED
+#endif // BRAINBOT_HPP_INCLUDED

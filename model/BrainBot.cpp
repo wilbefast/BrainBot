@@ -1,4 +1,4 @@
-#include "Player.hpp"
+#include "BrainBot.hpp"
 
 #include "../engine/math/wjd_math.h"
 #include "../engine/math/opengl_matrix.hpp"
@@ -17,16 +17,16 @@
 //! ----------------------------------------------------------------------------
 //! GLOBAL VARIABLES
 //! ----------------------------------------------------------------------------
-static Texture* t = NULL;
+static Texture *t1 = NULL, *t2 = NULL;
 
 //! ----------------------------------------------------------------------------
 //! FUNCTIONS
 //! ----------------------------------------------------------------------------
 
-void Player::load_texture()
+void BrainBot::load_texture()
 {
-  if(!t)
-    t = GraphicsManager::getInstance()->get_texture("alien_bot2");
+  t1 = GraphicsManager::getInstance()->get_texture("alien_bot1");
+  t2 = GraphicsManager::getInstance()->get_texture("alien_bot2");
 }
 
 bool blocked(int x, int y, NavGrid* grid)
@@ -52,7 +52,7 @@ bool blocked(int x, int y, NavGrid* grid)
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTOR
 //! ----------------------------------------------------------------------------
-Player::Player(fV2 position_) :
+BrainBot::BrainBot(fV2 position_) :
 position(position_),
 speed()
 {
@@ -64,7 +64,7 @@ speed()
 //! MUTATORS
 //! ----------------------------------------------------------------------------
 
-void Player::move(fV2 amount, NavGrid* grid)
+void BrainBot::move(fV2 amount, NavGrid* grid)
 {
   ///smooth to collision
 
@@ -120,7 +120,7 @@ void Player::move(fV2 amount, NavGrid* grid)
 
 
 
-void Player::render()
+void BrainBot::render()
 {
   M44<GLfloat> const* mv = getGLMatrix(GL_MODELVIEW_MATRIX);
 
@@ -139,7 +139,7 @@ void Player::render()
               p4 = v4_pos - ox*half_size - oy*half_size;
 
   glColor3f(1.0f, 1.0f, 1.0f);
-  glBindTexture(GL_TEXTURE_2D, t->getHandle());
+  glBindTexture(GL_TEXTURE_2D, t1->getHandle());
   glBegin(GL_TRIANGLE_FAN);
     glTexCoord2f(0, 0);
     glVertex3fv(p1.front());

@@ -46,7 +46,7 @@ grid(GRID_ORIGIN, uV2(GRID_N_COLS, GRID_N_ROWS)),
 gridView(&grid),
 // objects
 player(fV2(20, 20)),
-first_object(NULL),
+first_bot(NULL),
 // camera controls
 camera(),
 left(false),
@@ -65,19 +65,19 @@ int MassMovement::startup()
         "MassMovement starting GameState");
 
 
-  Player::load_texture();
+  BrainBot::load_texture();
 
   // load the 3D scene
   draw::use3D();
   MeshManager::getInstance()->startup();
 
   // create the objects
-  fV3 p(0, 0, -10), d(32, 32, 0);
-  first_object = current_object = new GameObject(p, "trojan");
+  fV2 p(0, 0), d(32, 32);
+  first_bot = current_bot = new BrainBot(p);
   for(int i = 1; i < 10; i++)
   {
     p += d;
-    first_object->newNext(new GameObject(p, "trojan"));
+    first_bot->newNext(new BrainBot(p));
   }
 
   // all clear
@@ -160,13 +160,13 @@ void MassMovement::draw()
     camera.lookThrough();
     gridView.draw();
 
-    /*current_object = first_object;
+    current_bot = first_bot;
     do
     {
-      current_object->draw();
-      current_object = (GameObject*)current_object->getNext();
+      current_bot->render();
+      current_bot = (BrainBot*)current_bot->getNext();
     }
-    while(current_object != first_object);*/
+    while(current_bot != first_bot);
 
     player.render();
 

@@ -285,14 +285,14 @@
 		<Unit filename="utils/IntrusiveLinked.hpp" />
 		<Unit filename="../model/BoundingBox.cpp" />
 		<Unit filename="../model/BoundingBox.hpp" />
+		<Unit filename="../model/BrainBot.cpp" />
+		<Unit filename="../model/BrainBot.hpp" />
 		<Unit filename="../model/GameObject.cpp" />
 		<Unit filename="../model/GameObject.hpp" />
 		<Unit filename="../model/NavCell.cpp" />
 		<Unit filename="../model/NavCell.hpp" />
 		<Unit filename="../model/NavGrid.cpp" />
 		<Unit filename="../model/NavGrid.hpp" />
-		<Unit filename="../model/Player.cpp" />
-		<Unit filename="../model/Player.hpp" />
 		<Unit filename="../view/NavGridView.cpp" />
 		<Unit filename="../view/NavGridView.hpp" />
 		<Unit filename="../view/StrategyCamera.cpp" />
