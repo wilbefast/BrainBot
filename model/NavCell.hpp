@@ -17,10 +17,12 @@ public:
   static const fV3 size;
 
   //! ATTRIBUTES
+public:
+  const bool obstacle;
 private:
   uV2 grid_position;
   unsigned int cost;
-  bool obstacle;
+
 
   //! METHODS
 public:

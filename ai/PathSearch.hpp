@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef PATHSEARCH_HPP_INCLUDED
 #define PATHSEARCH_HPP_INCLUDED
 
+
 #include <map>
 
 #include <queue>
@@ -43,7 +44,7 @@ private:
   NavGrid *grid;
   SearchState *start, *end, *fallback_plan;
   std::map<NavCell*, SearchState*> states;
-  std::priority_queue<SearchStateRef> open;
+  std::priority_queue<SearchState> open;
   bool has_result;
 
   //! METHODS

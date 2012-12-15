@@ -2,6 +2,7 @@
 #define STRATEGYCAMERA_HPP
 
 #include "../engine/math/M44.hpp"
+#include "../engine/math/V2.hpp"
 
 class StrategyCamera
 {
@@ -18,6 +19,7 @@ public:
 
   // mutators
   void push(fV3 amount);
+  void centreOver(fV2 position);
   void update_position();
 
   // opengl

@@ -20,6 +20,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../engine/opengl.h"
 #include "../engine/math/opengl_matrix.hpp"
 
+
+
 #define PITCH 30
 #define MIN_Z 30
 #define MAX_Z 1000
@@ -63,6 +65,12 @@ void StrategyCamera::push(fV3 amount)
     if(speed[i] < -MAX_SPEED) speed[i] = -MAX_SPEED;
     else if(speed[i] > MAX_SPEED) speed[i] = MAX_SPEED;
   }
+}
+
+void StrategyCamera::centreOver(fV2 position)
+{
+  transform[3].x = -position.x;
+  transform[3].y = -position.y;
 }
 
 void StrategyCamera::update_position()

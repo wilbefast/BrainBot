@@ -33,7 +33,7 @@ has_result(false)
   start->totalCostEstimate = estimateRemainingCost(start->cell);
   states[start->cell] = start;
   states[end->cell] = end;
-  open.push(SearchStateRef(start));
+  open.push(*start);
 }
 
 //! ----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ path* PathSearch::getPath()
 //! ----------------------------------------------------------------------------
 //! SUBROUTINES
 //! ----------------------------------------------------------------------------
-
+/*
 bool PathSearch::search()
 {
   while (!open.empty())
@@ -146,4 +146,4 @@ void PathSearch::expand(SearchState* src_state, NavCell* c)
     dest_state.setParent(src_state);
     open.add(dest_state);
   }*/
-}
+//}

@@ -22,8 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! ----------------------------------------------------------------------------
 
 NavGrid::NavGrid(fV3 origin_, uV2 n_cells_) :
-origin(origin_),
-n_cells(n_cells_)
+n_cells(n_cells_),
+origin(origin_)
 {
   // allocate memory for cells
   cells = new NavCell**[n_cells.y];

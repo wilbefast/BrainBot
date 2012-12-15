@@ -22,9 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine/scenes/GameState.hpp"
 
 #include "model/NavGrid.hpp"
+#include "model/Player.hpp"
 
 #include "view/NavGridView.hpp"
 #include "view/StrategyCamera.hpp"
+
 
 class MassMovement : public GameState
 {
@@ -35,6 +37,7 @@ private:
   NavGridView gridView;
 
   // objects
+  Player player;
   GameObject *first_object, *current_object;
 
   // camera controls

@@ -26,6 +26,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "model/GameObject.hpp"
 
+#include "engine/math/V2.hpp"
+
 #define PAN_SPEED 20
 #define ZOOM_SPEED 200
 
@@ -43,6 +45,7 @@ GameState(),
 grid(GRID_ORIGIN, uV2(GRID_N_COLS, GRID_N_ROWS)),
 gridView(&grid),
 // objects
+player(fV2(20, 20)),
 first_object(NULL),
 // camera controls
 camera(),
@@ -60,6 +63,9 @@ int MassMovement::startup()
   // basic startup
   ASSERT(GameState::startup() == EXIT_SUCCESS,
         "MassMovement starting GameState");
+
+
+  Player::load_texture();
 
   // load the 3D scene
   draw::use3D();
@@ -95,19 +101,30 @@ int MassMovement::update(float delta)
   // move camera
   static fV3 camera_move;
     camera_move = fV3(0, 0, 0);
+  static fV2 player_move;
+    player_move = fV2(0, 0);
 
   if(up) camera_move.z -= ZOOM_SPEED;
   if(down) camera_move.z += ZOOM_SPEED;
-  if(forward) camera_move.y -= PAN_SPEED;
+
+  /*if(forward) camera_move.y -= PAN_SPEED;
   if(backward) camera_move.y += PAN_SPEED;
   if(left) camera_move.x -= PAN_SPEED;
-  if(right) camera_move.x += PAN_SPEED;
+  if(right) camera_move.x += PAN_SPEED;*/
+
+  if(forward) player_move.y -= 1;
+  if(backward) player_move.y += 1;
+  if(left) player_move.x -= 1;
+  if(right) player_move.x += 1;
 
   // Apply the camera movement
   camera.push(camera_move);
   up = down = false;
-
   camera.update_position();
+
+  // Move the player
+  player.move(player_move, &grid);
+  camera.centreOver(player.getPosition());
 
   // Update dynamic game objects
   int result = GameState::update(delta);
@@ -143,13 +160,15 @@ void MassMovement::draw()
     camera.lookThrough();
     gridView.draw();
 
-    current_object = first_object;
+    /*current_object = first_object;
     do
     {
       current_object->draw();
       current_object = (GameObject*)current_object->getNext();
     }
-    while(current_object != first_object);
+    while(current_object != first_object);*/
+
+    player.render();
 
   glPopMatrix();
 

@@ -152,6 +152,8 @@
 		<Unit filename="../ai/PathSearch.hpp" />
 		<Unit filename="../ai/SearchState.cpp" />
 		<Unit filename="../ai/SearchState.hpp" />
+		<Unit filename="../ai/SearchStateRef.cpp" />
+		<Unit filename="../ai/SearchStateRef.hpp" />
 		<Unit filename="Android.mk" />
 		<Unit filename="Application.cpp" />
 		<Unit filename="Application.hpp" />
@@ -289,6 +291,8 @@
 		<Unit filename="../model/NavCell.hpp" />
 		<Unit filename="../model/NavGrid.cpp" />
 		<Unit filename="../model/NavGrid.hpp" />
+		<Unit filename="../model/Player.cpp" />
+		<Unit filename="../model/Player.hpp" />
 		<Unit filename="../view/NavGridView.cpp" />
 		<Unit filename="../view/NavGridView.hpp" />
 		<Unit filename="../view/StrategyCamera.cpp" />

@@ -34,9 +34,10 @@ friend class NavGridView;
 friend class PathSearch;
 
   //! ATTRIBUTES
+public:
+    const uV2 n_cells;
 private:
   fV3 origin;
-  uV2 n_cells;
   NavCell ***cells;
 
   //! METHODS

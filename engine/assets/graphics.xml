@@ -2,6 +2,7 @@
 <graphics>
   <texture_list>
     <texture name="windows" />
+    <texture name="alien_bot" />
     <texture name="alien_bot2" />
   </texture_list>
 </graphics>

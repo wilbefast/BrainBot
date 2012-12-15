@@ -28,9 +28,9 @@ const fV3 NavCell::size = fV3(32, 32, 64);
 //! ----------------------------------------------------------------------------
 
 NavCell::NavCell(uV2 grid_position_, bool obstacle_, unsigned int cost_) :
+obstacle(obstacle_),
 grid_position(grid_position_),
-cost(cost_),
-obstacle(obstacle_)
+cost(cost_)
 {
   //ctor
 }
