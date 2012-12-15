@@ -69,7 +69,6 @@ int MassMovement::startup()
   ASSERT(GameState::startup() == EXIT_SUCCESS,
         "MassMovement starting GameState");
 
-
   BrainBot::load_texture();
   BrainBotKing::load_texture();
 
@@ -105,6 +104,24 @@ int MassMovement::startup()
   // test path
   testpath = grid.getPath(uV2(0,0), uV2(45,45));
 
+    /*column = new ColumnFormation(uV2(2, 8));
+    column->setSpotSize(fV2(30.0f, 30.0f));
+    group.setFormation(column);
+
+    fV2 p(0, 0), d(32, 32);
+    first_bot = current_bot = new BrainBot(p);
+    group.setLeader(first_bot);
+
+
+    for(int i = 1; i < 17; i++) {
+        p += d;
+        BrainBot* newbie = new BrainBot(p);
+        group.addMember(newbie);
+        first_bot->newNext(newbie);
+    }
+
+    group.assembleFormation();
+	*/
 
   // all clear
   return EXIT_SUCCESS;

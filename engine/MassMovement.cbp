@@ -152,7 +152,6 @@
 		<Unit filename="../ai/PathSearch.hpp" />
 		<Unit filename="../ai/SearchState.cpp" />
 		<Unit filename="../ai/SearchState.hpp" />
-		<Unit filename="../ai/SearchStateRef.cpp" />
 		<Unit filename="../ai/SearchStateRef.hpp" />
 		<Unit filename="Android.mk" />
 		<Unit filename="Application.cpp" />
@@ -287,6 +286,8 @@
 		<Unit filename="../model/BoundingBox.hpp" />
 		<Unit filename="../model/BrainBot.cpp" />
 		<Unit filename="../model/BrainBot.hpp" />
+		<Unit filename="../model/BrainBotKing.cpp" />
+		<Unit filename="../model/BrainBotKing.hpp" />
 		<Unit filename="../model/GameObject.cpp" />
 		<Unit filename="../model/GameObject.hpp" />
 		<Unit filename="../model/NavCell.cpp" />

@@ -30,7 +30,7 @@ void BrainBot::load_texture()
   t= GraphicsManager::getInstance()->get_texture("alien_bot1");
 }
 
-bool blocked(int x, int y, NavGrid* grid)
+bool blocked(float x, float y, NavGrid* grid)
 {
   if(x < HSIZE || y < HSIZE || x >= (int)grid->n_cells.x*NavCell::size.x - HSIZE
                     || y >= (int)grid->n_cells.y*NavCell::size.y - HSIZE)
@@ -64,6 +64,11 @@ speed()
 //! ----------------------------------------------------------------------------
 //! MUTATORS
 //! ----------------------------------------------------------------------------
+
+void BrainBot::setPosition(fV2 position_)
+{
+  position = position_;
+}
 
 void BrainBot::move(fV2 amount, NavGrid* grid)
 {

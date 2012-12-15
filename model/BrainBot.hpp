@@ -12,14 +12,18 @@ class BrainBot : public IntrusiveLinked
 public:
   static void load_texture();
 
-
+  // attributes
   fV2 position, speed;
 
+  // constructors
   BrainBot(fV2 position_);
 
+  // accessors
   fV2 getPosition() const { return position; }
 
-  virtual void move(fV2 amount, NavGrid* grid);
+  // mutators
+  void setPosition(fV2 position_);
+  void move(fV2 amount, NavGrid* grid);
   void render();
 
   virtual Texture* get_texture();

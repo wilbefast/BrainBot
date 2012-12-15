@@ -26,7 +26,7 @@ void BrainBotKing::load_texture()
 
 void attract(BrainBotKing* king, BrainBot* minion)
 {
-  fV2 to_me = king->position - minion->position;
+  fV2 to_me = king->getPosition() - minion->getPosition();
 
   if(to_me.getNorm2() > 64*64)
     minion->speed += to_me*0.03f;
