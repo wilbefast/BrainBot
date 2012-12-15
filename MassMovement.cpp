@@ -66,7 +66,7 @@ int MassMovement::startup()
   MeshManager::getInstance()->startup();
 
   // create the objects
-  fV3 p(0, 0, 10), d(32, 32, 0);
+  fV3 p(0, 0, -10), d(32, 32, 0);
   first_object = current_object = new GameObject(p, "trojan");
   for(int i = 1; i < 10; i++)
   {
@@ -143,7 +143,6 @@ void MassMovement::draw()
     camera.lookThrough();
     gridView.draw();
 
-    glColor3f(0, 1, 0);
     current_object = first_object;
     do
     {

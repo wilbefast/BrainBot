@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "M44.hpp"
 
 void printGLMatrix(GLenum which_matrix);
+M44<GLfloat> const* getGLMatrix(GLenum which_matrix);
 void applyTransform(M44<GLfloat> const& transform);
 
 void addTranslation(M44<GLfloat>& transform, fV3 trans);

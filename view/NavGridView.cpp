@@ -17,9 +17,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "../view/NavGridView.hpp"
 
+#include "../engine/io/GraphicsManager.hpp"
+
 #include "../engine/opengl.h"
 
 #include <stdio.h>
+
+//! ----------------------------------------------------------------------------
+//! GLOBAL VARIABLES
+//! ----------------------------------------------------------------------------
+
+static Texture* window_t = NULL;
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
@@ -39,6 +47,9 @@ NavGridView::~NavGridView()
 
 void NavGridView::draw()
  {
+   if(window_t == NULL)
+     window_t = GraphicsManager::getInstance()->get_texture("windows");
+
   static uV2 grid_pos;
   for(grid_pos.x = 0; grid_pos.x < navGrid->n_cells.x; grid_pos.x++)
   {
@@ -91,14 +102,20 @@ void NavGridView::draw()
           vertex.z += NavCell::size.z;
           glVertex3fv(vertex.front());
           // front face
-          glVertex3fv(vertex.front());
+          glBindTexture(GL_TEXTURE_2D, window_t->getHandle());
+            glTexCoord2f(1,1);
+            glVertex3fv(vertex.front());
           vertex.z -= NavCell::size.z;
-          glVertex3fv(vertex.front());
+            glTexCoord2f(1,0);
+            glVertex3fv(vertex.front());
           vertex.x -= NavCell::size.x;
-          glVertex3fv(vertex.front());
+            glTexCoord2f(0,0);
+            glVertex3fv(vertex.front());
           vertex.z += NavCell::size.z;
-          glVertex3fv(vertex.front());
+            glTexCoord2f(0,1);
+            glVertex3fv(vertex.front());
           vertex.z -= NavCell::size.z;
+          glBindTexture(GL_TEXTURE_2D, 0);
           // top face
           glVertex3fv(vertex.front());
           vertex.x += NavCell::size.x;

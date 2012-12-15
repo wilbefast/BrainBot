@@ -38,6 +38,13 @@ void printGLMatrix(GLenum which_matrix)
   cout << m << endl;
 }
 
+M44<GLfloat> const* getGLMatrix(GLenum which_matrix)
+{
+  glGetFloatv(which_matrix, a);
+  m.importArray(a);
+  return &m;
+}
+
 void applyTransform(M44<GLfloat> const& transform)
 {
   transform.exportArray(a);

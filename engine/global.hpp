@@ -21,8 +21,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "math/Rect.hpp"
 
-#define WINDOW_DEFAULT_W 640    // size used by Desktop version
-#define WINDOW_DEFAULT_H 480
+#define WINDOW_DEFAULT_W 800    // size used by Desktop version
+#define WINDOW_DEFAULT_H 640
 #define MAX_FPS 30
 #define APP_NAME "Arrogance"
 
