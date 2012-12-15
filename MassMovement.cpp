@@ -74,8 +74,8 @@ int MassMovement::startup() {
 
     // create the objects
 
-    column = new ColumnFormation(uV2(4, 4));
-    column->setSpotSize(fV2(20.0f, 20.0f));
+    column = new ColumnFormation(uV2(2, 8));
+    column->setSpotSize(fV2(30.0f, 30.0f));
     group.setFormation(column);
 
     fV2 p(0, 0), d(32, 32);
@@ -83,7 +83,7 @@ int MassMovement::startup() {
     group.setLeader(first_bot);
 
 
-    for(int i = 1; i < 10; i++) {
+    for(int i = 1; i < 17; i++) {
         p += d;
         BrainBot* newbie = new BrainBot(p);
         group.addMember(newbie);

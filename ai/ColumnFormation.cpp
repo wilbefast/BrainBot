@@ -12,11 +12,12 @@ ColumnFormation::~ColumnFormation() {
 uV2 ColumnFormation::assignPosition(BrainBot* member) {
     uV2 newRelativePosition;
 
-    if(lastPositionAssigned.x == 0 && lastPositionAssigned.y == 0) {
-        newRelativePosition = lastPositionAssigned;
+    if(lastPositionAssigned.x == 666 && lastPositionAssigned.y == 666) {
+        newRelativePosition = uV2(0, 0);
     } else {
-        if(lastPositionAssigned.x == size.x) {
-            newRelativePosition = uV2(0, lastPositionAssigned.y + 1);
+        if(lastPositionAssigned.x == size.x - 1) {
+            lastPositionAssigned.x = 0;
+            newRelativePosition = uV2(lastPositionAssigned.x, lastPositionAssigned.y + 1);
         } else {
             newRelativePosition = uV2(lastPositionAssigned.x + 1, lastPositionAssigned.y);
         }
