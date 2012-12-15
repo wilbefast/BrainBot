@@ -283,6 +283,7 @@
 		<Unit filename="utils/Bounded.inl" />
 		<Unit filename="utils/IntrusiveLinked.cpp" />
 		<Unit filename="utils/IntrusiveLinked.hpp" />
+		<Unit filename="../include/Group.h" />
 		<Unit filename="../model/BoundingBox.cpp" />
 		<Unit filename="../model/BoundingBox.hpp" />
 		<Unit filename="../model/BrainBot.cpp" />
@@ -293,6 +294,7 @@
 		<Unit filename="../model/NavCell.hpp" />
 		<Unit filename="../model/NavGrid.cpp" />
 		<Unit filename="../model/NavGrid.hpp" />
+		<Unit filename="../src/Group.cpp" />
 		<Unit filename="../view/NavGridView.cpp" />
 		<Unit filename="../view/NavGridView.hpp" />
 		<Unit filename="../view/StrategyCamera.cpp" />

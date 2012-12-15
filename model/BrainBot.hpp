@@ -14,7 +14,7 @@ public:
 
 
 
-private:
+protected:
   fV2 position, speed;
 
 public:
@@ -22,6 +22,8 @@ public:
 
   fV2 getPosition() const { return position; }
 
+  //
+  void setPosition(fV2 position_);
   void move(fV2 amount, NavGrid* grid);
   void render();
 

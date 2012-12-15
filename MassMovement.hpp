@@ -27,6 +27,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "view/NavGridView.hpp"
 #include "view/StrategyCamera.hpp"
 
+#include "ai/ColumnFormation.hpp"
+#include "ai/Group.hpp"
+
 
 class MassMovement : public GameState
 {
@@ -39,6 +42,9 @@ private:
   // objects
   BrainBot player;
   BrainBot *first_bot, *current_bot;
+
+  Group group;
+  ColumnFormation* column;
 
   // camera controls
   StrategyCamera camera;

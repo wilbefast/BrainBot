@@ -102,7 +102,7 @@ void NavGridView::draw()
           vertex.z += NavCell::size.z;
           glVertex3fv(vertex.front());
           // front face
-          glBindTexture(GL_TEXTURE_2D, window_t->getHandle());
+          //glBindTexture(GL_TEXTURE_2D, window_t->getHandle());
             glTexCoord2f(1,1);
             glVertex3fv(vertex.front());
           vertex.z -= NavCell::size.z;
@@ -115,7 +115,7 @@ void NavGridView::draw()
             glTexCoord2f(0,1);
             glVertex3fv(vertex.front());
           vertex.z -= NavCell::size.z;
-          glBindTexture(GL_TEXTURE_2D, 0);
+          //glBindTexture(GL_TEXTURE_2D, 0);
           // top face
           glVertex3fv(vertex.front());
           vertex.x += NavCell::size.x;

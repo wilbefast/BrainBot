@@ -47,6 +47,7 @@ gridView(&grid),
 // objects
 player(fV2(20, 20)),
 first_bot(NULL),
+group(fV2(50, 50), &grid),
 // camera controls
 camera(),
 left(false),
@@ -58,30 +59,41 @@ backward(false)
 {
 }
 
-int MassMovement::startup()
-{
-  // basic startup
-  ASSERT(GameState::startup() == EXIT_SUCCESS,
+int MassMovement::startup() {
+    // basic startup
+    ASSERT(GameState::startup() == EXIT_SUCCESS,
         "MassMovement starting GameState");
 
+    BrainBot::load_texture();
 
-  BrainBot::load_texture();
 
-  // load the 3D scene
-  draw::use3D();
-  MeshManager::getInstance()->startup();
+    // load the 3D scene
+    draw::use3D();
+    MeshManager::getInstance()->startup();
 
-  // create the objects
-  fV2 p(0, 0), d(32, 32);
-  first_bot = current_bot = new BrainBot(p);
-  for(int i = 1; i < 10; i++)
-  {
-    p += d;
-    first_bot->newNext(new BrainBot(p));
-  }
 
-  // all clear
-  return EXIT_SUCCESS;
+    // create the objects
+
+    column = new ColumnFormation(uV2(4, 4));
+    column->setSpotSize(fV2(20.0f, 20.0f));
+    group.setFormation(column);
+
+    fV2 p(0, 0), d(32, 32);
+    first_bot = current_bot = new BrainBot(p);
+    group.setLeader(first_bot);
+
+
+    for(int i = 1; i < 10; i++) {
+        p += d;
+        BrainBot* newbie = new BrainBot(p);
+        group.addMember(newbie);
+        first_bot->newNext(newbie);
+    }
+
+    group.assembleFormation();
+
+    // all clear
+    return EXIT_SUCCESS;
 }
 
 int MassMovement::shutdown()
