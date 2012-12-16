@@ -32,12 +32,14 @@ origin(origin_)
   for(unsigned int r = 0; r < n_cells.y; r++)
     cells[r] = new NavCell*[n_cells.x];
 
-  // set values of cells
+  // allocate memory for cells
   uV2 grid_pos;
   for(grid_pos.y = 0; grid_pos.y < n_cells.y; grid_pos.y++)
   for(grid_pos.x = 0; grid_pos.x < n_cells.x; grid_pos.x++)
     cells[grid_pos.y][grid_pos.x] = new NavCell(grid_pos, true);
-  dig_maze(uV2(10,10));
+
+  // dig out a maze
+  dig_maze(uV2(n_cells.x/2, n_cells.y/2));
 }
 
 NavGrid::~NavGrid()

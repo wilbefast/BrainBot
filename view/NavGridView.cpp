@@ -38,9 +38,12 @@ static float road_shine = 60;
 
 static Colour building_ambient(0.4f, 0.3f, 0.3f),
               building_diffuse(0.7f, 0.6f, 0.6f),
-              building_specular(0.1f, 0.1f, 0.1f),
-              building_emission(0.0f, 0.0f, 0.0f);
+              building_emission(0.0f, 0.0f, 0.0f),
+              building_specular(0.0f, 0.0f, 0.0f);
 static float building_shine = 128;
+
+static Colour roof_ambient(0,0,0),//(0.4f, 0.2f, 0.2f),
+              roof_diffuse(0.4f, 0.2f, 0.2f);
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
@@ -139,6 +142,8 @@ void NavGridView::draw()
             glVertex3fv(vertex.front());
           vertex.z -= NavCell::size.z;
           //glBindTexture(GL_TEXTURE_2D, 0);
+          glMaterialfv(GL_FRONT, GL_AMBIENT, roof_ambient.front());
+          glMaterialfv(GL_FRONT, GL_DIFFUSE, roof_diffuse.front());
           // top face
           glVertex3fv(vertex.front());
           vertex.x += NavCell::size.x;

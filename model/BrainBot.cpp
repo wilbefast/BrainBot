@@ -10,8 +10,8 @@
 
 #include <iostream>
 
-#define SIZE 10
-#define HSIZE 5
+#define SIZE 32
+#define HSIZE 16
 
 
 //! ----------------------------------------------------------------------------

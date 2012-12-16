@@ -50,7 +50,7 @@ GameState(),
 grid(GRID_ORIGIN, uV2(GRID_N_COLS, GRID_N_ROWS)),
 gridView(&grid),
 // objects
-player(fV2(300, 300)),
+player(fV2(GRID_N_COLS*NavCell::size.x*0.5f, GRID_N_ROWS*NavCell::size.y*0.5f)),
 first_bot(NULL),
 // camera controls
 camera(),
