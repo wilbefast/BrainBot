@@ -30,9 +30,9 @@ void attract(BrainBotKing* king, BrainBot* minion)
   fV2 to_me = king->getPosition() - minion->getPosition();
 
   if(to_me.getNorm2() > 64*64)
-    minion->speed += to_me*0.03f;
+    minion->speed += to_me*0.015f;
   else
-    minion->speed -= to_me*0.07f;
+    minion->speed -= to_me*0.035f;
 }
 
 void repulse(BrainBot* a, BrainBot* b)
@@ -40,8 +40,8 @@ void repulse(BrainBot* a, BrainBot* b)
   fV2 a_to_b = b->position - a->position;
   if(a_to_b.getNorm2() < 64*64)
   {
-    a->speed -= a_to_b*0.01f;
-    b->speed += a_to_b*0.01f;
+    a->speed -= a_to_b*0.008f;
+    b->speed += a_to_b*0.008f;
   }
 
 }

@@ -129,9 +129,6 @@ void shuffle_array(int table[], size_t max)
 
 void NavGrid::dig_maze(uV2 pos)
 {
-
-  std::cout << "digging " << pos << "\n";
-
   // dig out the current block
   dig_block(pos, TUNNEL_SIZE);
 
@@ -148,7 +145,6 @@ void NavGrid::dig_maze(uV2 pos)
         dig_block(pos + up, TUNNEL_SIZE);
         dig_maze(pos + up*2);
       }
-
     break;
 
     case DOWN:
@@ -165,8 +161,6 @@ void NavGrid::dig_maze(uV2 pos)
         dig_block(pos + left, TUNNEL_SIZE);
         dig_maze(pos + left*2);
       }
-
-      else
     break;
 
     case RIGHT:

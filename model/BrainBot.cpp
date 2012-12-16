@@ -4,6 +4,7 @@
 #include "../engine/math/opengl_matrix.hpp"
 
 #include "../engine/io/GraphicsManager.hpp"
+#include "../engine/io/MeshManager.hpp"
 
 
 #define WALKABLE(x,y)  grid->getCell(grid->getGridPosition(uV2(x,y)))
@@ -17,9 +18,10 @@
 //! ----------------------------------------------------------------------------
 //! GLOBAL VARIABLES
 //! ----------------------------------------------------------------------------
+static Mesh3D* m = NULL;
 static Texture *t = NULL;
 
-static Colour bot_emissive(1.0f, 1.0f, 1.0f);
+//static Colour bot_emissive(1.0f, 1.0f, 1.0f);
 
 //! ----------------------------------------------------------------------------
 //! FUNCTIONS
@@ -28,6 +30,7 @@ static Colour bot_emissive(1.0f, 1.0f, 1.0f);
 void BrainBot::load_assets()
 {
   t= GraphicsManager::getInstance()->get_texture("alien_bot1");
+  m= MeshManager::getInstance()->get_mesh("spider");
 }
 
 bool blocked(float x, float y, NavGrid* grid)
@@ -133,7 +136,15 @@ Texture* BrainBot::get_texture()
 
 void BrainBot::render()
 {
-  M44<GLfloat> const* mv = getGLMatrix(GL_MODELVIEW_MATRIX);
+  glPushMatrix();
+
+    glTranslatef(position.x, position.y, -50);
+    glScalef(4, 4, 4);
+
+    m->draw();
+  glPopMatrix();
+
+  /*M44<GLfloat> const* mv = getGLMatrix(GL_MODELVIEW_MATRIX);
 
   V4<GLfloat> ox = mv->row(0), oy = mv->row(1);
 
@@ -162,5 +173,5 @@ void BrainBot::render()
     glTexCoord2f(1, 0);
     glVertex3fv(p2.front());
   glEnd();
-  glBindTexture(GL_TEXTURE_2D, 0);
+  glBindTexture(GL_TEXTURE_2D, 0);*/
 }

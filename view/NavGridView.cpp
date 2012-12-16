@@ -42,7 +42,7 @@ static Colour building_ambient(0.4f, 0.3f, 0.3f),
               building_specular(0.0f, 0.0f, 0.0f);
 static float building_shine = 128;
 
-static Colour roof_ambient(0,0,0),//(0.4f, 0.2f, 0.2f),
+static Colour roof_ambient(0.4f, 0.2f, 0.2f),
               roof_diffuse(0.4f, 0.2f, 0.2f);
 
 //! ----------------------------------------------------------------------------

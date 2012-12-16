@@ -2,7 +2,7 @@
 # Material Count: 3
 newmtl default_001-material
 Ns 98.039216
-Ka 0.000000 0.000000 0.000000
+Ka 0.3 0.3 0.3
 Kd 0.505506 0.520533 0.444189
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
@@ -13,7 +13,7 @@ map_Kd spider_head.png
 
 newmtl default_001-material_spider_body.png
 Ns 98.039216
-Ka 0.000000 0.000000 0.000000
+Ka 0.3 0.3 0.3
 Kd 0.505506 0.520533 0.444189
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000
@@ -24,7 +24,7 @@ map_Kd spider_body.png
 
 newmtl default_001-material_spider_leg.png
 Ns 98.039216
-Ka 0.000000 0.000000 0.000000
+Ka 0.3 0.3 0.3
 Kd 0.505506 0.520533 0.444189
 Ks 0.500000 0.500000 0.500000
 Ni 1.000000

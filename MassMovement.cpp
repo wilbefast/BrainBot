@@ -35,6 +35,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define GRID_N_COLS 64
 #define GRID_ORIGIN fV3(0, 0, 0)
 
+#define START_N_MINIONS 2
+
 using namespace std;
 
 
@@ -50,7 +52,7 @@ GameState(),
 grid(GRID_ORIGIN, uV2(GRID_N_COLS, GRID_N_ROWS)),
 gridView(&grid),
 // objects
-player(fV2(GRID_N_COLS*NavCell::size.x*0.5f, GRID_N_ROWS*NavCell::size.y*0.5f)),
+player(fV2((GRID_N_COLS+1)*NavCell::size.x*0.5f, (GRID_N_ROWS+1)*NavCell::size.y*0.5f)),
 first_bot(NULL),
 // camera controls
 camera(),
@@ -79,19 +81,23 @@ int MassMovement::startup()
 
   // set up the lighting
   glShadeModel(GL_SMOOTH);
-  GLfloat light_pos[3] = { 300, 300, -1000 };
+  GLfloat light_pos[3] = { player.position.x, player.position.y, -100 };
+  GLfloat light_diffuse[3] = { 1.0f, 1.0f, 1.0f };
+  GLfloat light_ambient[3] = { 0.5f, 0.5f, 0.5f };
   glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
-  GLfloat lmodel_ambient[] = { 0.2, 0.2, 0.2, 1.0 };
-  glLightModelfv(GL_LIGHT_MODEL_AMBIENT, lmodel_ambient);
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
+  glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 
   // create the objects
-  fV2 p(100 + rand()%200, 100 + rand()%200);
-  first_bot = current_bot = new BrainBot(p);
-  for(int i = 1; i < 10; i++)
+  fV2 p;
+  for(int i = 0; i < START_N_MINIONS; i++)
   {
-    p.x = 100 + rand()%200;
-    p.y = 100 + rand()%200;
-    first_bot->newNext(new BrainBot(p));
+    p.x = player.position.x -rand()%10 + rand()%10;
+    p.y = player.position.y -rand()%10 + rand()%10;
+    if(first_bot)
+      first_bot->newNext(new BrainBot(p));
+    else
+      first_bot = current_bot = new BrainBot(p);
   }
 
   // add brain bots to king bot's minions

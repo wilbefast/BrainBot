@@ -121,10 +121,7 @@ int Mesh3D::load(const char* filename)
       normals.push_back(normal_t(s));
     // texture coordinates
     else if(key == TAG_TEXTURE_COORDINATES)
-    {
-      tex_coord_t temp(s);
-      add_texture_coordinate(tex_coord_t(1-temp.x, 1-temp.y));
-    }
+      add_texture_coordinate(tex_coord_t(s));
     // face
     else if(key == TAG_FACE)
       parse_faces(s);
