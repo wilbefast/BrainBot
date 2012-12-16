@@ -73,14 +73,13 @@ Texture* BrainBotKing::get_texture()
 }
 
 
-/*void BrainBotKing::render()
+void BrainBotKing::render()
 {
   glPushMatrix();
 
     glTranslatef(position.x, position.y, -50);
-    glRotatef(-100, 1, 0, 0);
     glScalef(5, 5, 5);
 
     m->draw();
   glPopMatrix();
-}*/
+}

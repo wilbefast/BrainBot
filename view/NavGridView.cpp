@@ -74,7 +74,7 @@ void NavGridView::draw()
       int obstructed = (navGrid->getCell(grid_pos).obstacle) ? 1 : 0;
 
       // Draw the tiles
-      glBegin(GL_QUADS);
+      glBegin(GL_LINES);
         if(!obstructed)
         {
           glMaterialfv(GL_FRONT, GL_AMBIENT, road_ambient.front());

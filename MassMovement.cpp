@@ -77,8 +77,6 @@ int MassMovement::startup()
   BrainBot::load_assets();
   BrainBotKing::load_assets();
 
-
-
   // set up the lighting
   glShadeModel(GL_SMOOTH);
   GLfloat light_pos[3] = { 300, 300, -1000 };
@@ -174,10 +172,13 @@ int MassMovement::update(float delta)
   player.move(player_move, &grid);
   camera.centreOver(player.getPosition());
 
-  // Update dynamic game objects
-  int result = GameState::update(delta);
-  if(result != CONTINUE)
-    return result;
+  // Get the mouse
+  static fV2 pointed;
+
+
+  pointed = input.last_hover;
+  pointed.x -= camera.transform[3].x;
+  pointed.y -= camera.transform[3].y;
 
   // All clear
   return CONTINUE;

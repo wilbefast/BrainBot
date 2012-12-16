@@ -7,12 +7,12 @@
 class StrategyCamera
 {
   /* ATTRIBUTES */
-private:
+public:
   fM44 transform;
   fV3 speed;
 
   /* METHODS */
-public:
+
   // constructors
   StrategyCamera();
   virtual ~StrategyCamera();

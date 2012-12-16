@@ -21,7 +21,7 @@ public:
   // override
   void move(fV2 amount, NavGrid* grid);
   Texture* get_texture();
-  //void render();
+  void render();
 };
 
 #endif // BRAINBOTKING_HPP_INCLUDED

@@ -96,8 +96,8 @@ int Mesh3D::load(const char* filename)
   string line;
   while (getline(in, line))
   {
-    // group
-    if(line[0] == 'g')
+    // group / object
+    if(line[0] == 'g' || line[0] == 'o')
     {
       add_group();
       continue;
@@ -121,7 +121,10 @@ int Mesh3D::load(const char* filename)
       normals.push_back(normal_t(s));
     // texture coordinates
     else if(key == TAG_TEXTURE_COORDINATES)
-      add_texture_coordinate(tex_coord_t(s));
+    {
+      tex_coord_t temp(s);
+      add_texture_coordinate(tex_coord_t(1-temp.x, 1-temp.y));
+    }
     // face
     else if(key == TAG_FACE)
       parse_faces(s);
@@ -321,9 +324,17 @@ void Mesh3D::draw()
 	// for each object
   do
 	{
+    static bool first = true;
+
+
 		// activate the current group's material
 		if(current_group->material)
-       current_group->material->activate();
+		{
+      current_group->material->activate();
+      if(first)
+        cout << "activating material group " << current_group << endl;
+		}
+    first = false;
 
     if(current_group->smooth)
       glShadeModel(GL_SMOOTH);
@@ -340,14 +351,14 @@ void Mesh3D::draw()
 				face_t const& face = faces[face_i];
 				for(size_t v_i = 0; v_i < 3; v_i++)
 				{
-				  // vertex position
-				  glVertex3fv(vertices[face.vertex_i[v_i]].front());
           // vertex texture coordinate (optional)
           if(face.uv_i[v_i] >= 0) // negative indices mean no uv!
             glTexCoord2fv(texture_coordinates[face.uv_i[v_i]].front());
 				  // vertex normal (optional)
           if(face.normal_i[v_i] >= 0) // negative indices mean no normal!
             glNormal3fv(normals[face.normal_i[v_i]].front());
+          // vertex position
+				  glVertex3fv(vertices[face.vertex_i[v_i]].front());
 				}
 			}
 			// finished drawing the triangles

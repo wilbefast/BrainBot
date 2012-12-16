@@ -18,9 +18,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "NavGrid.hpp"
 #include "../ai/PathSearch.hpp"
 
+#include "maze_generator.hpp"
+
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
+
 
 NavGrid::NavGrid(fV3 origin_, uV2 n_cells_) :
 n_cells(n_cells_),
@@ -35,8 +38,8 @@ origin(origin_)
   uV2 grid_pos;
   for(grid_pos.y = 0; grid_pos.y < n_cells.y; grid_pos.y++)
   for(grid_pos.x = 0; grid_pos.x < n_cells.x; grid_pos.x++)
-    cells[grid_pos.y][grid_pos.x] = new NavCell(grid_pos, grid_pos.x+grid_pos.y > 20
-                                                          && (rand()%3 == 1));
+    cells[grid_pos.y][grid_pos.x] = new NavCell(grid_pos, true);
+  generate_map(cells, n_cells, uV2(3,3));
 }
 
 NavGrid::~NavGrid()

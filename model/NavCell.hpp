@@ -18,7 +18,7 @@ public:
 
   //! ATTRIBUTES
 public:
-  const bool obstacle;
+  bool obstacle;
   uV2 grid_position;
   unsigned int cost;
 
