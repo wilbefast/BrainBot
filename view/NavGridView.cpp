@@ -69,12 +69,12 @@ void NavGridView::draw()
     for(grid_pos.y = 0; grid_pos.y < navGrid->n_cells.y; grid_pos.y++)
     {
       static fV3 vertex;
-      vertex = navGrid->getCellPosition(grid_pos);
+      vertex = navGrid->gridPosToVertex(grid_pos);
 
       int obstructed = (navGrid->getCell(grid_pos).obstacle) ? 1 : 0;
 
       // Draw the tiles
-      glBegin(GL_LINES);
+      glBegin(GL_QUADS);
         if(!obstructed)
         {
           glMaterialfv(GL_FRONT, GL_AMBIENT, road_ambient.front());

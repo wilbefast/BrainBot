@@ -294,6 +294,8 @@
 		<Unit filename="../model/NavCell.hpp" />
 		<Unit filename="../model/NavGrid.cpp" />
 		<Unit filename="../model/NavGrid.hpp" />
+		<Unit filename="../model/maze_generator.cpp" />
+		<Unit filename="../model/maze_generator.hpp" />
 		<Unit filename="../view/NavGridView.cpp" />
 		<Unit filename="../view/NavGridView.hpp" />
 		<Unit filename="../view/StrategyCamera.cpp" />

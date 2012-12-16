@@ -18,8 +18,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "NavGrid.hpp"
 #include "../ai/PathSearch.hpp"
 
-#include "maze_generator.hpp"
-
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
@@ -39,7 +37,7 @@ origin(origin_)
   for(grid_pos.y = 0; grid_pos.y < n_cells.y; grid_pos.y++)
   for(grid_pos.x = 0; grid_pos.x < n_cells.x; grid_pos.x++)
     cells[grid_pos.y][grid_pos.x] = new NavCell(grid_pos, true);
-  generate_map(cells, n_cells, uV2(3,3));
+  dig_maze(uV2(10,10));
 }
 
 NavGrid::~NavGrid()
@@ -70,18 +68,23 @@ uV2 const& NavGrid::getNCells() const
   return n_cells;
 }
 
-uV2 NavGrid::getGridPosition(fV2 position) const
+uV2 NavGrid::vertexToGridPos(fV2 position) const
 {
 	return uV2(position.x/NavCell::size.x, position.y/NavCell::size.y);
 }
 
-fV3 NavGrid::getCellPosition(uV2 position) const
+fV3 NavGrid::gridPosToVertex(uV2 position) const
 {
   return fV3(origin.x + position.x*NavCell::size.x,
              origin.y + position.y*NavCell::size.y,
              origin.z);
 }
 
+bool NavGrid::isValidGridPos(iV2 position) const
+{
+  return (position.x >= 0 && position.y >= 0
+          && position.x < (int)n_cells.x && position.y < (int)n_cells.y);
+}
 
 //! ----------------------------------------------------------------------------
 //! PATHING
@@ -96,47 +99,107 @@ path* NavGrid::getPath(uV2 source, uV2 destination)
 
 
 //! ----------------------------------------------------------------------------
-//! NOT YET IMPLEMENTED
+//! MAZE
 //! ----------------------------------------------------------------------------
 
+#define UP 0
+#define DOWN 1
+#define LEFT 2
+#define RIGHT 3
 
+#define TUNNEL_SIZE 3
 
-/*uRect NavGrid::getApproximateFootprint(GameObject& o)
+static iV2 up(0,-TUNNEL_SIZE),
+            down(0,TUNNEL_SIZE),
+            left(-TUNNEL_SIZE,0),
+            right(TUNNEL_SIZE,0);
+
+void shuffle_array(int table[], size_t max)
 {
-
-  fV3 position = o.getPosition(), size = o.getSize();
-
-  unsigned int end_x = position.x + size.x + 1,
-               end_y = position.y + size.x + 1,
-               w = end_x - (unsigned int)position.x,
-               h = end_y - (unsigned int)position.y;
-
-  return uRect(position.x, position.y, w, h);
-  return uRect();
+  for(size_t i = max; i > 0; i--)
+  {
+    int rand_i = rand()%(i+1);
+    int swap = table[i];
+    table[i] = table[rand_i];
+    table[rand_i] = swap;
+  }
 }
 
-
-void NavGrid::generateGrid(std::vector<GameObject>& objects)
+void NavGrid::dig_maze(uV2 pos)
 {
 
-	for(unsigned int o = 0; 0 < objects.size(); o++) {
+  std::cout << "digging " << pos << "\n";
 
-	  GameObject& obstacle = objects[o];
-		uRect approximateFootprint = getApproximateFootprint(obstacle);
+  // dig out the current block
+  dig_block(pos, TUNNEL_SIZE);
 
+  // shuffle direction order
+  static int direction_order[] = { UP, DOWN, LEFT, RIGHT};
+  shuffle_array(direction_order, 3);
 
-		for(unsigned int r = approximateFootprint.y;
-        r < approximateFootprint.y + approximateFootprint.h; r++) {
-      for(unsigned int c = approximateFootprint.x;
-        c < approximateFootprint.x + approximateFootprint.w; c++)
-        {
-          GameObject cell(fV3(c*cellSize, r*cellSize, origin.z),
-                          fV3(cellSize, cellSize, cellHeight));
+  for(size_t i = 0; i < 4; i++)
+  switch(direction_order[i])
+  {
+    case UP:
+      if(block_is_filled(pos + up*2, TUNNEL_SIZE))
+      {
+        dig_block(pos + up, TUNNEL_SIZE);
+        dig_maze(pos + up*2);
+      }
 
-          if(cell.isColliding(obstacle))
-            cells[r][c]->setProperty(ObjectNavProperty.OBSTACLE);
+    break;
 
-        }
-		}
+    case DOWN:
+      if(block_is_filled(pos + down*2, TUNNEL_SIZE))
+      {
+        dig_block(pos + down, TUNNEL_SIZE);
+        dig_maze(pos + down*2);
+      }
+    break;
+
+    case LEFT:
+      if(block_is_filled(pos + left*2, TUNNEL_SIZE))
+      {
+        dig_block(pos + left, TUNNEL_SIZE);
+        dig_maze(pos + left*2);
+      }
+
+      else
+    break;
+
+    case RIGHT:
+      if(block_is_filled(pos + right*2, TUNNEL_SIZE))
+      {
+        dig_block(pos + right, TUNNEL_SIZE);
+        dig_maze(pos + right*2);
+      }
+    break;
+  }
 }
-*/
+
+void NavGrid::dig_block(uV2 centre, size_t size)
+{
+  int half_1 = size/2,
+      half_2 = size - half_1;
+
+  for(int r = (int)centre.y-half_1; r < (int)centre.y+half_2; r++)
+  for(int c = (int)centre.x-half_1; c < (int)centre.x+half_2; c++)
+  if(isValidGridPos(iV2(c,r)))
+    cells[r][c]->obstacle = false;
+}
+
+bool NavGrid::block_is_filled(uV2 centre, size_t size)
+{
+  bool result = true;
+  int half_1 = size/2,
+      half_2 = size - half_1;
+
+  for(int r = (int)centre.y-half_1; r < (int)centre.y+half_2; r++)
+  for(int c = (int)centre.x-half_1; c < (int)centre.x+half_2; c++)
+    result = (isValidGridPos(iV2(c,r)) && result
+                             && cells[r][c]->obstacle);
+
+
+  return result;
+}
+

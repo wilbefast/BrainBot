@@ -37,13 +37,13 @@ bool blocked(float x, float y, NavGrid* grid)
     return true;
   else
   {
-    uV2 grid_pos = grid->getGridPosition(fV2(x-HSIZE, y-SIZE));
+    uV2 grid_pos = grid->vertexToGridPos(fV2(x-HSIZE, y-SIZE));
       if(grid->getCell(grid_pos).obstacle) return true;
-    grid_pos = grid->getGridPosition(fV2(x-HSIZE, y+HSIZE));
+    grid_pos = grid->vertexToGridPos(fV2(x-HSIZE, y+HSIZE));
       if(grid->getCell(grid_pos).obstacle) return true;
-    grid_pos = grid->getGridPosition(fV2(x+HSIZE, y-HSIZE));
+    grid_pos = grid->vertexToGridPos(fV2(x+HSIZE, y-HSIZE));
       if(grid->getCell(grid_pos).obstacle) return true;
-    grid_pos = grid->getGridPosition(fV2(x+HSIZE, y+HSIZE));
+    grid_pos = grid->vertexToGridPos(fV2(x+HSIZE, y+HSIZE));
       if(grid->getCell(grid_pos).obstacle) return true;
     return false;
   }

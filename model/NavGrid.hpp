@@ -50,17 +50,19 @@ public:
   fV3 getOrigin() const;
   NavCell const& getCell(uV2 position) const;
   uV2 const& getNCells() const;
-  uV2 getGridPosition(fV2 position) const;
-  fV3 getCellPosition(uV2 position) const;
+  uV2 vertexToGridPos(fV2 position) const;
+  fV3 gridPosToVertex(uV2 position) const;
+  bool isValidGridPos(iV2 position) const;
 
   // pathing
   std::deque<NavCell*>* getPath(uV2 source, uV2 destination);
 
 
-  //! not yet implemented
-  /* uRect getApproximateFootprint(GameObject& o);
-  void generateGrid(std::vector<GameObject>& objects); */
-
+  // maze
+private:
+  void dig_maze(uV2 start_pos);
+  void dig_block(uV2 centre, size_t size);
+  bool block_is_filled(uV2 centre, size_t size);
 };
 
 #endif // NAVGRID_HPP_INCLUDED
