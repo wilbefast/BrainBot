@@ -96,6 +96,10 @@ void NavGridView::draw()
         }
         else
         {
+          static fV3  left(-1,0,0), right(1,0,0), up(0,0,-1),
+                      forward(0,1,0), back(0,-1,0);
+
+
           glMaterialfv(GL_FRONT, GL_AMBIENT, building_ambient.front());
           glMaterialfv(GL_FRONT, GL_SPECULAR, building_specular.front());
           glMaterialfv(GL_FRONT, GL_DIFFUSE, building_diffuse.front());
@@ -103,55 +107,67 @@ void NavGridView::draw()
           glMaterialfv(GL_FRONT, GL_SHININESS, &building_shine);
           glColor3f(0.7f, 0.7f, 0.8f);
           // left face
-          glVertex3fv(vertex.front());
+            glNormal3fv(left.front());
+            glVertex3fv(vertex.front()); // back bottom left
           vertex.y += NavCell::size.y;
-          glVertex3fv(vertex.front());
+            glNormal3fv(left.front());
+            glVertex3fv(vertex.front()); // front bottom left
           vertex.z -= NavCell::size.z;
-          glVertex3fv(vertex.front());
+            glNormal3fv(left.front());
+            glVertex3fv(vertex.front()); // front top left
           vertex.y -= NavCell::size.y;
-          glVertex3fv(vertex.front());
+            glNormal3fv(left.front());
+            glVertex3fv(vertex.front()); // back top left
           // back face
-          glVertex3fv(vertex.front());
+            glNormal3fv(back.front());
+            glVertex3fv(vertex.front()); // back top left
           vertex.x += NavCell::size.x;
-          glVertex3fv(vertex.front());
+            glNormal3fv(back.front());
+            glVertex3fv(vertex.front()); // back top right
           vertex.z += NavCell::size.z;
-          glVertex3fv(vertex.front());
+            glNormal3fv(back.front());
+            glVertex3fv(vertex.front()); // back bottom right
           vertex.x -= NavCell::size.x;
-          glVertex3fv(vertex.front());
+            glNormal3fv(back.front());
+            glVertex3fv(vertex.front()); // back bottom left
           vertex.x += NavCell::size.x;
           // right face
-          glVertex3fv(vertex.front());
+            glNormal3fv(right.front());
+            glVertex3fv(vertex.front()); // back bottom right
           vertex.z -= NavCell::size.z;
-          glVertex3fv(vertex.front());
+            glNormal3fv(right.front());
+            glVertex3fv(vertex.front()); // back top right
           vertex.y += NavCell::size.y;
-          glVertex3fv(vertex.front());
+            glNormal3fv(right.front());
+            glVertex3fv(vertex.front()); // front top right
           vertex.z += NavCell::size.z;
-          glVertex3fv(vertex.front());
+            glNormal3fv(right.front());
+            glVertex3fv(vertex.front());  // front bottom right
           // front face
-          //glBindTexture(GL_TEXTURE_2D, window_t->getHandle());
-            glTexCoord2f(1,1);
-            glVertex3fv(vertex.front());
+            glNormal3fv(forward.front());
+            glVertex3fv(vertex.front()); // front bottom right
           vertex.z -= NavCell::size.z;
-            glTexCoord2f(1,0);
-            glVertex3fv(vertex.front());
+            glNormal3fv(forward.front());
+            glVertex3fv(vertex.front()); // front top right
           vertex.x -= NavCell::size.x;
-            glTexCoord2f(0,0);
-            glVertex3fv(vertex.front());
+            glNormal3fv(forward.front());
+            glVertex3fv(vertex.front()); // front top left
           vertex.z += NavCell::size.z;
-            glTexCoord2f(0,1);
-            glVertex3fv(vertex.front());
+            glNormal3fv(forward.front());
+            glVertex3fv(vertex.front()); // front bottom left
           vertex.z -= NavCell::size.z;
-          //glBindTexture(GL_TEXTURE_2D, 0);
-          glMaterialfv(GL_FRONT, GL_AMBIENT, roof_ambient.front());
-          glMaterialfv(GL_FRONT, GL_DIFFUSE, roof_diffuse.front());
           // top face
-          glVertex3fv(vertex.front());
+            glNormal3fv(up.front());
+            glVertex3fv(vertex.front());  // front bottom left
           vertex.x += NavCell::size.x;
-          glVertex3fv(vertex.front());
+            glNormal3fv(up.front());
+            glVertex3fv(vertex.front()); // front bottom left
           vertex.y -= NavCell::size.y;
-          glVertex3fv(vertex.front());
+            glNormal3fv(up.front());
+            glVertex3fv(vertex.front());
           vertex.x -= NavCell::size.x;
-          glVertex3fv(vertex.front());
+            glNormal3fv(up.front());
+            glVertex3fv(vertex.front());
         }
       glEnd();
     }

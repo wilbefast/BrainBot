@@ -2,5 +2,6 @@
 <objects3D>
   <mesh_list>
     <mesh name="spider"/>
+    <mesh name="cube"/>
   </mesh_list>	
 </objects3D>
