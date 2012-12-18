@@ -111,7 +111,7 @@ int MassMovement::startup()
 
 
   // test path
-  testpath = grid.getPath(uV2(0,0), uV2(45,45));
+  testpath = grid.getPath(uV2(3,3), uV2(GRID_N_COLS/2, GRID_N_ROWS/2));
 
     /*column = new ColumnFormation(uV2(2, 8));
     column->setSpotSize(fV2(30.0f, 30.0f));

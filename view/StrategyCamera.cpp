@@ -105,7 +105,7 @@ void StrategyCamera::lookThrough() //const
   glRotatef(180, 0.0f, 0.0f, 1.0f);
   glTranslatef(transform[3].x, 0, transform[3].z);
     glRotatef(-30, 1, 0, 0);
-      glTranslatef(0, transform[3].y, 0);
+        glTranslatef(0, transform[3].y, 0);
 
 
   //glRotatef(PITCH, 1.0f, 0.0f, 0.0f);

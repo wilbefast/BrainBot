@@ -72,14 +72,11 @@ Texture* BrainBotKing::get_texture()
   return t;
 }
 
-
 void BrainBotKing::render()
 {
   glPushMatrix();
-
-    glTranslatef(position.x, position.y, -50);
+    glTranslatef(position.x, position.y, 0);
     glScalef(5, 5, 5);
-
     m->draw();
   glPopMatrix();
 }
