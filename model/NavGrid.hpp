@@ -63,6 +63,8 @@ private:
   void dig_maze(uV2 start_pos);
   void dig_block(uV2 centre, size_t size);
   bool block_is_filled(uV2 centre, size_t size);
+  bool block_touches_border(uV2 centre, size_t size);
+  size_t block_filled_neighbours(uV2 centre, size_t size);
 };
 
 #endif // NAVGRID_HPP_INCLUDED

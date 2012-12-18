@@ -137,39 +137,25 @@ void NavGrid::dig_maze(uV2 pos)
   shuffle_array(direction_order, 3);
 
   for(size_t i = 0; i < 4; i++)
-  switch(direction_order[i])
   {
-    case UP:
-      if(block_is_filled(pos + up*2, TUNNEL_SIZE))
-      {
-        dig_block(pos + up, TUNNEL_SIZE);
-        dig_maze(pos + up*2);
-      }
-    break;
+    // get a direction
+    iV2 dir;
+    switch(direction_order[i])
+    {
+      case UP: dir = up; break;
+      case DOWN: dir = down; break;
+      case LEFT: dir = left; break;
+      case RIGHT: dir = right; break;
+    }
 
-    case DOWN:
-      if(block_is_filled(pos + down*2, TUNNEL_SIZE))
-      {
-        dig_block(pos + down, TUNNEL_SIZE);
-        dig_maze(pos + down*2);
-      }
-    break;
-
-    case LEFT:
-      if(block_is_filled(pos + left*2, TUNNEL_SIZE))
-      {
-        dig_block(pos + left, TUNNEL_SIZE);
-        dig_maze(pos + left*2);
-      }
-    break;
-
-    case RIGHT:
-      if(block_is_filled(pos + right*2, TUNNEL_SIZE))
-      {
-        dig_block(pos + right, TUNNEL_SIZE);
-        dig_maze(pos + right*2);
-      }
-    break;
+    // strike the earth!
+    iV2 step = pos + dir, two_steps = step + dir;
+    if(block_is_filled(two_steps, TUNNEL_SIZE)
+       && !block_touches_border(two_steps, TUNNEL_SIZE))
+    {
+      dig_block(step, TUNNEL_SIZE);
+      dig_maze(two_steps);
+    }
   }
 }
 
@@ -186,16 +172,45 @@ void NavGrid::dig_block(uV2 centre, size_t size)
 
 bool NavGrid::block_is_filled(uV2 centre, size_t size)
 {
-  bool result = true;
   int half_1 = size/2,
       half_2 = size - half_1;
 
   for(int r = (int)centre.y-half_1; r < (int)centre.y+half_2; r++)
   for(int c = (int)centre.x-half_1; c < (int)centre.x+half_2; c++)
-    result = (isValidGridPos(iV2(c,r)) && result
-                             && cells[r][c]->obstacle);
+    if(!isValidGridPos(iV2(c,r)) || !cells[r][c]->obstacle)
+       return false;
 
 
-  return result;
+  return true;
 }
 
+bool NavGrid::block_touches_border(uV2 centre, size_t size)
+{
+  int half_1 = size/2,
+      half_2 = size - half_1,
+      r, c;
+
+  // top and bottom
+  for(c = (int)centre.x-half_1-1; c < (int)centre.x+half_2+1; c++)
+  {
+    if(!isValidGridPos(iV2(c,(int)centre.y-half_1-1))
+    || !isValidGridPos(iV2(c,(int)centre.y+half_1+1)))
+       return true;
+  }
+
+  // left and right
+  for(r = (int)centre.y-half_1; r < (int)centre.y+half_2; r++)
+  {
+      if(!isValidGridPos(iV2((int)centre.x-half_1-1,r))
+      || !isValidGridPos(iV2((int)centre.x+half_2+1,r)))
+       return true;
+  }
+
+  // if you've made it this far, you don't need glasses
+  return false;
+}
+
+size_t NavGrid::block_filled_neighbours(uV2 centre, size_t size)
+{
+
+}
