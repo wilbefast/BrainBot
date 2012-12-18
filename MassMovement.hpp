@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine/math/V3.hpp"
 #include "engine/scenes/GameState.hpp"
 
-#include "model/NavGrid.hpp"
+#include "model/NavGridMaze.hpp"
 #include "model/BrainBotKing.hpp"
 #include "model/BrainBot.hpp"
 
@@ -37,7 +37,7 @@ class MassMovement : public GameState
   /// ATTRIBUTES
 private:
   // grid
-  NavGrid grid;
+  NavGridMaze grid;
   NavGridView gridView;
 
   // objects

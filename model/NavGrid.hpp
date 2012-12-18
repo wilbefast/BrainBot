@@ -36,7 +36,7 @@ friend class PathSearch;
   //! ATTRIBUTES
 public:
     const uV2 n_cells;
-private:
+protected:
   fV3 origin;
   NavCell ***cells;
 
@@ -56,24 +56,6 @@ public:
 
   // pathing
   std::deque<NavCell*>* getPath(uV2 source, uV2 destination);
-
-
-  //! MAZE
-private:
-  uV2 top_left_block;
-
-  // methods
-private:
-  void dig_maze(uV2 start_pos);
-    void dig_block(uV2 centre, size_t size);
-    bool block_is_filled(uV2 centre, size_t size);
-    bool block_is_clear(uV2 centre, size_t size);
-    bool block_is_valid(uV2 centre, size_t size);
-    bool block_touches_border(uV2 centre, size_t size);
-  void break_walls();
-    size_t filled_neighbour_blocks(uV2 centre, size_t size, bool diagonals);
-    bool block_is_wall(uV2 centre, size_t size);
-
 };
 
 #endif // NAVGRID_HPP_INCLUDED
