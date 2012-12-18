@@ -31,8 +31,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PAN_SPEED 20
 #define ZOOM_SPEED 200
 
-#define GRID_N_ROWS 65
-#define GRID_N_COLS 65
+#define GRID_N_ROWS 67
+#define GRID_N_COLS 67
 #define GRID_ORIGIN fV3(0, 0, 0)
 
 #define START_N_MINIONS 2

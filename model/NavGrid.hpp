@@ -58,13 +58,22 @@ public:
   std::deque<NavCell*>* getPath(uV2 source, uV2 destination);
 
 
-  // maze
+  //! MAZE
+private:
+  uV2 top_left_block;
+
+  // methods
 private:
   void dig_maze(uV2 start_pos);
-  void dig_block(uV2 centre, size_t size);
-  bool block_is_filled(uV2 centre, size_t size);
-  bool block_touches_border(uV2 centre, size_t size);
-  size_t block_filled_neighbours(uV2 centre, size_t size);
+    void dig_block(uV2 centre, size_t size);
+    bool block_is_filled(uV2 centre, size_t size);
+    bool block_is_clear(uV2 centre, size_t size);
+    bool block_is_valid(uV2 centre, size_t size);
+    bool block_touches_border(uV2 centre, size_t size);
+  void break_walls();
+    size_t filled_neighbour_blocks(uV2 centre, size_t size, bool diagonals);
+    bool block_is_wall(uV2 centre, size_t size);
+
 };
 
 #endif // NAVGRID_HPP_INCLUDED

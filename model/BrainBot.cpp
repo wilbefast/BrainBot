@@ -80,7 +80,7 @@ void BrainBot::move(fV2 amount, NavGrid* grid)
   speed += amount*0.4f;
 
 
-  int xvar = SIGN(speed.x);
+  /*int xvar = SIGN(speed.x);
   int yvar = SIGN(speed.y);
 
   if(blocked(position.x + speed.x,
@@ -116,7 +116,7 @@ void BrainBot::move(fV2 amount, NavGrid* grid)
       position.y += yvar;
     }
     speed.x = speed.y = 0;
-  }
+  }*/
 
   position += speed;
 
