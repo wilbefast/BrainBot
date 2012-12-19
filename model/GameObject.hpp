@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2012 William James Dyce and Guillaume Surroca
+Copyright (C) 2012 William James Dyce
 
 This program is free software: you can redistribute it and/or modify
 it under he terms of the GNU General Public License as published by
@@ -14,6 +14,7 @@ GNU General Public License for more details.
 You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
+
 
 #ifndef GAMEOBJECT_HPP_INCLUDED
 #define GAMEOBJECT_HPP_INCLUDED

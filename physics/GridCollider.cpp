@@ -16,18 +16,29 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 
-#ifndef COLLISIONMASK_HPP_INCLUDED
-#define COLLISIONMASK_HPP_INCLUDED
+#include "GridCollider.hpp"
 
-#include "../engine/math/V3.hpp"
+//! ----------------------------------------------------------------------------
+//! CONSTRUCTORS, DESTRUCTORS
+//! ----------------------------------------------------------------------------
 
-//! ***ABSTRACT***
-class CollisionMask
+GridCollider::GridCollider(size_t size_) :
+size(size_),
+speed()
 {
-  //! INTERFACE
-public:
-  virtual void update(fV3& position) = 0;
-  virtual void push(fV3 const& direction) = 0;
-};
 
-#endif // COLLISIONMASK_HPP_INCLUDED
+}
+
+//! ----------------------------------------------------------------------------
+//! IMPLEMENTS -- COLLISIONMASK
+//! ----------------------------------------------------------------------------
+
+void GridCollider::update(fV3& position)
+{
+
+}
+
+void GridCollider::push(fV3 const& direction)
+{
+
+}

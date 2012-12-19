@@ -36,8 +36,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define GRID_SIZE uV2(GRID_N_COLS, GRID_N_ROWS)
 #define GRID_ORIGIN fV3(0, 0, 0)
 
-#define MAZE_TUNNEL_SIZE 3
-#define MAZE_PERCENT_BROKEN_WALLS 33
+#define MAZE_TUNNEL_SIZE 5
+#define MAZE_PERCENT_BROKEN_WALLS 40
 
 
 #define START_N_MINIONS 2

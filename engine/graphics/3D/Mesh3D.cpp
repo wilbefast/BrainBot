@@ -321,17 +321,9 @@ void Mesh3D::draw()
 	// for each object
   do
 	{
-    static bool first = true;
-
-
 		// activate the current group's material
 		if(current_group->material)
-		{
       current_group->material->activate();
-      if(first)
-        cout << "activating material group " << current_group << endl;
-		}
-    first = false;
 
     if(current_group->smooth)
       glShadeModel(GL_SMOOTH);

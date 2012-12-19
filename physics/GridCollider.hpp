@@ -15,19 +15,26 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef GRIDCOLLIDER_HPP_INCLUDED
+#define GRIDCOLLIDER_HPP_INCLUDED
 
-#ifndef COLLISIONMASK_HPP_INCLUDED
-#define COLLISIONMASK_HPP_INCLUDED
+#include "CollisionMask.hpp"
 
-#include "../engine/math/V3.hpp"
-
-//! ***ABSTRACT***
-class CollisionMask
+class GridCollider : public CollisionMask
 {
-  //! INTERFACE
+  //! ATTRIBUTES
+private:
+  size_t size;
+  fV3 speed;
+
+  //! METHODS
 public:
-  virtual void update(fV3& position) = 0;
-  virtual void push(fV3 const& direction) = 0;
+  // constructors, destructors
+  GridCollider(size_t size);
+
+  // implements -- CollisionMask
+  void update(fV3& position);
+  void push(fV3 const& direction);
 };
 
-#endif // COLLISIONMASK_HPP_INCLUDED
+#endif // GRIDCOLLIDER_HPP_INCLUDED
