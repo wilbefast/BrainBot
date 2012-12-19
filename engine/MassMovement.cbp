@@ -148,12 +148,6 @@
 		</Compiler>
 		<Unit filename="../MassMovement.cpp" />
 		<Unit filename="../MassMovement.hpp" />
-		<Unit filename="../ai/ColumnFormation.cpp" />
-		<Unit filename="../ai/ColumnFormation.hpp" />
-		<Unit filename="../ai/Formation.cpp" />
-		<Unit filename="../ai/Formation.hpp" />
-		<Unit filename="../ai/Group.cpp" />
-		<Unit filename="../ai/Group.hpp" />
 		<Unit filename="../ai/PathSearch.cpp" />
 		<Unit filename="../ai/PathSearch.hpp" />
 		<Unit filename="../ai/SearchState.cpp" />
@@ -289,8 +283,6 @@
 		<Unit filename="utils/IntrusiveLinked.hpp" />
 		<Unit filename="../model/BrainBot.cpp" />
 		<Unit filename="../model/BrainBot.hpp" />
-		<Unit filename="../model/BrainBotKing.cpp" />
-		<Unit filename="../model/BrainBotKing.hpp" />
 		<Unit filename="../model/GameObject.cpp" />
 		<Unit filename="../model/GameObject.hpp" />
 		<Unit filename="../model/NavCell.cpp" />
