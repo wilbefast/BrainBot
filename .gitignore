@@ -6,6 +6,9 @@
 # Backup files
 **~
 
+# Original files (from merges)
+**.orig
+
 # Compiled files
 **/bin/**
 **/obj/**

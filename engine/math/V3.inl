@@ -308,7 +308,8 @@ inline float V3<T>::getNorm2() const
 template <typename T>
 inline V3<T>& V3<T>::setMagnitude(float new_magnitude)
 {
-  return ((*this) *= (new_magnitude/getNorm()));
+  float norm = getNorm();
+  return ((*this) *= ((norm == 0) ? 0 : (new_magnitude/getNorm())));
 }
 
 template <typename T>

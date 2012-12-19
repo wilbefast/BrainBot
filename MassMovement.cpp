@@ -84,6 +84,10 @@ int MassMovement::startup()
   //player = new BrainBot(map_centre, &grid);
   player = new Group(map_centre, &grid);
 
+
+  BrainBot * spiderBrain = new BrainBot(map_centre, &grid);
+  player->addMember(spiderBrain);
+
   // set up the lighting
   glShadeModel(GL_SMOOTH);
   GLfloat light_pos[4] = { map_centre.x, map_centre.y, 1000.0f, 1.0f};
@@ -161,8 +165,14 @@ int MassMovement::update(float t_delta)
   up = down = false;
   camera.update_position();
 
-  // Move the player and follow with the camera
-  player->push(player_move);
+  // Push the player with the keyboard
+  if(player_move.x || player_move.y)
+  {
+    player->push(player_move);
+    player->setDirection(player_move);
+  }
+
+  // Update the player position and follow with the camera
   player->update(t_delta);
   camera.centreOver(player->getPosition());
 

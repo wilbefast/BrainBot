@@ -5,7 +5,7 @@
 
 #include "../model/NavGrid.hpp"
 #include "../model/GameObject.hpp"
-//#include "../ai/Formation.hpp"
+#include "../ai/Formation.hpp"
 
 class Group : public GameObject
 {
@@ -22,13 +22,15 @@ public:
   GameObject* getLeader() { return leader; }
   void setLeader(GameObject* leader_) { leader = leader_; }
 
-  //sFormation* getFormation() { return formation; }
-  //void setFormation(Formation* formation_) { formation = formation_; }
+  Formation* getFormation() { return formation; }
+  void setFormation(Formation* formation_) { formation = formation_; }
 
 
 // ---- Formation managment ----------------------------------------------------
 
   void assembleFormation();
+
+  void setDirection(fV3 direction_);
 
 
 // ---- Overrides GameObject ---------------------------------------------------
@@ -41,8 +43,9 @@ public:
 private:
   std::vector<GameObject*> members;
   GameObject* leader;
-  //Formation* formation;
+  Formation* formation;
   NavGrid* grid;
+  fV3 direction;
 };
 
 #endif // GROUP_HPP_INCLUDED
