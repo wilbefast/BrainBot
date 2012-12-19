@@ -35,12 +35,14 @@ public:
 
   // mutators
   void dig_block(uV2 centre);
+  bool set_tunnel_size(size_t tunnel_size);
 
   // accessors
   bool block_is_filled(uV2 centre) const;
   bool block_is_clear(uV2 centre) const;
   bool block_is_valid(uV2 centre) const;
   bool block_touches_border(uV2 centre) const;
+  bool block_border_is_clear(uV2 centre) const;
   size_t filled_neighbour_blocks(uV2 centre, bool diagonals) const;
   bool block_is_wall(uV2 centre) const;
 

@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2012 William James Dyce and Guillaume Surroca
+Copyright (C) 2012 William James Dyce
 
 This program is free software: you can redistribute it and/or modify
 it under he terms of the GNU General Public License as published by
@@ -16,6 +16,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "BrainBotGroup.hpp"
+
+#include "../model/BrainBot.hpp"
 
 //!-----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS

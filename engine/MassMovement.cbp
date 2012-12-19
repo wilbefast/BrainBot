@@ -148,8 +148,12 @@
 		</Compiler>
 		<Unit filename="../MassMovement.cpp" />
 		<Unit filename="../MassMovement.hpp" />
+		<Unit filename="../ai/BlockFormation.cpp" />
+		<Unit filename="../ai/BlockFormation.hpp" />
 		<Unit filename="../ai/BrainBotGroup.cpp" />
 		<Unit filename="../ai/BrainBotGroup.hpp" />
+		<Unit filename="../ai/Formation.cpp" />
+		<Unit filename="../ai/Formation.hpp" />
 		<Unit filename="../ai/Group.cpp" />
 		<Unit filename="../ai/Group.hpp" />
 		<Unit filename="../ai/PathSearch.cpp" />

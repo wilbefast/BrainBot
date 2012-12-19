@@ -22,11 +22,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../model/GameObject.hpp"
 #include "../ai/Formation.hpp"
 
+//! **ABSTRACT**
 class Group : public GameObject
 {
   //! ATTRIBUTES
 private:
-  GameObject *first_member, *current_member, *second_member;
+  GameObject *first_member, *current_member;
   size_t n_members;
   Formation *formation;
   fV3 direction;
@@ -61,7 +62,7 @@ protected:
 
   //! SUBROUTINES
 private:
-  void repulse(GameObject* a, GameObject* b);
+  void updateMember(GameObject *member, size_t member_i, float t_delta);
 };
 
 #endif // GROUP_HPP_INCLUDED

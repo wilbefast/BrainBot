@@ -27,9 +27,9 @@ Group::Group(fV3 position_, NavGrid* grid_, Formation* formation_) :
 GameObject(position_),
 first_member(NULL),
 current_member(NULL),
-second_member(NULL),
 n_members(0),
-direction(1,0,0), // face right
+formation(formation_),
+direction(1, 0, 0), // face right
 grid(grid_)
 {
 
@@ -42,24 +42,6 @@ Group::~Group()
   delete first_member;
 }
 
-// ---- Formation managment ----------------------------------------------------
-
-/*void Group::assembleFormation() {
-    uV2 tmpRelativePosition;
-
-    if(formation != NULL) {
-        for(unsigned int i = 0; i < members.size(); i++) {
-            tmpRelativePosition = formation->assignPosition(members[i]);
-            members[i]->setPosition(fV2(tmpRelativePosition.x * formation->getSpotSize().x + position.x,
-                                 tmpRelativePosition.y * formation->getSpotSize().y + position.y));
-        }
-
-        tmpRelativePosition = formation->assignLeaderPosition(leader);
-        leader->setPosition(fV2(tmpRelativePosition.x * formation->getSpotSize().x + position.x,
-                         position.y - formation->getSpotSize().y));
-    }
-}*/
-
 //!-----------------------------------------------------------------------------
 //! ACCESSORS
 //!-----------------------------------------------------------------------------
@@ -67,8 +49,8 @@ Group::~Group()
 fV3 Group::getDesiredMemberPosition(size_t member_i) const
 {
   return /*(formation)
-        ? position + formation->getMemberPosition(member_i)
-        : position;*/ position + fV3(rand()%30, rand()%30, 0);
+        ? position + formation->getMemberRelativePosition(member_i)
+        : */position + fV3(rand() % 32, rand() % 32, 0);
 
 }
 
@@ -107,33 +89,18 @@ int Group::update(float t_delta)
   GameObject::update(t_delta);
 
   //! update each member of the group
+  size_t member_i = 0;
   if(first_member)
   {
     current_member = first_member;
     do
     {
-      // push the members towards the centre of the group
-      fV3 direction = (position - current_member->getPosition());
-      float norm = direction.normalise();
-      if(norm > 32.0f)
-        current_member->push(direction);
+      // update each member
+      updateMember(current_member, member_i, t_delta);
 
-      // iterate through other members of the group
-      second_member = (GameObject*)current_member->getNext();
-      while(second_member != first_member)
-      {
-        // push members away from eachother
-        current_member->repulse(second_member);
-
-        // advance iterator
-        second_member = (GameObject*)second_member->getNext();
-      }
-
-      // call the members' update functions
-      current_member->update(t_delta);
-
-      // advance iterator
+      // advance iterators
       current_member = (GameObject*)current_member->getNext();
+      member_i++;
     }
     while(current_member != first_member);
   }
@@ -180,3 +147,31 @@ void Group::draw()
 //! SUBROUTINES
 //!-----------------------------------------------------------------------------
 
+void Group::updateMember(GameObject *member, size_t member_i, float t_delta)
+{
+  // push the members towards the centre of the group
+
+  fV3 reform = (position - member->getPosition());
+  float norm = reform.normalise();
+  if(norm > 32.0f)
+    member->push(reform);
+
+  // iterate through other members of the group
+
+  //! NB - we're overwriting current_member here, we'll need to restore it
+  current_member = (GameObject*)member->getNext();
+  while(current_member != first_member)
+  {
+    // push members away from eachother
+    member->repulse(current_member);
+
+    // advance inner-iterator
+    current_member = (GameObject*)current_member->getNext();
+  }
+
+  // call the member's update function
+  member->update(t_delta);
+
+  //! revert back to the original state
+  current_member = member;
+}

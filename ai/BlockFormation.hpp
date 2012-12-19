@@ -15,20 +15,18 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
+#ifndef BLOCKFORMATION_HPP_INCLUDED
+#define BLOCKFORMATION_HPP_INCLUDED
 
-#ifndef COLLISIONMASK_HPP_INCLUDED
-#define COLLISIONMASK_HPP_INCLUDED
+#include "Formation.hpp"
 
-#include "../engine/math/V3.hpp"
-
-//! **ABSTRACT**
-class CollisionMask
+class BlockFormation : public Formation
 {
-  //! INTERFACE
+
+  //! METHODS
 public:
-  virtual ~CollisionMask() { }
-  virtual int update(fV3& position, float t_delta) = 0;
-  virtual void push(fV3 const& direction) = 0;
+  // interface
+  virtual void deployMembers(GameObject* first_member) const = 0;
 };
 
-#endif // COLLISIONMASK_HPP_INCLUDED
+#endif // BLOCKFORMATION_HPP_INCLUDED
