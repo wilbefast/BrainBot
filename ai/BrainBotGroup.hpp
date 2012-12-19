@@ -1,5 +1,5 @@
 /*
-Copyright (C) 2012 William James Dyce
+Copyright (C) 2012 William James Dyce and Guillaume Surroca
 
 This program is free software: you can redistribute it and/or modify
 it under he terms of the GNU General Public License as published by
@@ -15,30 +15,26 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef GRIDCOLLIDER_HPP_INCLUDED
-#define GRIDCOLLIDER_HPP_INCLUDED
+#ifndef BRAINBOTGROUP_HPP_INCLUDED
+#define BRAINBOTGROUP_HPP_INCLUDED
 
-#include "CollisionMask.hpp"
-#include "PhysicalProperties.hpp"
-#include "../model/NavGrid.hpp"
+#include "Group.hpp"
 
-class GridCollider : public CollisionMask
+class BrainBotGroup : public Group
 {
-  //! ATTRIBUTES
-private:
-  size_t size;
-  fV3 speed;
-  NavGrid const* grid;
-  PhysicalProperties physics;
+  //! CONSTANTS
+public:
+  static const int INIT_SIZE = 10;
+
 
   //! METHODS
 public:
   // constructors, destructors
-  GridCollider(size_t size, NavGrid const* grid_, PhysicalProperties physics_);
+  BrainBotGroup(fV3 position_, NavGrid* grid_);
 
-  // implements -- CollisionMask
-  int update(fV3& position, float t_delta);
-  void push(fV3 const& direction);
+  // implements Group
+protected:
+  GameObject* spawnMember(fV3 spawn_position) const;
 };
 
-#endif // GRIDCOLLIDER_HPP_INCLUDED
+#endif // BRAINBOTGROUP_HPP_INCLUDED

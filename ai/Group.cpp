@@ -1,22 +1,44 @@
+/*
+Copyright (C) 2012 William James Dyce and Guillaume Surroca
+
+This program is free software: you can redistribute it and/or modify
+it under he terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+*/
+
 #include "Group.hpp"
 
 #include "../engine/opengl.h"
 
-Group::Group(fV3 position_, NavGrid* grid_) :
+//!-----------------------------------------------------------------------------
+//! CONSTRUCTORS, DESTRUCTORS
+//!-----------------------------------------------------------------------------
+
+Group::Group(fV3 position_, NavGrid* grid_, Formation* formation_) :
 GameObject(position_),
-grid(grid_),
-direction(1,0,0) // face right
+first_member(NULL),
+current_member(NULL),
+n_members(0),
+direction(1,0,0), // face right
+grid(grid_)
 {
+
 }
 
 Group::~Group()
 {
-  //! Delete formation? Shared?
-
-  //! draw each member of the group
-  for(std::vector<GameObject*>::iterator i = members.begin();
-  i != members.end(); i++)
-    delete (*i);
+  //! delete each member of the group
+  first_member->deleteConnections();
+  delete first_member;
 }
 
 // ---- Formation managment ----------------------------------------------------
@@ -37,6 +59,21 @@ Group::~Group()
     }
 }*/
 
+//!-----------------------------------------------------------------------------
+//! ACCESSORS
+//!-----------------------------------------------------------------------------
+
+fV3 Group::getDesiredMemberPosition(size_t member_i) const
+{
+  return /*(formation)
+        ? position + formation->getMemberPosition(member_i)
+        : position;*/ position;
+
+}
+
+//!-----------------------------------------------------------------------------
+//! MUTATORS
+//!-----------------------------------------------------------------------------
 
 void Group::setDirection(fV3 direction_)
 {
@@ -44,7 +81,19 @@ void Group::setDirection(fV3 direction_)
   direction.normalise();
 }
 
-// ---- Overriden --------------------------------------------------------------
+void Group::addMember()
+{
+  GameObject* newbie = spawnMember(getDesiredMemberPosition(n_members));
+  if(first_member)
+    first_member->newNext(newbie);
+  else
+    first_member = newbie;
+  n_members++;
+}
+
+//!-----------------------------------------------------------------------------
+//! OVERRIDES -- GAMEOBJECT
+//!-----------------------------------------------------------------------------
 
 void Group::push(fV3 push_direction)
 {
@@ -55,17 +104,24 @@ int Group::update(float t_delta)
 {
 
   //! update each member of the group
-  for(std::vector<GameObject*>::iterator i = members.begin();
-  i != members.end(); i++)
+  if(first_member)
   {
-    // push the members towards the centre of the group
-    fV3 direction = (position - (*i)->getPosition());
-    direction.normalise();
+    current_member = first_member;
+    do
+    {
+      // push the members towards the centre of the group
+      fV3 direction = (position - current_member->getPosition());
+      direction.normalise();
 
-    (*i)->push(direction);
+      current_member->push(direction);
 
-    // call the members' update functions
-    (*i)->update(t_delta);
+      // call the members' update functions
+      current_member->update(t_delta);
+
+      // advance iterator
+      current_member = (GameObject*)current_member->getNext();
+    }
+    while(current_member != first_member);
   }
 
   //! group is still alive (return 0)
@@ -75,10 +131,17 @@ int Group::update(float t_delta)
 void Group::draw()
 {
   //! draw each member of the group
-  for(std::vector<GameObject*>::iterator i = members.begin();
-  i != members.end(); i++)
+  if(first_member)
   {
-    (*i)->draw();
+    current_member = first_member;
+    do
+    {
+      current_member->draw();
+
+      // advance iterator
+      current_member = (GameObject*)current_member->getNext();
+    }
+    while(current_member != first_member);
   }
 
   //! debug draw position and direction

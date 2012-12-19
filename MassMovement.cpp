@@ -25,6 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine/graphics/draw.hpp"
 
 #include "model/GameObject.hpp"
+#include "ai/BrainBotGroup.hpp"
 
 #include "engine/math/V3.hpp"
 
@@ -82,11 +83,7 @@ int MassMovement::startup()
   fV3 map_centre((GRID_N_COLS+1)*NavCell::size.x*0.5f,
                   (GRID_N_ROWS+1)*NavCell::size.y*0.5f, 0);
   //player = new BrainBot(map_centre, &grid);
-  player = new Group(map_centre, &grid);
-
-
-  BrainBot * spiderBrain = new BrainBot(map_centre, &grid);
-  player->addMember(spiderBrain);
+  player = new BrainBotGroup(map_centre, &grid);
 
   // set up the lighting
   glShadeModel(GL_SMOOTH);

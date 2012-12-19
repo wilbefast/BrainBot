@@ -12,7 +12,7 @@ private:
   //! METHODS
 public:
   // constructors
-  BrainBot(fV3 position_, NavGrid* grid_);
+  BrainBot(fV3 position_, NavGrid const* grid_);
 };
 
 #endif // BRAINBOT_HPP_INCLUDED

@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! FUNCTIONS
 //! ----------------------------------------------------------------------------
 
-bool blocked(float x, float y, float size, NavGrid* grid)
+bool blocked(float x, float y, float size, NavGrid const* grid)
 {
   float hsize = size / 2;
 
@@ -55,7 +55,7 @@ bool blocked(float x, float y, float size, NavGrid* grid)
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-GridCollider::GridCollider(size_t size_, NavGrid *grid_,
+GridCollider::GridCollider(size_t size_, NavGrid const* grid_,
                            PhysicalProperties physics_) :
 size(size_),
 speed(),

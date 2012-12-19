@@ -13,7 +13,7 @@
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTOR
 //! ----------------------------------------------------------------------------
-BrainBot::BrainBot(fV3 position_, NavGrid* grid) :
+BrainBot::BrainBot(fV3 position_, NavGrid const* grid) :
 GameObject(position_, new Mesh3DView(position_, 3.0f, "spider"),
                       new GridCollider(10, grid,
                          PhysicalProperties(MAX_SPEED, FRICTION, ACCELERATION)))
