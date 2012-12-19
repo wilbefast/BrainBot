@@ -25,9 +25,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 Group::Group(fV3 position_, NavGrid* grid_, Formation* formation_) :
 GameObject(position_),
-first_member(NULL),
-current_member(NULL),
-n_members(0),
+members(),
 formation(formation_),
 direction(1, 0, 0), // face right
 grid(grid_)
@@ -37,9 +35,8 @@ grid(grid_)
 
 Group::~Group()
 {
-  //! delete each member of the group
-  first_member->deleteConnections();
-  delete first_member;
+  for(members_container_it i = members.begin(); i != members.end(); i++)
+    delete (*i);
 }
 
 //!-----------------------------------------------------------------------------
@@ -66,12 +63,7 @@ void Group::setDirection(fV3 direction_)
 
 void Group::addMember()
 {
-  GameObject* newbie = spawnMember(getDesiredMemberPosition(n_members));
-  if(first_member)
-    first_member->newNext(newbie);
-  else
-    first_member = newbie;
-  n_members++;
+  members.push_back(spawnMember(getDesiredMemberPosition(members.size())));
 }
 
 //!-----------------------------------------------------------------------------
@@ -89,20 +81,24 @@ int Group::update(float t_delta)
   GameObject::update(t_delta);
 
   //! update each member of the group
-  size_t member_i = 0;
-  if(first_member)
+  for(members_container_it i = members.begin(); i != members.end(); i++)
   {
-    current_member = first_member;
-    do
-    {
-      // update each member
-      updateMember(current_member, member_i, t_delta);
+    // cache current object
+    GameObject* member = (*i);
 
-      // advance iterators
-      current_member = (GameObject*)current_member->getNext();
-      member_i++;
-    }
-    while(current_member != first_member);
+    // push the members towards the centroid of the group
+    fV3 reform = (position - member->getPosition());
+    float norm = reform.normalise();
+    if(norm > 32.0f)
+      member->push(reform);
+
+    // push members away from eachother
+    members_container_it j = i;
+    for(j++; j != members.end(); j++)
+      member->repulse((*j));
+
+    // call the member's update function
+    member->update(t_delta);
   }
 
   //! group is still alive (return 0)
@@ -115,19 +111,8 @@ void Group::draw()
   glLoadName(id);
 
   //! draw each member of the group
-  if(first_member)
-  {
-    current_member = first_member;
-    do
-    {
-      // draw the current object
-      current_member->draw();
-
-      // advance iterator
-      current_member = (GameObject*)current_member->getNext();
-    }
-    while(current_member != first_member);
-  }
+  for(members_container_it i = members.begin(); i != members.end(); i++)
+    (*i)->draw();
 
   //! debug draw position and direction
   fV3 front_position = position + (direction*32.0f);
@@ -140,38 +125,4 @@ void Group::draw()
 
   //! unbind group identifier
   glLoadName(0);
-}
-
-
-//!-----------------------------------------------------------------------------
-//! SUBROUTINES
-//!-----------------------------------------------------------------------------
-
-void Group::updateMember(GameObject *member, size_t member_i, float t_delta)
-{
-  // push the members towards the centre of the group
-
-  fV3 reform = (position - member->getPosition());
-  float norm = reform.normalise();
-  if(norm > 32.0f)
-    member->push(reform);
-
-  // iterate through other members of the group
-
-  //! NB - we're overwriting current_member here, we'll need to restore it
-  current_member = (GameObject*)member->getNext();
-  while(current_member != first_member)
-  {
-    // push members away from eachother
-    member->repulse(current_member);
-
-    // advance inner-iterator
-    current_member = (GameObject*)current_member->getNext();
-  }
-
-  // call the member's update function
-  member->update(t_delta);
-
-  //! revert back to the original state
-  current_member = member;
 }

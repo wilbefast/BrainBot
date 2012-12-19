@@ -19,14 +19,15 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BLOCKFORMATION_HPP_INCLUDED
 
 #include "Formation.hpp"
+#include "../model/GameObject.hpp"
 
 class BlockFormation : public Formation
 {
 
   //! METHODS
 public:
-  // interface
-  virtual void deployMembers(GameObject* first_member) const = 0;
+  // implements -- Formation
+  void form(fV3 centre, fV3 direction, GameObject* first_member) const;
 };
 
 #endif // BLOCKFORMATION_HPP_INCLUDED

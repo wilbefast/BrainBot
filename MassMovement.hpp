@@ -27,7 +27,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "view/NavGridView.hpp"
 #include "view/StrategyCamera.hpp"
 
-#include "ai/ColumnFormation.hpp"
 #include "ai/Group.hpp"
 
 
@@ -41,7 +40,6 @@ private:
 
   // objects
   Group* player;
-  //ColumnFormation* column;
 
   // camera controls
   StrategyCamera camera;

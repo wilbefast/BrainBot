@@ -25,15 +25,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! IMPLEMENTS FORMATION
 //!-----------------------------------------------------------------------------
 
-void BlockFormation::deployMembers(GameObject* first_member) const
+void BlockFormation::form(fV3 centre, fV3 direction, GameObject* first_member) const
 {
-  GameObject* current_member = first_member;
-  do
-  {
-    //! TODO
-
-    current_member = (GameObject*)current_member->getNext();
-  }
-  while(current_member != first_member);
-
 }

@@ -22,16 +22,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../model/GameObject.hpp"
 #include "../ai/Formation.hpp"
 
+#include <vector>
+typedef std::vector<GameObject*> members_container;
+typedef members_container::iterator members_container_it;
+
 //! **ABSTRACT**
 class Group : public GameObject
 {
   //! ATTRIBUTES
 private:
-  GameObject *first_member, *current_member;
-  size_t n_members;
+  members_container members;
   Formation *formation;
   fV3 direction;
-
 
 public:
   NavGrid const* grid;
@@ -58,11 +60,6 @@ public:
   // interface
 protected:
   virtual GameObject* spawnMember(fV3 spawn_position) const = 0;
-
-
-  //! SUBROUTINES
-private:
-  void updateMember(GameObject *member, size_t member_i, float t_delta);
 };
 
 #endif // GROUP_HPP_INCLUDED

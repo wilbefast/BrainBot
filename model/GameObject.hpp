@@ -22,9 +22,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../physics/CollisionMask.hpp"
 #include "../view/ObjectView.hpp"
 #include "../engine/math/V3.hpp"
-#include "../engine/utils/IntrusiveLinked.hpp"
 
-class GameObject : public IntrusiveLinked
+class GameObject
 {
 //! VARIABLES
 private:
