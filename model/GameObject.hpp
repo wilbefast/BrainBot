@@ -45,7 +45,8 @@ public:
   GameObject(fV3 position_, ObjectView* view_ = NULL, CollisionMask* = NULL);
   virtual ~GameObject();
   // accessors
-  fV3 const& getPosition() const { return position; }
+  fV3 const& getPosition() const;
+  float getRadius() const;
   // mutators
   void push(fV3 direction);
   void repulse(GameObject* other, float spring_factor = 1.0f);

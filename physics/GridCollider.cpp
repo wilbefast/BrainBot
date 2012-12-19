@@ -23,27 +23,25 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! FUNCTIONS
 //! ----------------------------------------------------------------------------
 
-bool blocked(float x, float y, float size, NavGrid const* grid)
+bool blocked(float x, float y, size_t radius, NavGrid const* grid)
 {
-  float hsize = size / 2;
-
-  if(x < hsize
- || y < hsize
- || x >= (int)grid->n_cells.x * NavCell::size.x - hsize
- || y >= (int)grid->n_cells.y * NavCell::size.y - hsize)
+  if(x < radius
+ || y < radius
+ || x >= (int)grid->n_cells.x * NavCell::size.x - radius
+ || y >= (int)grid->n_cells.y * NavCell::size.y - radius)
     return true;
   else
   {
-    uV2 grid_pos = grid->vertexToGridPos(fV2(x-hsize, y-hsize));
+    uV2 grid_pos = grid->vertexToGridPos(fV2(x-radius, y-radius));
       if(grid->getCell(grid_pos).obstacle) return true;
 
-    grid_pos = grid->vertexToGridPos(fV2(x-hsize, y+hsize));
+    grid_pos = grid->vertexToGridPos(fV2(x-radius, y+radius));
       if(grid->getCell(grid_pos).obstacle) return true;
 
-    grid_pos = grid->vertexToGridPos(fV2(x+hsize, y-hsize));
+    grid_pos = grid->vertexToGridPos(fV2(x+radius, y-radius));
       if(grid->getCell(grid_pos).obstacle) return true;
 
-    grid_pos = grid->vertexToGridPos(fV2(x+hsize, y+hsize));
+    grid_pos = grid->vertexToGridPos(fV2(x+radius, y+radius));
       if(grid->getCell(grid_pos).obstacle) return true;
 
     return false;
@@ -55,9 +53,10 @@ bool blocked(float x, float y, float size, NavGrid const* grid)
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-GridCollider::GridCollider(size_t size_, NavGrid const* grid_,
+GridCollider::GridCollider(float size_, NavGrid const* grid_,
                            PhysicalProperties physics_) :
 size(size_),
+radius(size_ / 2),
 speed(),
 grid(grid_),
 physics(physics_)
@@ -75,24 +74,24 @@ int GridCollider::update(fV3& position, float t_delta)
   int xvar = SIGN(speed.x);
   int yvar = SIGN(speed.y);
 
-  if(blocked(position.x + speed.x, position.y, size, grid))
+  if(blocked(position.x + speed.x, position.y, radius, grid))
   {
     //snap to collision position
-    while(!blocked(position.x + xvar, position.y, size, grid))
+    while(!blocked(position.x + xvar, position.y, radius, grid))
         position.x += xvar;
     speed.x = 0;
   }
-  if(blocked(position.x, position.y + speed.y, size, grid))
+  if(blocked(position.x, position.y + speed.y, radius, grid))
   {
     //snap to collision position
-    while(!blocked(position.x, position.y + yvar, size, grid))
+    while(!blocked(position.x, position.y + yvar, radius, grid))
       position.y += yvar;
     speed.y = 0;
   }
-  if(blocked(position.x + speed.x, position.y + speed.y, size, grid))
+  if(blocked(position.x + speed.x, position.y + speed.y, radius, grid))
   {
     //snap to collision position
-    while(!blocked(position.x, position.y + yvar, size, grid))
+    while(!blocked(position.x, position.y + yvar, radius, grid))
     {
       position.x += xvar;
       position.y += yvar;
@@ -119,4 +118,9 @@ int GridCollider::update(fV3& position, float t_delta)
 void GridCollider::push(fV3 const& direction)
 {
   speed += direction * physics.acceleration;
+}
+
+float GridCollider::getRadius() const
+{
+  return radius;
 }

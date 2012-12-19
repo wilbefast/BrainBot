@@ -34,6 +34,7 @@ private:
   members_container members;
   Formation *formation;
   fV3 direction;
+  float radius;
 
 public:
   NavGrid const* grid;

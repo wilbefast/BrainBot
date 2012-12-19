@@ -69,6 +69,21 @@ void GameObject::repulse(GameObject* other, float spring_factor)
   other->push(to_other * spring_factor);
 }
 
+
+//! ----------------------------------------------------------------------------
+//! ACCESSORS
+//! ----------------------------------------------------------------------------
+
+fV3 const& GameObject::getPosition() const
+{
+  return position;
+}
+
+float GameObject::getRadius() const
+{
+  return (mask) ? mask->getRadius() : 0;
+}
+
 //! ----------------------------------------------------------------------------
 //! CALLED EACH FRAME
 //! ----------------------------------------------------------------------------

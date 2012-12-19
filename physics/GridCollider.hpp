@@ -26,7 +26,7 @@ class GridCollider : public CollisionMask
 {
   //! ATTRIBUTES
 private:
-  size_t size;
+  float size, radius;
   fV3 speed;
   NavGrid const* grid;
   PhysicalProperties physics;
@@ -34,11 +34,12 @@ private:
   //! METHODS
 public:
   // constructors, destructors
-  GridCollider(size_t size, NavGrid const* grid_, PhysicalProperties physics_);
+  GridCollider(float size, NavGrid const* grid_, PhysicalProperties physics_);
 
   // implements -- CollisionMask
   int update(fV3& position, float t_delta);
   void push(fV3 const& direction);
+  float getRadius() const;
 };
 
 #endif // GRIDCOLLIDER_HPP_INCLUDED

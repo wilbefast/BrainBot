@@ -63,7 +63,12 @@ void Group::setDirection(fV3 direction_)
 
 void Group::addMember()
 {
-  members.push_back(spawnMember(getDesiredMemberPosition(members.size())));
+  // add member
+  GameObject* newbie = spawnMember(getDesiredMemberPosition(members.size()));
+  members.push_back(newbie);
+
+  // group becomes bigger
+  radius += newbie->getRadius();
 }
 
 //!-----------------------------------------------------------------------------
@@ -72,7 +77,7 @@ void Group::addMember()
 
 void Group::push(fV3 push_direction)
 {
-  GameObject::push(push_direction * 10.0f);
+  GameObject::push(push_direction * 10.0f); //! TODO FIXME
 }
 
 int Group::update(float t_delta)
@@ -89,7 +94,7 @@ int Group::update(float t_delta)
     // push the members towards the centroid of the group
     fV3 reform = (position - member->getPosition());
     float norm = reform.normalise();
-    if(norm > 32.0f)
+    if(norm > radius)
       member->push(reform);
 
     // push members away from eachother
@@ -115,7 +120,7 @@ void Group::draw()
     (*i)->draw();
 
   //! debug draw position and direction
-  fV3 front_position = position + (direction*32.0f);
+  fV3 front_position = position + (direction * radius);
   glDisable(GL_LIGHTING);
     glBegin(GL_LINE_LOOP);
       glVertex3fv(position.front());
