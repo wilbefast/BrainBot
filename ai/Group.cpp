@@ -1,15 +1,19 @@
 #include "Group.hpp"
 
-Group::Group(fV2 position_, NavGrid* grid_) : BrainBot(position_), grid(grid_) {
+Group::Group(fV3 position_, NavGrid* grid_) :
+GameObject(position_),
+grid(grid_)
+{
 }
 
-Group::~Group() {
-    delete formation;
+Group::~Group()
+{
+  //! Delete formation? Shared?
 }
 
 // ---- Formation managment -----------------------------------------------------------
 
-void Group::assembleFormation() {
+/*void Group::assembleFormation() {
     uV2 tmpRelativePosition;
 
     if(formation != NULL) {
@@ -23,10 +27,33 @@ void Group::assembleFormation() {
         leader->setPosition(fV2(tmpRelativePosition.x * formation->getSpotSize().x + position.x,
                          position.y - formation->getSpotSize().y));
     }
-}
+}*/
 
 
 // ---- Overriden ---------------------------------------------------------------------
 
-void Group::move(fV2 amount, NavGrid* grid) {
+void Group::push(fV3 direction)
+{
+  GameObject::push(direction);
+}
+
+int Group::update(float t_delta)
+{
+
+  //! update each member of the group
+  for(std::vector<GameObject*>::iterator i = members.begin();
+  i != members.end(); i++)
+  {
+    (*i)->update(t_delta);
+  }
+}
+
+void Group::draw()
+{
+  //! draw each member of the group
+  for(std::vector<GameObject*>::iterator i = members.begin();
+  i != members.end(); i++)
+  {
+    (*i)->draw();
+  }
 }

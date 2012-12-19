@@ -37,7 +37,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define GRID_ORIGIN fV3(0, 0, 0)
 
 #define MAZE_TUNNEL_SIZE 5
-#define MAZE_PERCENT_BROKEN_WALLS 10
+#define MAZE_PERCENT_BROKEN_WALLS 15
 
 #define START_N_MINIONS 2
 
@@ -81,24 +81,26 @@ int MassMovement::startup()
   // create game objects
   fV3 map_centre((GRID_N_COLS+1)*NavCell::size.x*0.5f,
                   (GRID_N_ROWS+1)*NavCell::size.y*0.5f, 0);
-  player = new BrainBot(map_centre);
+  //player = new BrainBot(map_centre, &grid);
+  player = new Group(map_centre, &grid);
 
   // set up the lighting
   glShadeModel(GL_SMOOTH);
-  GLfloat light_pos[3] = { 0, 0, 2066516480 };
-  GLfloat light_diffuse[3] = { 1.0f, 1.0f, 1.0f };
-  GLfloat light_ambient[3] = { 0.5f, 0.5f, 0.5f };
+  GLfloat light_pos[4] = { map_centre.x, map_centre.y, 1000.0f, 1.0f};
+  GLfloat light_diffuse[4] = { 1.0f, 1.0f, 1.0f, 1.0f };
+  GLfloat light_ambient[4] = { 0.5f, 0.5f, 0.5f, 1.0f };
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
   glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
   glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
 
-
   // test path
-  //testpath = grid.getPath(uV2(3,3), uV2(GRID_N_COLS/2, GRID_N_ROWS/2));
-
+  testpath = grid.getPath(uV2(3,3), uV2(GRID_N_COLS/2, GRID_N_ROWS/2));
+  //
     /*column = new ColumnFormation(uV2(2, 8));
     column->setSpotSize(fV2(30.0f, 30.0f));
     group.setFormation(column);
+
+
 
     fV2 p(0, 0), d(32, 32);
     first_bot = current_bot = new BrainBot(p);

@@ -84,7 +84,7 @@ right(tunnel_size_,0)
     up.y = left.x = -tunnel_size;
     down.y = right.x = tunnel_size;
   }
-  while(tunnel_size > 1);
+  while(tunnel_size > 2);
 
   // snap top-left block to top-left
   while(block_is_valid(top_left_block))

@@ -47,26 +47,23 @@ void GameObject::push(fV3 direction)
   if(mask)
     mask->push(direction);
   else
-    position += direction*3.0f;
+    position += direction;
 }
 
 //! ----------------------------------------------------------------------------
 //! CALLED EACH FRAME
 //! ----------------------------------------------------------------------------
 
-#include <iostream>
-
 int GameObject::update(float t_delta)
 {
-  //std::cout << "position before mask->update: " << position << std::endl;
+  int result = 0;
   if(mask)
-    return mask->update(position, t_delta);
+    result = mask->update(position, t_delta);
 
-  //std::cout << "position before view->setPosition: " << position << std::endl;
   if(view)
     view->setPosition(position);
 
-  return 0;
+  return result;
 }
 
 void GameObject::draw() const

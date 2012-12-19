@@ -148,6 +148,8 @@
 		</Compiler>
 		<Unit filename="../MassMovement.cpp" />
 		<Unit filename="../MassMovement.hpp" />
+		<Unit filename="../ai/Group.cpp" />
+		<Unit filename="../ai/Group.hpp" />
 		<Unit filename="../ai/PathSearch.cpp" />
 		<Unit filename="../ai/PathSearch.hpp" />
 		<Unit filename="../ai/SearchState.cpp" />
@@ -294,6 +296,7 @@
 		<Unit filename="../physics/CollisionMask.hpp" />
 		<Unit filename="../physics/GridCollider.cpp" />
 		<Unit filename="../physics/GridCollider.hpp" />
+		<Unit filename="../physics/PhysicalProperties.hpp" />
 		<Unit filename="../view/BillboardView.cpp" />
 		<Unit filename="../view/BillboardView.hpp" />
 		<Unit filename="../view/Mesh3DView.cpp" />

@@ -40,9 +40,7 @@ private:
   NavGridView gridView;
 
   // objects
-  BrainBot* player;
-
-  //Group group;
+  Group* player;
   //ColumnFormation* column;
 
   // camera controls

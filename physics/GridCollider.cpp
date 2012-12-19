@@ -18,6 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "GridCollider.hpp"
 
+
 //! ----------------------------------------------------------------------------
 //! FUNCTIONS
 //! ----------------------------------------------------------------------------
@@ -54,10 +55,12 @@ bool blocked(float x, float y, float size, NavGrid* grid)
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-GridCollider::GridCollider(size_t size_, NavGrid *grid_) :
+GridCollider::GridCollider(size_t size_, NavGrid *grid_,
+                           PhysicalProperties physics_) :
 size(size_),
 speed(),
-grid(grid_)
+grid(grid_),
+physics(physics_)
 {
 
 }
@@ -101,12 +104,12 @@ int GridCollider::update(fV3& position, float t_delta)
   position += speed;
 
   //! apply friction
-  speed *= 0.9f;
+  speed *= physics.friction;
 
   //! apply terminal velocity
-  if((speed.x > 0 && speed.x < 0.01f) || (speed.x < 0 && speed.x > 0.01f))
+  if(ABS(speed.x) < 0.01f)
     speed.x = 0;
-  if((speed.y > 0 && speed.y < 0.01f) || (speed.y < 0 && speed.y > 0.01f))
+  if(ABS(speed.y) < 0.01f)
     speed.y = 0;
 
   //! don't destroy the object
@@ -115,5 +118,5 @@ int GridCollider::update(fV3& position, float t_delta)
 
 void GridCollider::push(fV3 const& direction)
 {
-  speed += direction*0.4f;
+  speed += direction * physics.acceleration;
 }

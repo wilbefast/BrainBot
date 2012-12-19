@@ -1,45 +1,48 @@
-#ifndef GROUP_H
-#define GROUP_H
+#ifndef GROUP_HPP_INCLUDED
+#define GROUP_HPP_INCLUDED
 
 #include <vector>
 
-#include "../model/BrainBot.hpp"
-#include "../ai/Formation.hpp"
+#include "../model/NavGrid.hpp"
+#include "../model/GameObject.hpp"
+//#include "../ai/Formation.hpp"
 
-class Group : public BrainBot {
+class Group : public GameObject
+{
+public:
+  Group(fV3 position_, NavGrid* grid_);
+  virtual ~Group();
 
-    public:
-        Group(fV2 position_, NavGrid* grid_);
-        virtual ~Group();
+// ---- Accessors --------------------------------------------------------------
 
-// ---- Accessors ---------------------------------------------------------------------
+  std::vector<GameObject*> getMembers() { return members; }
+  void setMembers(std::vector<GameObject*> val) { members = val; }
+  void addMember(GameObject* member) { members.push_back(member); }
 
-        std::vector<BrainBot*> getMembers() { return members; }
-        void setMembers(std::vector<BrainBot*> val) { members = val; }
-        void addMember(BrainBot* member) { members.push_back(member); }
+  GameObject* getLeader() { return leader; }
+  void setLeader(GameObject* leader_) { leader = leader_; }
 
-        BrainBot* getLeader() { return leader; }
-        void setLeader(BrainBot* leader_) { leader = leader_; }
-
-        Formation* getFormation() { return formation; }
-        void setFormation(Formation* formation_) { formation = formation_; }
-
-
-// ---- Formation managment -----------------------------------------------------------
-
-        void assembleFormation();
+  //sFormation* getFormation() { return formation; }
+  //void setFormation(Formation* formation_) { formation = formation_; }
 
 
-// ---- Overriden ---------------------------------------------------------------------
+// ---- Formation managment ----------------------------------------------------
 
-        void move(fV2 amount, NavGrid* grid);
+  void assembleFormation();
 
 
-    private:
-        std::vector<BrainBot*> members;
-        BrainBot* leader;
-        Formation* formation;
-        NavGrid* grid;
+// ---- Overrides GameObject ---------------------------------------------------
+
+  void push(fV3 direction);
+  int update(float t_delta);
+  void draw();
+
+
+private:
+  std::vector<GameObject*> members;
+  GameObject* leader;
+  //Formation* formation;
+  NavGrid* grid;
 };
 
-#endif // GROUP_H
+#endif // GROUP_HPP_INCLUDED

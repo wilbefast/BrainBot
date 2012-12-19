@@ -71,8 +71,7 @@ void NavGridView::draw()
     {
       // cache cell and its position
       NavCell const& cell = navGrid->getCell(grid_pos);
-      static fV3 vertex;
-        vertex = navGrid->gridPosToVertex(grid_pos);
+      fV3 vertex = navGrid->gridPosToVertex(grid_pos);
 
       // is the cell obstructed? How high is it?
       int obstructed = (cell.obstacle) ? 1 : 0;
