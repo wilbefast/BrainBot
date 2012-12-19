@@ -67,7 +67,7 @@ void StrategyCamera::push(fV3 amount)
   }
 }
 
-void StrategyCamera::centreOver(fV2 position)
+void StrategyCamera::centreOver(fV3 position)
 {
   transform[3].x = -position.x;
   transform[3].y = -position.y;

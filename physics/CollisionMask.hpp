@@ -26,7 +26,8 @@ class CollisionMask
 {
   //! INTERFACE
 public:
-  virtual void update(fV3& position) = 0;
+  virtual ~CollisionMask() { }
+  virtual int update(fV3& position, float t_delta) = 0;
   virtual void push(fV3 const& direction) = 0;
 };
 

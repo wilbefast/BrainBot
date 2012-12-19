@@ -19,7 +19,7 @@ public:
 
   // mutators
   void push(fV3 amount);
-  void centreOver(fV2 position);
+  void centreOver(fV3 position);
   void update_position();
 
   // opengl

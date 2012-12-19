@@ -28,6 +28,7 @@ class GameObject
 //! ATTRIBUTES
 protected:
   fV3 position;
+  float scale;
   ObjectView* view;
   CollisionMask* mask;
 
@@ -37,8 +38,12 @@ public:
   // constructors, destructors
   GameObject(fV3 position_, ObjectView* view_ = NULL, CollisionMask* = NULL);
   virtual ~GameObject();
+  // accessors
+  fV3 const& getPosition() const { return position; }
+  // mutators
+  void push(fV3 direction);
   // called each frame
-  int update();
+  int update(float t_delta);
   void draw() const;
 };
 

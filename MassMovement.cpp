@@ -26,7 +26,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "model/GameObject.hpp"
 
-#include "engine/math/V2.hpp"
+#include "engine/math/V3.hpp"
 
 #define PAN_SPEED 20
 #define ZOOM_SPEED 200
@@ -57,8 +57,7 @@ GameState(),
 grid(GRID_ORIGIN, GRID_SIZE, MAZE_TUNNEL_SIZE, MAZE_PERCENT_BROKEN_WALLS),
 gridView(&grid),
 // objects
-player(fV2((GRID_N_COLS+1)*NavCell::size.x*0.5f, (GRID_N_ROWS+1)*NavCell::size.y*0.5f)),
-first_bot(NULL),
+player(NULL),
 // camera controls
 camera(),
 left(false),
@@ -80,13 +79,14 @@ int MassMovement::startup()
   draw::use3D();
   MeshManager::getInstance()->startup();
 
-  // grab assets for objects
-  BrainBot::load_assets();
-  BrainBotKing::load_assets();
+  // create game objects
+  fV3 map_centre((GRID_N_COLS+1)*NavCell::size.x*0.5f,
+                  (GRID_N_ROWS+1)*NavCell::size.y*0.5f, 0);
+  player = new BrainBot(map_centre);
 
   // set up the lighting
   glShadeModel(GL_SMOOTH);
-  GLfloat light_pos[3] = { player.position.x, player.position.y, -100 };
+  GLfloat light_pos[3] = { map_centre.x, map_centre.y, -100 };
   GLfloat light_diffuse[3] = { 1.0f, 1.0f, 1.0f };
   GLfloat light_ambient[3] = { 0.5f, 0.5f, 0.5f };
   glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
@@ -94,7 +94,7 @@ int MassMovement::startup()
   glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
 
   // create the objects
-  fV2 p;
+  /*fV2 p;
   for(int i = 0; i < START_N_MINIONS; i++)
   {
     p.x = player.position.x -rand()%10 + rand()%10;
@@ -113,7 +113,7 @@ int MassMovement::startup()
     current_bot = (BrainBot*)current_bot->getNext();
   }
   while(current_bot != first_bot);
-
+  */
 
   // test path
   testpath = grid.getPath(uV2(3,3), uV2(GRID_N_COLS/2, GRID_N_ROWS/2));
@@ -147,19 +147,21 @@ int MassMovement::shutdown()
   ASSERT(GameState::shutdown() == EXIT_SUCCESS,
         "MassMovement stopping GameState");
 
+  // free memory
+  delete player;
+
   // all clear
   return EXIT_SUCCESS;
 }
 
 /// OVERRIDES GAMESTATE
 
-int MassMovement::update(float delta)
+int MassMovement::update(float t_delta)
 {
   // move camera
-  static fV3 camera_move;
+  static fV3 camera_move, player_move;
     camera_move = fV3(0, 0, 0);
-  static fV2 player_move;
-    player_move = fV2(0, 0);
+    player_move = fV3(0, 0, 0);
 
   if(up) camera_move.z -= ZOOM_SPEED;
   if(down) camera_move.z += ZOOM_SPEED;
@@ -179,14 +181,13 @@ int MassMovement::update(float delta)
   up = down = false;
   camera.update_position();
 
-  // Move the player
-  player.move(player_move, &grid);
-  camera.centreOver(player.getPosition());
+  // Move the player and follow with the camera
+  player->push(player_move);
+  player->update(t_delta);
+  camera.centreOver(player->getPosition());
 
   // Get the mouse
   static fV2 pointed;
-
-
   pointed = input.last_hover;
   pointed.x -= camera.transform[3].x;
   pointed.y -= camera.transform[3].y;
@@ -220,15 +221,15 @@ void MassMovement::draw()
     camera.lookThrough();
     gridView.draw();
 
-    current_bot = first_bot;
+    /*current_bot = first_bot;
     do
     {
       current_bot->render();
       current_bot = (BrainBot*)current_bot->getNext();
     }
-    while(current_bot != first_bot);
+    while(current_bot != first_bot);*/
 
-    player.render();
+    player->draw();
 
     glLineWidth(2.0f);
     glColor3f(1,1,0);
@@ -241,12 +242,7 @@ void MassMovement::draw()
        node.y *= NavCell::size.y; node.y += NavCell::size.y*0.5f;
       glVertex3f(node.x, node.y, -15);
     }
-
-
     glEnd();
 
   glPopMatrix();
-
-  // Draw dynamic game objects
-  GameState::draw();
 }

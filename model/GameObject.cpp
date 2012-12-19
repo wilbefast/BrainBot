@@ -24,6 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 GameObject::GameObject(fV3 position_, ObjectView* view_, CollisionMask* mask_) :
 position(position_),
+scale(1.0f),
 view(view_),
 mask(mask_)
 {
@@ -39,13 +40,34 @@ GameObject::~GameObject()
 }
 
 //! ----------------------------------------------------------------------------
+//! MUTATORS
+//! ----------------------------------------------------------------------------
+
+void GameObject::push(fV3 direction)
+{
+  if(mask)
+    mask->push(direction);
+  else
+    position += direction;
+}
+
+//! ----------------------------------------------------------------------------
 //! CALLED EACH FRAME
 //! ----------------------------------------------------------------------------
 
-int GameObject::update()
+#include <iostream>
+
+int GameObject::update(float t_delta)
 {
+  //std::cout << "position before mask->update: " << position << std::endl;
   if(mask)
-    mask->update(position);
+    return mask->update(position, t_delta);
+
+  //std::cout << "position before view->setPosition: " << position << std::endl;
+  if(view)
+    view->setPosition(position);
+
+  return 0;
 }
 
 void GameObject::draw() const

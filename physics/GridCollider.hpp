@@ -35,7 +35,7 @@ public:
   GridCollider(size_t size, NavGrid *grid_);
 
   // implements -- CollisionMask
-  void update(fV3& position);
+  int update(fV3& position, float t_delta);
   void push(fV3 const& direction);
 };
 

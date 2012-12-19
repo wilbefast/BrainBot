@@ -22,7 +22,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine/scenes/GameState.hpp"
 
 #include "model/NavGridMaze.hpp"
-#include "model/BrainBotKing.hpp"
 #include "model/BrainBot.hpp"
 
 #include "view/NavGridView.hpp"
@@ -41,8 +40,7 @@ private:
   NavGridView gridView;
 
   // objects
-  BrainBotKing player;
-  BrainBot *first_bot, *current_bot;
+  BrainBot* player;
 
   //Group group;
   //ColumnFormation* column;

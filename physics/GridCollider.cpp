@@ -66,7 +66,7 @@ grid(grid_)
 //! IMPLEMENTS -- COLLISIONMASK
 //! ----------------------------------------------------------------------------
 
-void GridCollider::update(fV3& position)
+int GridCollider::update(fV3& position, float t_delta)
 {
   ///smooth to collision
   int xvar = SIGN(speed.x);
@@ -108,6 +108,9 @@ void GridCollider::update(fV3& position)
     speed.x = 0;
   if((speed.y > 0 && speed.y < 0.01f) || (speed.y < 0 && speed.y > 0.01f))
     speed.y = 0;
+
+  //! don't destroy the object
+  return 0;
 }
 
 void GridCollider::push(fV3 const& direction)
