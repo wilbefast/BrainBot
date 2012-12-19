@@ -33,7 +33,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #define GRID_N_ROWS 67
 #define GRID_N_COLS 67
+#define GRID_SIZE uV2(GRID_N_COLS, GRID_N_ROWS)
 #define GRID_ORIGIN fV3(0, 0, 0)
+
+#define MAZE_TUNNEL_SIZE 3
+#define MAZE_PERCENT_BROKEN_WALLS 33
+
 
 #define START_N_MINIONS 2
 
@@ -49,7 +54,7 @@ static std::deque<NavCell*>* testpath = NULL;
 MassMovement::MassMovement() :
 GameState(),
 // grid
-grid(GRID_ORIGIN, uV2(GRID_N_COLS, GRID_N_ROWS)),
+grid(GRID_ORIGIN, GRID_SIZE, MAZE_TUNNEL_SIZE, MAZE_PERCENT_BROKEN_WALLS),
 gridView(&grid),
 // objects
 player(fV2((GRID_N_COLS+1)*NavCell::size.x*0.5f, (GRID_N_ROWS+1)*NavCell::size.y*0.5f)),

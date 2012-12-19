@@ -24,23 +24,25 @@ class NavGridMaze : public NavGrid
 {
   //! ATTRIBUTES
 private:
+  size_t tunnel_size, percent_broken_walls;
   uV2 top_left_block;
+  iV2 up, down, left, right;
 
   //! METHODS
 public:
   // constructors
-  NavGridMaze(fV3 origin_, uV2 grid_size_);
+  NavGridMaze(fV3 origin_, uV2 grid_size_, size_t _tunnel_size, size_t _percent_broken_walls);
 
   // mutators
-  void dig_block(uV2 centre, size_t size);
+  void dig_block(uV2 centre);
 
   // accessors
-  bool block_is_filled(uV2 centre, size_t size) const;
-  bool block_is_clear(uV2 centre, size_t size) const;
-  bool block_is_valid(uV2 centre, size_t size) const;
-  bool block_touches_border(uV2 centre, size_t size) const;
-  size_t filled_neighbour_blocks(uV2 centre, size_t size, bool diagonals) const;
-  bool block_is_wall(uV2 centre, size_t size) const;
+  bool block_is_filled(uV2 centre) const;
+  bool block_is_clear(uV2 centre) const;
+  bool block_is_valid(uV2 centre) const;
+  bool block_touches_border(uV2 centre) const;
+  size_t filled_neighbour_blocks(uV2 centre, bool diagonals) const;
+  bool block_is_wall(uV2 centre) const;
 
   //! SUBROUTINES
 private:

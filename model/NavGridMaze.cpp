@@ -22,17 +22,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define LEFT 2
 #define RIGHT 3
 
-#define TUNNEL_SIZE 3
-#define PERCENT_BROKEN_WALLS 25
-
 //! ----------------------------------------------------------------------------
-//! PRIVATE FUNCTIONS AND VARIABLES
+//! PRIVATE FUNCTIONS
 //! ----------------------------------------------------------------------------
-
-static iV2 up(0,-TUNNEL_SIZE),
-            down(0,TUNNEL_SIZE),
-            left(-TUNNEL_SIZE,0),
-            right(TUNNEL_SIZE,0);
 
 void shuffle_array(int table[], size_t max)
 {
@@ -50,23 +42,30 @@ void shuffle_array(int table[], size_t max)
 //! ----------------------------------------------------------------------------
 
 
-NavGridMaze::NavGridMaze(fV3 origin_, uV2 grid_size_) :
-NavGrid(origin_, grid_size_)
+NavGridMaze::NavGridMaze(fV3 origin_, uV2 grid_size_, size_t tunnel_size_, size_t percent_broken_walls_) :
+NavGrid(origin_, grid_size_),
+tunnel_size(tunnel_size_),
+percent_broken_walls(percent_broken_walls_),
+top_left_block(grid_size_.x/2, grid_size_.y/2),
+up(0,-tunnel_size_),
+down(0,tunnel_size_),
+left(-tunnel_size_,0),
+right(tunnel_size_,0)
 {
 
   // dig out a "perfect" maze
-  uV2 middle(n_cells.x/2, n_cells.y/2);
-  top_left_block = middle;
-  dig_maze(middle);
-  while(block_is_valid(top_left_block, TUNNEL_SIZE))
-    top_left_block.y -= TUNNEL_SIZE;
-  top_left_block.y += TUNNEL_SIZE;
-  while(block_is_valid(top_left_block, TUNNEL_SIZE))
-    top_left_block.x -= TUNNEL_SIZE;
-  top_left_block.x += TUNNEL_SIZE;
+  dig_maze(top_left_block);
+
+  // snap top-left block to top-left
+  while(block_is_valid(top_left_block))
+    top_left_block.y -= tunnel_size;
+  top_left_block.y += tunnel_size;
+  while(block_is_valid(top_left_block))
+    top_left_block.x -= tunnel_size;
+  top_left_block.x += tunnel_size;
 
 
-  // break some extra walls, just for fun
+  // starting at top-left: break some extra walls, just for fun
   break_walls();
 }
 
@@ -77,7 +76,7 @@ NavGrid(origin_, grid_size_)
 void NavGridMaze::dig_maze(uV2 pos)
 {
   // dig out the current block
-  dig_block(pos, TUNNEL_SIZE);
+  dig_block(pos);
 
   // shuffle direction order
   static int direction_order[] = { UP, DOWN, LEFT, RIGHT};
@@ -97,19 +96,19 @@ void NavGridMaze::dig_maze(uV2 pos)
 
     // strike the earth!
     iV2 step = pos + dir, two_steps = step + dir;
-    if(block_is_filled(two_steps, TUNNEL_SIZE)
-       && !block_touches_border(two_steps, TUNNEL_SIZE))
+    if(block_is_filled(two_steps)
+       && !block_touches_border(two_steps))
     {
-      dig_block(step, TUNNEL_SIZE);
+      dig_block(step);
       dig_maze(two_steps);
     }
   }
 }
 
-void NavGridMaze::dig_block(uV2 centre, size_t size)
+void NavGridMaze::dig_block(uV2 centre)
 {
-  int half_1 = size/2,
-      half_2 = size - half_1;
+  int half_1 = tunnel_size/2,
+      half_2 = tunnel_size - half_1;
 
   for(int r = (int)centre.y-half_1; r < (int)centre.y+half_2; r++)
   for(int c = (int)centre.x-half_1; c < (int)centre.x+half_2; c++)
@@ -123,10 +122,10 @@ void NavGridMaze::dig_block(uV2 centre, size_t size)
     top_left_block = centre;
 }
 
-bool NavGridMaze::block_is_filled(uV2 centre, size_t size) const
+bool NavGridMaze::block_is_filled(uV2 centre) const
 {
-  int half_1 = size/2,
-      half_2 = size - half_1;
+  int half_1 = tunnel_size/2,
+      half_2 = tunnel_size - half_1;
 
   for(int r = (int)centre.y-half_1; r < (int)centre.y+half_2; r++)
   for(int c = (int)centre.x-half_1; c < (int)centre.x+half_2; c++)
@@ -137,10 +136,10 @@ bool NavGridMaze::block_is_filled(uV2 centre, size_t size) const
   return true;
 }
 
-bool NavGridMaze::block_is_clear(uV2 centre, size_t size) const
+bool NavGridMaze::block_is_clear(uV2 centre) const
 {
-  int half_1 = size/2,
-      half_2 = size - half_1;
+  int half_1 = tunnel_size/2,
+      half_2 = tunnel_size - half_1;
 
   for(int r = (int)centre.y-half_1; r < (int)centre.y+half_2; r++)
   for(int c = (int)centre.x-half_1; c < (int)centre.x+half_2; c++)
@@ -151,10 +150,10 @@ bool NavGridMaze::block_is_clear(uV2 centre, size_t size) const
   return true;
 }
 
-bool NavGridMaze::block_is_valid(uV2 centre, size_t size) const
+bool NavGridMaze::block_is_valid(uV2 centre) const
 {
-  int half_1 = size/2,
-      half_2 = size - half_1;
+  int half_1 = tunnel_size/2,
+      half_2 = tunnel_size - half_1;
 
   for(int r = (int)centre.y-half_1; r < (int)centre.y+half_2; r++)
   for(int c = (int)centre.x-half_1; c < (int)centre.x+half_2; c++)
@@ -163,10 +162,10 @@ bool NavGridMaze::block_is_valid(uV2 centre, size_t size) const
   return true;
 }
 
-bool NavGridMaze::block_touches_border(uV2 centre, size_t size) const
+bool NavGridMaze::block_touches_border(uV2 centre) const
 {
-  int half_1 = size/2,
-      half_2 = size - half_1,
+  int half_1 = tunnel_size/2,
+      half_2 = tunnel_size - half_1,
       r, c;
 
   // top and bottom
@@ -197,42 +196,42 @@ bool NavGridMaze::block_touches_border(uV2 centre, size_t size) const
 void NavGridMaze::break_walls()
 {
   uV2 pos;
-  for(pos.y = top_left_block.y; pos.y < n_cells.y; pos.y += TUNNEL_SIZE)
-    for(pos.x = top_left_block.x; pos.x < n_cells.x; pos.x += TUNNEL_SIZE)
+  for(pos.y = top_left_block.y; pos.y < n_cells.y; pos.y += tunnel_size)
+    for(pos.x = top_left_block.x; pos.x < n_cells.x; pos.x += tunnel_size)
       // don't clear the whole map!
-      if(rand() % 100 < PERCENT_BROKEN_WALLS
+      if((rand() % 100) < (int)percent_broken_walls
       // objects should not be able to leave the map
-      && !block_touches_border(pos, TUNNEL_SIZE)
+      && !block_touches_border(pos)
       // destroy walls only, for a more aesthetic effect
-      && block_is_wall(pos, TUNNEL_SIZE))
-        dig_block(pos, TUNNEL_SIZE);
+      && block_is_wall(pos))
+        dig_block(pos);
 }
 
-size_t NavGridMaze::filled_neighbour_blocks(uV2 centre, size_t size, bool diagonals) const
+size_t NavGridMaze::filled_neighbour_blocks(uV2 centre, bool diagonals) const
 {
   size_t result = 0;
   //std::cout << "couting those around " << centre << '\n';
-  for(int r = centre.y - size, i = -1; i < 2; r += size, i++)
-  for(int c = centre.x - size, j = -1; j < 2; c += size, j++)
+  for(int r = centre.y - tunnel_size, i = -1; i < 2; r += tunnel_size, i++)
+  for(int c = centre.x - tunnel_size, j = -1; j < 2; c += tunnel_size, j++)
   {
-    if((diagonals || abs(i+j) == 1) && block_is_filled(iV2(c, r), size))
+    if((diagonals || abs(i+j) == 1) && block_is_filled(iV2(c, r)))
       result++;
   }
 
   return result;
 }
 
-bool NavGridMaze::block_is_wall(uV2 centre, size_t size) const
+bool NavGridMaze::block_is_wall(uV2 centre) const
 {
   // open areas cannot be walls
-  if(!block_is_filled(centre, size))
+  if(!block_is_filled(centre))
     return false;
 
   // check neighbours
-  bool n = block_is_filled(centre + iV2(0, -size), size),
-        s = block_is_filled(centre + iV2(0, size), size),
-        e = block_is_filled(centre + iV2(size, 0), size),
-        w = block_is_filled(centre + iV2(-size, 0), size);
+  bool n = block_is_filled(centre + up),
+        s = block_is_filled(centre + down),
+        e = block_is_filled(centre + right),
+        w = block_is_filled(centre + left);
 
   return
   // vertical wall

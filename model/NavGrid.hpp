@@ -53,6 +53,7 @@ public:
   uV2 vertexToGridPos(fV2 position) const;
   fV3 gridPosToVertex(uV2 position) const;
   bool isValidGridPos(iV2 position) const;
+  bool isLineOfSight(uV2 start, uV2 end) const;
 
   // pathing
   std::deque<NavCell*>* getPath(uV2 source, uV2 destination);
