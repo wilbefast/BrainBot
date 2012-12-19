@@ -313,12 +313,12 @@ void NavGridMaze::break_walls()
     for(pos.x = start.x; pos.x < n_cells.x; pos.x += tunnel_size)
       // don't clear the whole map!
       if((rand() % 100) < (int)percent_broken_walls
-      // objects should not be able to leave the map
-      && !block_touches_border(pos)
       // destroy walls only, for a more aesthetic effect
       && block_is_wall(pos))
       {
         set_tunnel_size(2);
+        // objects should not be able to leave the map
+        if(!block_touches_border(pos))
           dig_block(pos);
         set_tunnel_size(1);
       }

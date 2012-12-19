@@ -7,7 +7,7 @@ class NavGridView
 {
   //! ATTRIBUTES
 private:
-  NavGrid * navGrid;
+  NavGrid *navGrid;
 
   //! METHODS
 public:
@@ -16,6 +16,11 @@ public:
   virtual ~NavGridView();
   // mutators
   void draw();
+
+  //! SUBROUTINES
+private:
+  void draw_all_roads();
+  void draw_all_buildings();
 };
 
 #endif // NAVGRIDVIEW_HPP_INCLUDED

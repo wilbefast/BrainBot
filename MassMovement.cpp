@@ -37,8 +37,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define GRID_SIZE uV2(GRID_N_COLS, GRID_N_ROWS)
 #define GRID_ORIGIN fV3(0, 0, 0)
 
-#define MAZE_TUNNEL_SIZE 8
-#define MAZE_PERCENT_BROKEN_WALLS 15
+#define MAZE_TUNNEL_SIZE 5
+#define MAZE_PERCENT_BROKEN_WALLS 20
 
 #define START_N_MINIONS 2
 
@@ -96,27 +96,6 @@ int MassMovement::startup()
 
   // test path
   testpath = grid.getPath(uV2(3,3), uV2(GRID_N_COLS/2, GRID_N_ROWS/2));
-  //
-    /*column = new ColumnFormation(uV2(2, 8));
-    column->setSpotSize(fV2(30.0f, 30.0f));
-    group.setFormation(column);
-
-
-
-    fV2 p(0, 0), d(32, 32);
-    first_bot = current_bot = new BrainBot(p);
-    group.setLeader(first_bot);
-
-
-    for(int i = 1; i < 17; i++) {
-        p += d;
-        BrainBot* newbie = new BrainBot(p);
-        group.addMember(newbie);
-        first_bot->newNext(newbie);
-    }
-
-    group.assembleFormation();
-	*/
 
   // all clear
   return EXIT_SUCCESS;
