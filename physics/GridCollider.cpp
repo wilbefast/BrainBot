@@ -19,12 +19,45 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "GridCollider.hpp"
 
 //! ----------------------------------------------------------------------------
+//! FUNCTIONS
+//! ----------------------------------------------------------------------------
+
+bool blocked(float x, float y, float size, NavGrid* grid)
+{
+  float hsize = size / 2;
+
+  if(x < hsize
+ || y < hsize
+ || x >= (int)grid->n_cells.x * NavCell::size.x - hsize
+ || y >= (int)grid->n_cells.y * NavCell::size.y - hsize)
+    return true;
+  else
+  {
+    uV2 grid_pos = grid->vertexToGridPos(fV2(x-hsize, y-hsize));
+      if(grid->getCell(grid_pos).obstacle) return true;
+
+    grid_pos = grid->vertexToGridPos(fV2(x-hsize, y+hsize));
+      if(grid->getCell(grid_pos).obstacle) return true;
+
+    grid_pos = grid->vertexToGridPos(fV2(x+hsize, y-hsize));
+      if(grid->getCell(grid_pos).obstacle) return true;
+
+    grid_pos = grid->vertexToGridPos(fV2(x+hsize, y+hsize));
+      if(grid->getCell(grid_pos).obstacle) return true;
+
+    return false;
+  }
+}
+
+
+//! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-GridCollider::GridCollider(size_t size_) :
+GridCollider::GridCollider(size_t size_, NavGrid *grid_) :
 size(size_),
-speed()
+speed(),
+grid(grid_)
 {
 
 }
@@ -35,10 +68,49 @@ speed()
 
 void GridCollider::update(fV3& position)
 {
+  ///smooth to collision
+  int xvar = SIGN(speed.x);
+  int yvar = SIGN(speed.y);
 
+  if(blocked(position.x + speed.x, position.y, size, grid))
+  {
+    //snap to collision position
+    while(!blocked(position.x + xvar, position.y, size, grid))
+        position.x += xvar;
+    speed.x = 0;
+  }
+  if(blocked(position.x, position.y + speed.y, size, grid))
+  {
+    //snap to collision position
+    while(!blocked(position.x, position.y + yvar, size, grid))
+      position.y += yvar;
+    speed.y = 0;
+  }
+  if(blocked(position.x + speed.x, position.y + speed.y, size, grid))
+  {
+    //snap to collision position
+    while(!blocked(position.x, position.y + yvar, size, grid))
+    {
+      position.x += xvar;
+      position.y += yvar;
+    }
+    speed.x = speed.y = 0;
+  }
+
+  //! update position
+  position += speed;
+
+  //! apply friction
+  speed *= 0.9f;
+
+  //! apply terminal velocity
+  if((speed.x > 0 && speed.x < 0.01f) || (speed.x < 0 && speed.x > 0.01f))
+    speed.x = 0;
+  if((speed.y > 0 && speed.y < 0.01f) || (speed.y < 0 && speed.y > 0.01f))
+    speed.y = 0;
 }
 
 void GridCollider::push(fV3 const& direction)
 {
-
+  speed += direction*0.4f;
 }

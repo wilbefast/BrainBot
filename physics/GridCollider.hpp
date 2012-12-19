@@ -19,6 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define GRIDCOLLIDER_HPP_INCLUDED
 
 #include "CollisionMask.hpp"
+#include "../model/NavGrid.hpp"
 
 class GridCollider : public CollisionMask
 {
@@ -26,11 +27,12 @@ class GridCollider : public CollisionMask
 private:
   size_t size;
   fV3 speed;
+  NavGrid *grid;
 
   //! METHODS
 public:
   // constructors, destructors
-  GridCollider(size_t size);
+  GridCollider(size_t size, NavGrid *grid_);
 
   // implements -- CollisionMask
   void update(fV3& position);
