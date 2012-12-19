@@ -14,13 +14,14 @@ friend class SearchState;
 
   //! CONSTANTS
 public:
-  static const fV3 size;
+  static const fV2 size;
 
   //! ATTRIBUTES
 public:
   bool obstacle;
   uV2 grid_position;
   unsigned int cost;
+  size_t height;
 
 
   //! METHODS

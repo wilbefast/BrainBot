@@ -21,7 +21,10 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! CONSTANTS
 //! ----------------------------------------------------------------------------
 
-const fV3 NavCell::size = fV3(32, 32, 96);
+#define MIN_HEIGHT 50
+#define MAX_HEIGHT 100
+
+const fV2 NavCell::size = fV2(32, 32);
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
@@ -30,7 +33,8 @@ const fV3 NavCell::size = fV3(32, 32, 96);
 NavCell::NavCell(uV2 grid_position_, bool obstacle_, unsigned int cost_) :
 obstacle(obstacle_),
 grid_position(grid_position_),
-cost(cost_)
+cost(cost_),
+height(MIN_HEIGHT + rand() % (MAX_HEIGHT - MIN_HEIGHT))
 {
   //ctor
 }

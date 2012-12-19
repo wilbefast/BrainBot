@@ -95,8 +95,3 @@ path* NavGrid::getPath(uV2 source, uV2 destination)
   PathSearch s(this, source, destination);
   return s.getPath();
 }
-
-
-//! ----------------------------------------------------------------------------
-//! MAZE
-//! ----------------------------------------------------------------------------
