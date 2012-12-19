@@ -25,9 +25,6 @@ public:
   void setPosition(fV2 position_);
   void move(fV2 amount, NavGrid* grid);
   void render();
-
-  virtual Texture* get_texture();
-
 };
 
 #endif // BRAINBOT_HPP_INCLUDED

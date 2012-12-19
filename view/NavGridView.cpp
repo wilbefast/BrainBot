@@ -18,10 +18,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../view/NavGridView.hpp"
 
 #include "../engine/io/GraphicsManager.hpp"
-
 #include "../engine/opengl.h"
-
-#include <stdio.h>
+#include "../engine/graphics/Colour.hpp"
 
 //! ----------------------------------------------------------------------------
 //! GLOBAL VARIABLES

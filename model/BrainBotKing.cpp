@@ -7,7 +7,6 @@
 //! GLOBAL VARIABLES
 //! ----------------------------------------------------------------------------
 static Mesh3D* m = NULL;
-static Texture* t = NULL;
 
 
 //! ----------------------------------------------------------------------------
@@ -16,7 +15,6 @@ static Texture* t = NULL;
 
 void BrainBotKing::load_assets()
 {
-  t= GraphicsManager::getInstance()->get_texture("alien_bot2");
   m= MeshManager::getInstance()->get_mesh("spider");
 }
 
@@ -65,11 +63,6 @@ void BrainBotKing::move(fV2 amount, NavGrid* grid)
     // move minions
     (*i)->move(fV2(), grid);
   }
-}
-
-Texture* BrainBotKing::get_texture()
-{
-  return t;
 }
 
 void BrainBotKing::render()
