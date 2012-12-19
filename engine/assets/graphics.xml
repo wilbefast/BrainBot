@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <graphics>
   <texture_list>
-    <texture name="windows" />
+    <texture name="concrete" />
     <texture name="asphalt" />
     <texture name="alien_bot1" />
     <texture name="alien_bot2" />

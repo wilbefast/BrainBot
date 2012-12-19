@@ -1,0 +1,8 @@
+- Sprites, Model and model textures by wilbefast (William Dyce)
+
+- Asphalt and building texture by Tiziana
+--- found = http://opengameart.org/textures/all 
+--- origin = http://www.unbruco.it/offcircle/index_en.html
+
+- All assets are licenced under creative commons 3.0 (CC-BY)
+

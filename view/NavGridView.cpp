@@ -25,19 +25,19 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! GLOBAL VARIABLES
 //! ----------------------------------------------------------------------------
 
-static Texture *building_t = NULL, *road_tex = NULL;
+static Texture *building_tex = NULL, *road_tex = NULL;
 
 static fV3  left(-1,0,0), right(1,0,0), up(0,0,-1), forward(0,1,0), back(0,-1,0);
 
-static Colour road_ambient(0.05f, 0.05f, 0.1f),
-              road_diffuse(0.3f, 0.3f, 0.4f),
+static Colour road_ambient(0.15f, 0.1f, 0.2f),
+              road_diffuse(0.6f, 0.5f, 0.7f),
               road_specular(0.3f, 0.3f, 0.6f),
               road_emission(0.0f, 0.0f, 0.0f);
 static float road_shine = 64;
 
 
-static Colour building_ambient(0.2f, 0.1f, 0.1f),
-              building_diffuse(0.7f, 0.6f, 0.6f),
+static Colour building_ambient(0.4f, 0.2f, 0.2f),
+              building_diffuse(0.8f, 0.7f, 0.7f),
               building_specular(0.0f, 0.0f, 0.0f),
               building_emission(0.0f, 0.0f, 0.0f);
 static float building_shine = 128;
@@ -64,8 +64,8 @@ NavGridView::~NavGridView()
 void NavGridView::draw()
 {
   //! get texture handles if not already done
-  if(building_t == NULL)
-   building_t = GraphicsManager::getInstance()->get_texture("windows");
+  if(building_tex == NULL)
+   building_tex = GraphicsManager::getInstance()->get_texture("concrete");
   if(road_tex == NULL)
    road_tex = GraphicsManager::getInstance()->get_texture("asphalt");
 
@@ -81,69 +81,89 @@ void NavGridView::draw()
 inline void draw_building(fV3 position, float height)
 {
     // left face
+    glTexCoord2f(0.0f, 1.0f);
     glNormal3fv(left.front());
     glVertex3fv(position.front()); // back bottom left
   position.y += NavCell::size.y;
+    glTexCoord2f(1.0f, 1.0f);
     glNormal3fv(left.front());
     glVertex3fv(position.front()); // front bottom left
   position.z -= height;
+    glTexCoord2f(1.0f, 0.0f);
     glNormal3fv(left.front());
     glVertex3fv(position.front()); // front top left
   position.y -= NavCell::size.y;
+    glTexCoord2f(0.0f, 0.0f);
     glNormal3fv(left.front());
     glVertex3fv(position.front()); // back top left
 
   // back face
+    glTexCoord2f(1.0f, 0.0f);
     glNormal3fv(back.front());
     glVertex3fv(position.front()); // back top left
   position.x += NavCell::size.x;
+    glTexCoord2f(0.0f, 0.0f);
     glNormal3fv(back.front());
     glVertex3fv(position.front()); // back top right
   position.z += height;
+    glTexCoord2f(0.0f, 1.0f);
     glNormal3fv(back.front());
     glVertex3fv(position.front()); // back bottom right
   position.x -= NavCell::size.x;
+    glTexCoord2f(1.0f, 1.0f);
     glNormal3fv(back.front());
     glVertex3fv(position.front()); // back bottom left
-  position.x += NavCell::size.x;
 
   // right face
+  position.x += NavCell::size.x;
+    glTexCoord2f(1.0f, 1.0f);
     glNormal3fv(right.front());
     glVertex3fv(position.front()); // back bottom right
   position.z -= height;
+    glTexCoord2f(1.0f, 0.0f);
     glNormal3fv(right.front());
     glVertex3fv(position.front()); // back top right
   position.y += NavCell::size.y;
+    glTexCoord2f(0.0f, 0.0f);
     glNormal3fv(right.front());
     glVertex3fv(position.front()); // front top right
   position.z += height;
+    glTexCoord2f(0.0f, 1.0f);
     glNormal3fv(right.front());
     glVertex3fv(position.front());  // front bottom right
 
   // front face
+    glTexCoord2f(1.0f, 1.0f);
     glNormal3fv(forward.front());
     glVertex3fv(position.front()); // front bottom right
   position.z -= height;
+    glTexCoord2f(1.0f, 0.0f);
     glNormal3fv(forward.front());
     glVertex3fv(position.front()); // front top right
   position.x -= NavCell::size.x;
+    glTexCoord2f(0.0f, 0.0f);
     glNormal3fv(forward.front());
     glVertex3fv(position.front()); // front top left
   position.z += height;
+    glTexCoord2f(0.0f, 1.0f);
     glNormal3fv(forward.front());
     glVertex3fv(position.front()); // front bottom left
-  position.z -= height;
 
   // top face
+  position.z -= height;
+    glTexCoord2f(0.0f, 1.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());  // front top left
   position.x += NavCell::size.x;
+    glTexCoord2f(1.0f, 1.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front()); // front top right
   position.y -= NavCell::size.y;
+    glTexCoord2f(1.0f, 0.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front()); // back top right
   position.x -= NavCell::size.x;
+    glTexCoord2f(0.0f, 0.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front()); // back top left
 }
@@ -160,7 +180,7 @@ void NavGridView::draw_all_buildings()
   glMaterialfv(GL_FRONT, GL_SHININESS, &building_shine);
 
   //! activate the texture BEFORE glBegin
-  //glBindTexture(GL_TEXTURE_2D, road_tex->getHandle());
+  glBindTexture(GL_TEXTURE_2D, building_tex->getHandle());
   glBegin(GL_QUADS);
   for(grid_pos.x = 0; grid_pos.x < navGrid->n_cells.x; grid_pos.x++)
   {
@@ -176,7 +196,7 @@ void NavGridView::draw_all_buildings()
     }
   }
   glEnd();
-  //glBindTexture(GL_TEXTURE_2D, 0);
+  glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 //! ----------------------------------------------------------------------------
