@@ -1,0 +1,9 @@
+#ifndef COLLISIONMASK_HPP_INCLUDED
+#define COLLISIONMASK_HPP_INCLUDED
+
+class CollisionMask
+{
+
+};
+
+#endif // COLLISIONMASK_HPP_INCLUDED

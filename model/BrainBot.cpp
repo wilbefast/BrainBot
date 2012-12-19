@@ -19,9 +19,6 @@
 //! GLOBAL VARIABLES
 //! ----------------------------------------------------------------------------
 static Mesh3D* m = NULL;
-static Texture *t = NULL;
-
-//static Colour bot_emissive(1.0f, 1.0f, 1.0f);
 
 //! ----------------------------------------------------------------------------
 //! FUNCTIONS
@@ -29,7 +26,6 @@ static Texture *t = NULL;
 
 void BrainBot::load_assets()
 {
-  t= GraphicsManager::getInstance()->get_texture("alien_bot1");
   m= MeshManager::getInstance()->get_mesh("spider");
 }
 
@@ -128,50 +124,11 @@ void BrainBot::move(fV2 amount, NavGrid* grid)
 
 }
 
-
-Texture* BrainBot::get_texture()
-{
-  return t;
-}
-
 void BrainBot::render()
 {
   glPushMatrix();
-
     glTranslatef(position.x, position.y, -50);
     glScalef(4, 4, 4);
-
     m->draw();
   glPopMatrix();
-
-  /*M44<GLfloat> const* mv = getGLMatrix(GL_MODELVIEW_MATRIX);
-
-  V4<GLfloat> ox = mv->row(0), oy = mv->row(1);
-
-
-  float half_size = 16.0f;
-
-
-  static fV4 v4_pos;
-    v4_pos = fV4(position.x, position.y, 0, 1);
-
-  V4<GLfloat> p1 = v4_pos - ox*half_size + oy*half_size,
-              p2 = v4_pos + ox*half_size + oy*half_size,
-              p3 = v4_pos + ox*half_size - oy*half_size,
-              p4 = v4_pos - ox*half_size - oy*half_size;
-
-  //glColor3f(1.0f, 1.0f, 1.0f);
-  glMaterialfv(GL_FRONT, GL_EMISSION, bot_emissive.front());
-  glBindTexture(GL_TEXTURE_2D, get_texture()->getHandle());
-  glBegin(GL_TRIANGLE_FAN);
-    glTexCoord2f(0, 0);
-    glVertex3fv(p1.front());
-    glTexCoord2f(0, 1);
-    glVertex3fv(p4.front());
-    glTexCoord2f(1, 1);
-    glVertex3fv(p3.front());
-    glTexCoord2f(1, 0);
-    glVertex3fv(p2.front());
-  glEnd();
-  glBindTexture(GL_TEXTURE_2D, 0);*/
 }

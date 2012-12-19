@@ -23,10 +23,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "V3.hpp"
 #include "M44.hpp"
 
+// debug
 void printGLMatrix(GLenum which_matrix);
 M44<GLfloat> const* getGLMatrix(GLenum which_matrix);
+
+// render
 void applyTransform(M44<GLfloat> const& transform);
 
+// reset
+void setTranslation(M44<GLfloat>& transform, fV3 trans);
+
+// compose
 void addTranslation(M44<GLfloat>& transform, fV3 trans);
 void addRotationX(M44<GLfloat>& transform, float angle);
 void addRotationY(M44<GLfloat>& transform, float angle);

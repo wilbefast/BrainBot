@@ -27,7 +27,7 @@ static GLfloat a[16];
 static M44<GLfloat> m;
 
 //! ----------------------------------------------------------------------------
-//! FUNCTIONS
+//! DEBUG
 //! ----------------------------------------------------------------------------
 void printGLMatrix(GLenum which_matrix)
 {
@@ -45,11 +45,30 @@ M44<GLfloat> const* getGLMatrix(GLenum which_matrix)
   return &m;
 }
 
+//! ----------------------------------------------------------------------------
+//! RENDER
+//! ----------------------------------------------------------------------------
+
 void applyTransform(M44<GLfloat> const& transform)
 {
   transform.exportArray(a);
   glMultMatrixf(a);
 }
+
+//! ----------------------------------------------------------------------------
+//! RESET
+//! ----------------------------------------------------------------------------
+
+void setTranslation(M44<GLfloat>& transform, fV3 trans)
+{
+  transform[3].x = trans.x;
+  transform[3].y = trans.y;
+  transform[3].z = trans.z;
+}
+
+//! ----------------------------------------------------------------------------
+//! COMPOSE
+//! ----------------------------------------------------------------------------
 
 void addTranslation(M44<GLfloat>& transform, fV3 trans)
 {
