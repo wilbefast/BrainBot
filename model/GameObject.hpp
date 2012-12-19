@@ -28,7 +28,6 @@ class GameObject
 //! ATTRIBUTES
 protected:
   fV3 position;
-  float scale;
   ObjectView* view;
   CollisionMask* mask;
 

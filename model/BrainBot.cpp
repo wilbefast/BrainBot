@@ -9,7 +9,7 @@
 //! CONSTRUCTOR
 //! ----------------------------------------------------------------------------
 BrainBot::BrainBot(fV3 position_) :
-GameObject(position_, new Mesh3DView(position_, "spider"), NULL)
+GameObject(position_, new Mesh3DView(position_, 3.0f, "spider"), NULL)
 {
 
 }

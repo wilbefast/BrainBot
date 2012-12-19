@@ -24,10 +24,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-Mesh3DView::Mesh3DView(fV3 position_, const char* mesh_name) :
+Mesh3DView::Mesh3DView(fV3 position_, float scale_, const char* mesh_name) :
 transform(),
 mesh(NULL),
-position(position_)
+position(position_),
+scale(scale_, scale_, scale_)
 {
   // translate and scale the transform matrix
   transform.toIdentity();
@@ -63,12 +64,14 @@ void Mesh3DView::setPosition(fV3 position)
 {
   transform.toIdentity();
   addTranslation(transform, position);
+  addScale(transform, scale);
 }
 
 void Mesh3DView::setRotationX(float degrees)
 {
   transform.toIdentity();
   addTranslation(transform, position);
+  addScale(transform, scale);
   addRotationX(transform, degrees);
 }
 
@@ -76,6 +79,7 @@ void Mesh3DView::setRotationY(float degrees)
 {
   transform.toIdentity();
   addTranslation(transform, position);
+  addScale(transform, scale);
   addRotationY(transform, degrees);
 }
 
@@ -83,5 +87,6 @@ void Mesh3DView::setRotationZ(float degrees)
 {
   transform.toIdentity();
   addTranslation(transform, position);
+  addScale(transform, scale);
   addRotationZ(transform, degrees);
 }

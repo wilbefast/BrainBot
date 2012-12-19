@@ -28,14 +28,17 @@ class Mesh3DView : public ObjectView
 {
 //! ATTRIBUTES
 private:
-  fM44 transform; // position, rotation
+  // position, rotation
+  fM44 transform;
+  // the mesh to draw, may be shared by multiple objects
   Mesh3D* mesh;
-  fV3 position; // saved to regenerate matrix correctly
+  // saved to regenerate matrix correctly
+  fV3 position, scale;
 
 //! METHODS
 public:
   // constructors, destructors
-  Mesh3DView(fV3 position, const char* mesh_name);
+  Mesh3DView(fV3 position, float scale_, const char* mesh_name);
   virtual ~Mesh3DView();
   // render
   void draw() const;

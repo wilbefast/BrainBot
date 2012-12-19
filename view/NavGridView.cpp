@@ -34,10 +34,10 @@ static Colour road_ambient(0.05f, 0.05f, 0.1f),
 static float road_shine = 60;
 
 
-static Colour building_ambient(0.4f, 0.3f, 0.3f),
+static Colour building_ambient(0.2f, 0.1f, 0.1f),
               building_diffuse(0.7f, 0.6f, 0.6f),
-              building_emission(0.0f, 0.0f, 0.0f),
-              building_specular(0.0f, 0.0f, 0.0f);
+              building_specular(0.0f, 0.0f, 0.0f),
+              building_emission(0.0f, 0.0f, 0.0f);
 static float building_shine = 128;
 
 static Colour roof_ambient(0.4f, 0.2f, 0.2f),

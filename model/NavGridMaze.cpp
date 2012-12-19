@@ -52,9 +52,39 @@ down(0,tunnel_size_),
 left(-tunnel_size_,0),
 right(tunnel_size_,0)
 {
-
-  // dig out a "perfect" maze
+  // initial maze starts in the middle
   dig_maze(top_left_block);
+
+  tunnel_size--;
+  up.y = left.x = -tunnel_size;
+  down.y = right.x = tunnel_size;
+
+  // dig smaller mazes in the space left around this maze
+  do
+  {
+    // snap top-left block to top-left
+    while(block_is_valid(top_left_block))
+      top_left_block.y -= tunnel_size;
+    top_left_block.y += tunnel_size;
+    while(block_is_valid(top_left_block))
+      top_left_block.x -= tunnel_size;
+    top_left_block.x += tunnel_size;
+
+    uV2 pos;
+    for(pos.y = top_left_block.y; pos.y < n_cells.y; pos.y += tunnel_size)
+      for(pos.x = top_left_block.x; pos.x < n_cells.x; pos.x += tunnel_size)
+      // objects should not be able to leave the map
+      if(!block_touches_border(pos)
+      // destroy walls only, for a more aesthetic effect
+      && block_is_filled(pos))
+        dig_maze(pos);
+
+    // smaller tunnel
+    tunnel_size--;
+    up.y = left.x = -tunnel_size;
+    down.y = right.x = tunnel_size;
+  }
+  while(tunnel_size > 1);
 
   // snap top-left block to top-left
   while(block_is_valid(top_left_block))
@@ -210,7 +240,6 @@ void NavGridMaze::break_walls()
 size_t NavGridMaze::filled_neighbour_blocks(uV2 centre, bool diagonals) const
 {
   size_t result = 0;
-  //std::cout << "couting those around " << centre << '\n';
   for(int r = centre.y - tunnel_size, i = -1; i < 2; r += tunnel_size, i++)
   for(int c = centre.x - tunnel_size, j = -1; j < 2; c += tunnel_size, j++)
   {
@@ -228,10 +257,10 @@ bool NavGridMaze::block_is_wall(uV2 centre) const
     return false;
 
   // check neighbours
-  bool n = block_is_filled(centre + up),
-        s = block_is_filled(centre + down),
-        e = block_is_filled(centre + right),
-        w = block_is_filled(centre + left);
+  bool n = block_is_filled(centre + up) && block_is_filled(centre + up*2),
+        s = block_is_filled(centre + down) && block_is_filled(centre + down*2),
+        e = block_is_filled(centre + right) && block_is_filled(centre + right*2),
+        w = block_is_filled(centre + left) && block_is_filled(centre + left*2);
 
   return
   // vertical wall

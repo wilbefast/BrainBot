@@ -2,8 +2,8 @@
 # Material Count: 3
 newmtl default_001-material
 Ns 98.039216
-Ka 0.3 0.3 0.3
-Kd 0.7 0.7 0.7
+Ka 0.1 0.1 0.1
+Kd 0.9 0.9 0.9
 Ks 1.0 1.0 1.0
 Ni 1.000000
 d 1.000000

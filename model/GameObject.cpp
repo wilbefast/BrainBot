@@ -24,7 +24,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 GameObject::GameObject(fV3 position_, ObjectView* view_, CollisionMask* mask_) :
 position(position_),
-scale(1.0f),
 view(view_),
 mask(mask_)
 {
@@ -48,7 +47,7 @@ void GameObject::push(fV3 direction)
   if(mask)
     mask->push(direction);
   else
-    position += direction;
+    position += direction*3.0f;
 }
 
 //! ----------------------------------------------------------------------------

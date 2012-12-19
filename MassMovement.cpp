@@ -31,14 +31,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define PAN_SPEED 20
 #define ZOOM_SPEED 200
 
-#define GRID_N_ROWS 67
-#define GRID_N_COLS 67
+#define GRID_N_ROWS 64
+#define GRID_N_COLS 64
 #define GRID_SIZE uV2(GRID_N_COLS, GRID_N_ROWS)
 #define GRID_ORIGIN fV3(0, 0, 0)
 
 #define MAZE_TUNNEL_SIZE 5
-#define MAZE_PERCENT_BROKEN_WALLS 40
-
+#define MAZE_PERCENT_BROKEN_WALLS 10
 
 #define START_N_MINIONS 2
 
@@ -86,37 +85,16 @@ int MassMovement::startup()
 
   // set up the lighting
   glShadeModel(GL_SMOOTH);
-  GLfloat light_pos[3] = { map_centre.x, map_centre.y, -100 };
+  GLfloat light_pos[3] = { 0, 0, 2066516480 };
   GLfloat light_diffuse[3] = { 1.0f, 1.0f, 1.0f };
   GLfloat light_ambient[3] = { 0.5f, 0.5f, 0.5f };
-  glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
   glLightfv(GL_LIGHT0, GL_DIFFUSE, light_diffuse);
   glLightfv(GL_LIGHT0, GL_AMBIENT, light_ambient);
+  glLightfv(GL_LIGHT0, GL_POSITION, light_pos);
 
-  // create the objects
-  /*fV2 p;
-  for(int i = 0; i < START_N_MINIONS; i++)
-  {
-    p.x = player.position.x -rand()%10 + rand()%10;
-    p.y = player.position.y -rand()%10 + rand()%10;
-    if(first_bot)
-      first_bot->newNext(new BrainBot(p));
-    else
-      first_bot = current_bot = new BrainBot(p);
-  }
-
-  // add brain bots to king bot's minions
-  current_bot = first_bot;
-  do
-  {
-    player.minions.push_back(current_bot);
-    current_bot = (BrainBot*)current_bot->getNext();
-  }
-  while(current_bot != first_bot);
-  */
 
   // test path
-  testpath = grid.getPath(uV2(3,3), uV2(GRID_N_COLS/2, GRID_N_ROWS/2));
+  //testpath = grid.getPath(uV2(3,3), uV2(GRID_N_COLS/2, GRID_N_ROWS/2));
 
     /*column = new ColumnFormation(uV2(2, 8));
     column->setSpotSize(fV2(30.0f, 30.0f));
@@ -231,7 +209,7 @@ void MassMovement::draw()
 
     player->draw();
 
-    glLineWidth(2.0f);
+    /*glLineWidth(2.0f);
     glColor3f(1,1,0);
     glBegin(GL_LINE_STRIP);
     for(std::deque<NavCell*>::iterator i = testpath->begin(); i != testpath->end(); i++)
@@ -243,6 +221,6 @@ void MassMovement::draw()
       glVertex3f(node.x, node.y, -15);
     }
     glEnd();
-
+*/
   glPopMatrix();
 }
