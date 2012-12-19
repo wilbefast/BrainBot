@@ -26,7 +26,7 @@ class Group : public GameObject
 {
   //! ATTRIBUTES
 private:
-  GameObject *first_member, *current_member;
+  GameObject *first_member, *current_member, *second_member;
   size_t n_members;
   Formation *formation;
   fV3 direction;
@@ -57,6 +57,11 @@ public:
   // interface
 protected:
   virtual GameObject* spawnMember(fV3 spawn_position) const = 0;
+
+
+  //! SUBROUTINES
+private:
+  void repulse(GameObject* a, GameObject* b);
 };
 
 #endif // GROUP_HPP_INCLUDED

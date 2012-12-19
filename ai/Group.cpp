@@ -27,6 +27,7 @@ Group::Group(fV3 position_, NavGrid* grid_, Formation* formation_) :
 GameObject(position_),
 first_member(NULL),
 current_member(NULL),
+second_member(NULL),
 n_members(0),
 direction(1,0,0), // face right
 grid(grid_)
@@ -67,7 +68,7 @@ fV3 Group::getDesiredMemberPosition(size_t member_i) const
 {
   return /*(formation)
         ? position + formation->getMemberPosition(member_i)
-        : position;*/ position;
+        : position;*/ position + fV3(rand()%30, rand()%30, 0);
 
 }
 
@@ -102,6 +103,8 @@ void Group::push(fV3 push_direction)
 
 int Group::update(float t_delta)
 {
+  //! update position
+  GameObject::update(t_delta);
 
   //! update each member of the group
   if(first_member)
@@ -111,9 +114,20 @@ int Group::update(float t_delta)
     {
       // push the members towards the centre of the group
       fV3 direction = (position - current_member->getPosition());
-      direction.normalise();
+      float norm = direction.normalise();
+      if(norm > 32.0f)
+        current_member->push(direction);
 
-      current_member->push(direction);
+      // iterate through other members of the group
+      second_member = (GameObject*)current_member->getNext();
+      while(second_member != first_member)
+      {
+        // push members away from eachother
+        current_member->repulse(second_member);
+
+        // advance iterator
+        second_member = (GameObject*)second_member->getNext();
+      }
 
       // call the members' update functions
       current_member->update(t_delta);
@@ -130,12 +144,16 @@ int Group::update(float t_delta)
 
 void Group::draw()
 {
+  //! bind group identifier to all group members
+  glLoadName(id);
+
   //! draw each member of the group
   if(first_member)
   {
     current_member = first_member;
     do
     {
+      // draw the current object
       current_member->draw();
 
       // advance iterator
@@ -145,7 +163,6 @@ void Group::draw()
   }
 
   //! debug draw position and direction
-
   fV3 front_position = position + (direction*32.0f);
   glDisable(GL_LIGHTING);
     glBegin(GL_LINE_LOOP);
@@ -153,4 +170,13 @@ void Group::draw()
       glVertex3fv(front_position.front());
     glEnd();
   glEnable(GL_LIGHTING);
+
+  //! unbind group identifier
+  glLoadName(0);
 }
+
+
+//!-----------------------------------------------------------------------------
+//! SUBROUTINES
+//!-----------------------------------------------------------------------------
+

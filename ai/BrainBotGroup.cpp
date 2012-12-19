@@ -29,6 +29,11 @@ Group(position_, grid_) //! TODO BrainBotFormation
     addMember();
 }
 
+BrainBotGroup::~BrainBotGroup()
+{
+
+}
+
 //!-----------------------------------------------------------------------------
 //! IMPLEMENTS GROUP
 //!-----------------------------------------------------------------------------

@@ -31,6 +31,7 @@ public:
 public:
   // constructors, destructors
   BrainBotGroup(fV3 position_, NavGrid* grid_);
+  virtual ~BrainBotGroup();
 
   // implements Group
 protected:

@@ -26,11 +26,18 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class GameObject : public IntrusiveLinked
 {
+//! VARIABLES
+private:
+  static size_t next_id;
+
+
 //! ATTRIBUTES
 protected:
   fV3 position;
   ObjectView* view;
   CollisionMask* mask;
+public:
+  const size_t id;
 
 
 //! METHODS
@@ -42,6 +49,7 @@ public:
   fV3 const& getPosition() const { return position; }
   // mutators
   void push(fV3 direction);
+  void repulse(GameObject* other, float spring_factor = 1.0f);
   // called each frame
   int update(float t_delta);
   void draw() const;

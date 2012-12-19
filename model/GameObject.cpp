@@ -18,6 +18,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "GameObject.hpp"
 
+#include "../engine/opengl.h" // for glLoadName
+
+//! ----------------------------------------------------------------------------
+//! IDENTIFIER ALLOCATION
+//! ----------------------------------------------------------------------------
+
+size_t GameObject::next_id = 1; // 0 is reserved for null
+
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
@@ -25,7 +33,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 GameObject::GameObject(fV3 position_, ObjectView* view_, CollisionMask* mask_) :
 position(position_),
 view(view_),
-mask(mask_)
+mask(mask_),
+id(next_id++)
 {
 }
 
@@ -48,6 +57,16 @@ void GameObject::push(fV3 direction)
     mask->push(direction);
   else
     position += direction;
+}
+
+void GameObject::repulse(GameObject* other, float spring_factor)
+{
+  fV3 to_other = other->position - this->position;
+  float distance2 = to_other.getNorm2();
+
+  spring_factor /= distance2;
+  this->push(-to_other * spring_factor);
+  other->push(to_other * spring_factor);
 }
 
 //! ----------------------------------------------------------------------------
