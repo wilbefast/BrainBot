@@ -7,12 +7,12 @@ class NavGridView
 {
   //! ATTRIBUTES
 private:
-  NavGrid *navGrid;
+  NavGrid *grid;
 
   //! METHODS
 public:
   // constructors, destructors
-  NavGridView(NavGrid * navGrid_);
+  NavGridView(NavGrid *grid_);
   virtual ~NavGridView();
   // mutators
   void draw();

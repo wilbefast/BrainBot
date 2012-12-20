@@ -21,7 +21,7 @@ public:
   bool obstacle;
   uV2 grid_position;
   unsigned int cost;
-  size_t height;
+  float height;
 
 
   //! METHODS

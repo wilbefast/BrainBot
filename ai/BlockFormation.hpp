@@ -26,7 +26,7 @@ class BlockFormation : public Formation
   //! ATTRIBUTES
 private:
   size_t n_ranks, incomplete_rank, n_files, strength;
-  float file_middle, rank_middle;
+  float file_middle, rank_middle, spacing;
 
   //! METHODS
 public:
@@ -35,6 +35,7 @@ public:
 
   // implements -- Formation
   void setStrength(size_t strength_);
+  void setSpacing(float spacing_);
   fV3 getOffset(fV3 direction, size_t member_i) const;
 
   //! SUBROUTINES

@@ -48,15 +48,21 @@ public:
 
   // accessors
   fV3 getOrigin() const;
-  NavCell const& getCell(uV2 position) const;
   uV2 const& getNCells() const;
-  uV2 vertexToGridPos(fV2 position) const;
-  fV3 gridPosToVertex(uV2 position) const;
+
+  // collision testing
+  bool isObstacle(uV2 grid_position) const;
+  bool isObstacle(fV3 position) const;
   bool isValidGridPos(iV2 position) const;
-  bool isLineOfSight(iV2 start, iV2 end) const;
+
+  // conversion
+  uV2 vertexToGridPos(fV2 position) const;
+  fV3 gridPosToVertex(uV2 grid_position) const;
+  fV3 gridPosToSize(uV2 grid_position) const;
 
   // pathing
   std::deque<NavCell*>* getPath(uV2 source, uV2 destination);
+  bool isLineOfSight(iV2 start, iV2 end) const;
 };
 
 #endif // NAVGRID_HPP_INCLUDED

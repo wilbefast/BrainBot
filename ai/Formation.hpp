@@ -3,14 +3,13 @@
 
 #include "../engine/math/V3.hpp"
 
-#include "../model/GameObject.hpp"
-
 //! **ABSTRACT**
 class Formation
 {
   //! METHODS
 public:
   // interface
+  virtual void setSpacing(float spacing_) = 0;
   virtual void setStrength(size_t strength_) = 0;
   virtual fV3 getOffset(fV3 direction, size_t member_i) const = 0;
 };

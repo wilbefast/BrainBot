@@ -57,15 +57,37 @@ fV3 NavGrid::getOrigin() const
   return origin;
 }
 
-NavCell const& NavGrid::getCell(uV2 grid_position) const
-{
-	return *(cells[grid_position.y][grid_position.x]);
-}
-
 uV2 const& NavGrid::getNCells() const
 {
   return n_cells;
 }
+
+//! ----------------------------------------------------------------------------
+//! COLLISION-TESTING
+//! ----------------------------------------------------------------------------
+
+bool NavGrid::isObstacle(uV2 grid_position) const
+{
+  if(!isValidGridPos(grid_position))
+    return false;
+	return cells[grid_position.y][grid_position.x]->obstacle;
+}
+
+bool NavGrid::isObstacle(fV3 position) const
+{
+  return isObstacle(iV2(position.x / NavCell::size.x, position.y / NavCell::size.y));
+}
+
+bool NavGrid::isValidGridPos(iV2 position) const
+{
+  return (position.x >= 0 && position.y >= 0
+          && position.x < (int)n_cells.x && position.y < (int)n_cells.y);
+}
+
+
+//! ----------------------------------------------------------------------------
+//! CONVERSION
+//! ----------------------------------------------------------------------------
 
 uV2 NavGrid::vertexToGridPos(fV2 position) const
 {
@@ -79,10 +101,22 @@ fV3 NavGrid::gridPosToVertex(uV2 position) const
              origin.z);
 }
 
-bool NavGrid::isValidGridPos(iV2 position) const
+fV3 NavGrid::gridPosToSize(uV2 position) const
 {
-  return (position.x >= 0 && position.y >= 0
-          && position.x < (int)n_cells.x && position.y < (int)n_cells.y);
+  float h = (isValidGridPos(position))
+          ? cells[position.y][position.x]->height : 0.0f;
+  return fV3(NavCell::size.x, NavCell::size.y, h);
+}
+
+//! ----------------------------------------------------------------------------
+//! PATHING
+//! ----------------------------------------------------------------------------
+
+
+path* NavGrid::getPath(uV2 source, uV2 destination)
+{
+  PathSearch s(this, source, destination);
+  return s.getPath();
 }
 
 bool NavGrid::isLineOfSight(iV2 start, iV2 end) const
@@ -96,7 +130,7 @@ bool NavGrid::isLineOfSight(iV2 start, iV2 end) const
 
   while(start.x != end.x || start.y != end.y)
   {
-    if(getCell(start).obstacle)
+    if(isObstacle(start))
       // the way is shut (it was made by those who are dead)
       return false;
 
@@ -119,15 +153,4 @@ bool NavGrid::isLineOfSight(iV2 start, iV2 end) const
 
   // made it - the way is clear!
   return true;
-}
-
-//! ----------------------------------------------------------------------------
-//! PATHING
-//! ----------------------------------------------------------------------------
-
-
-path* NavGrid::getPath(uV2 source, uV2 destination)
-{
-  PathSearch s(this, source, destination);
-  return s.getPath();
 }

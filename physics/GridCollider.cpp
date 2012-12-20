@@ -33,16 +33,16 @@ bool blocked(float x, float y, size_t radius, NavGrid const* grid)
   else
   {
     uV2 grid_pos = grid->vertexToGridPos(fV2(x-radius, y-radius));
-      if(grid->getCell(grid_pos).obstacle) return true;
+      if(grid->isObstacle(grid_pos)) return true;
 
     grid_pos = grid->vertexToGridPos(fV2(x-radius, y+radius));
-      if(grid->getCell(grid_pos).obstacle) return true;
+      if(grid->isObstacle(grid_pos)) return true;
 
     grid_pos = grid->vertexToGridPos(fV2(x+radius, y-radius));
-      if(grid->getCell(grid_pos).obstacle) return true;
+      if(grid->isObstacle(grid_pos)) return true;
 
     grid_pos = grid->vertexToGridPos(fV2(x+radius, y+radius));
-      if(grid->getCell(grid_pos).obstacle) return true;
+      if(grid->isObstacle(grid_pos)) return true;
 
     return false;
   }

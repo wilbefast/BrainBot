@@ -28,9 +28,9 @@ GameObject(position_),
 members(),
 formation(formation_),
 direction(1, 0, 0), // face right
-grid(grid_),
 radius(0.0f),
-max_member_radius(0.0f)
+max_member_radius(0.0f),
+grid(grid_)
 {
 
 }
@@ -60,10 +60,15 @@ void Group::addMember()
   GameObject* spawn = spawnMember(spawn_position);
   members.push_back(spawn);
 
-  // group becomes bigger
+  // remember the size of the largest object in the group
   float spawn_radius = spawn->getRadius();
   if(spawn_radius > max_member_radius)
+  {
     max_member_radius = spawn_radius;
+    formation->setSpacing(max_member_radius * 4);
+  }
+
+  // group becomes bigger
   radius += spawn->getRadius();
 
   // inform the formation
@@ -81,7 +86,7 @@ fV3 Group::getIdealPosition(size_t i) const
     return position;
 
   fV3 idealPosition = position + formation->getOffset(direction, i);
-  if(grid->getCell(idealPosition).)
+  return idealPosition;
 
 }
 
