@@ -64,12 +64,25 @@ void GameObject::repulse(GameObject* other, float spring_factor)
   fV3 to_other = other->position - this->position;
   float distance2 = to_other.getNorm2(), radius = getRadius();
 
-
   if(distance2 < radius*radius*4)
   {
     spring_factor /= distance2;
     this->push(-to_other * spring_factor);
     other->push(to_other * spring_factor);
+  }
+}
+
+void GameObject::cohere(GameObject* other, float spring_factor)
+{
+  fV3 to_other = other->position - this->position;
+  float distance2 = to_other.getNorm2(), radius = getRadius();
+
+  float radius2 = radius*radius;
+  if(distance2 > radius2*16 && distance2 < radius2*32)
+  {
+    spring_factor /= distance2;
+    this->push(to_other * spring_factor);
+    other->push(-to_other * spring_factor);
   }
 }
 

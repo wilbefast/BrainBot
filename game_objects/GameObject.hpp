@@ -57,6 +57,7 @@ public:
   // mutators
   void push(fV3 direction);
   void repulse(GameObject* other, float spring_factor = 1.0f);
+  void cohere(GameObject* other, float spring_factor = 1.0f);
   // called each frame
   int update(float t_delta);
   void draw() const;

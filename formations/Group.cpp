@@ -102,19 +102,28 @@ int Group::update(float t_delta)
 
 
   //! update each member of the group
-  size_t i = 0;
-  for(gobject_container_it it = members.begin(); it != members.end(); it++, i++)
+  size_t member_i = 0;
+  for(gobject_container_it it = members.begin(); it != members.end();
+  it++, member_i++)
   {
     // cache current object
     GameObject* member = (*it);
 
     // move the members with the group
-    tryMoveMember(member, i, position);
+    if(!tryMoveMember(member, member_i, position))
+      for(size_t prev_i = 0; prev_i < N_PREVIOUS_POSITIONS; prev_i++)
+        if(tryMoveMember(member, member_i, previous_positions[prev_i]))
+          break;
 
-    // push members away from eachother
+    // keep members at a given distance from eachother
     gobject_container_it j = it;
     for(j++; j != members.end(); j++)
+    {
       member->repulse((*j));
+      member->cohere((*j));
+    }
+
+
 
     // call the member's update function
     member->update(t_delta);
@@ -178,7 +187,7 @@ fV3 Group::getIdealPosition(size_t member_i, fV3 const& centre) const
 bool Group::tryMoveMember(GameObject* member, size_t member_i, fV3 const& centre)
 {
   // check where the formation wants the object
-  fV3 current_position = getIdealPosition(member_i, position),
+  fV3 current_position = getIdealPosition(member_i, centre),
       desired_position = member->getPosition();
 
   // make sure there's a clear line-of-sight
