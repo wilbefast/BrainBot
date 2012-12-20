@@ -115,14 +115,18 @@ int Group::update(float t_delta)
   //! update position
   GameObject::update(t_delta);
 
+  //! update previous position
+  for(int i = N_PREVIOUS_POSITIONS-2; i >= 0; i--)
+    previous_positions[i+1] = previous_positions[i];
+  previous_positions[0] = position;
+
+
   //! update each member of the group
   size_t i = 0;
   for(gobject_container_it it = members.begin(); it != members.end(); it++, i++)
   {
     // cache current object
     GameObject* member = (*it);
-
-    std::cout << grid->isLineOfSight(member->getPosition(), position) << std::endl;
 
     // push the members towards the centroid of the group
     fV3 reform = (getIdealPosition(i) - member->getPosition());
@@ -153,11 +157,12 @@ void Group::draw()
     (*i)->draw();
 
   //! debug draw position and direction
-  fV3 front_position = position + (direction * radius);
   glDisable(GL_LIGHTING);
-    glBegin(GL_LINE_LOOP);
+  glColor3f(1.0f, 1.0f, 0.0f);
+    glBegin(GL_LINE_STRIP);
       glVertex3fv(position.front());
-      glVertex3fv(front_position.front());
+      for(size_t i = 0; i < N_PREVIOUS_POSITIONS; i++)
+        glVertex3fv(previous_positions[i].front());
     glEnd();
   glEnable(GL_LIGHTING);
 
