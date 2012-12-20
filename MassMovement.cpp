@@ -80,8 +80,8 @@ int MassMovement::startup()
   MeshManager::getInstance()->startup();
 
   // create game objects
-  fV3 map_centre((GRID_N_COLS+1)*NavCell::size.x*0.5f,
-                  (GRID_N_ROWS+1)*NavCell::size.y*0.5f, 0);
+  fV3 map_centre((GRID_N_COLS+1)*NavCell::SIZE.x*0.5f,
+                  (GRID_N_ROWS+1)*NavCell::SIZE.y*0.5f, 0);
   //player = new BrainBot(map_centre, &grid);
   player = new BrainBotGroup(map_centre, &grid);
 
@@ -204,8 +204,8 @@ void MassMovement::draw()
     {
       fV2 node = (*i)->grid_position;
 
-       node.x *= NavCell::size.x; node.x += NavCell::size.x*0.5f;
-       node.y *= NavCell::size.y; node.y += NavCell::size.y*0.5f;
+       node.x *= NavCell::SIZE.x; node.x += NavCell::SIZE.x*0.5f;
+       node.y *= NavCell::SIZE.y; node.y += NavCell::SIZE.y*0.5f;
       glVertex3f(node.x, node.y, -15);
     }
     glEnd();

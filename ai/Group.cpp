@@ -79,35 +79,12 @@ void Group::addMember()
 }
 
 //!-----------------------------------------------------------------------------
-//! ACCESSORS
-//!-----------------------------------------------------------------------------
-
-fV3 Group::getIdealPosition(size_t i) const
-{
-  //! if we have no formation we are forced to use the centroid
-  if(!formation)
-    return position;
-
-  fV3 formationPosition = position + formation->getOffset(direction, i);
-
-  //! move to the centre of the group if the formation possible is blocked
-  if(grid->isObstacle(formationPosition))
-    return position;
-
-
-  //! use the formation position whenever possible
-  else
-    return formationPosition;
-
-}
-
-//!-----------------------------------------------------------------------------
 //! OVERRIDES -- GAMEOBJECT
 //!-----------------------------------------------------------------------------
 
 void Group::push(fV3 push_direction)
 {
-  GameObject::push(push_direction * 10.0f); //! TODO FIXME
+  GameObject::push(push_direction * 5.0f); //! TODO FIXME
 }
 
 int Group::update(float t_delta)
@@ -116,9 +93,12 @@ int Group::update(float t_delta)
   GameObject::update(t_delta);
 
   //! update previous position
-  for(int i = N_PREVIOUS_POSITIONS-2; i >= 0; i--)
-    previous_positions[i+1] = previous_positions[i];
-  previous_positions[0] = position;
+  if((previous_positions[0] - position).getNorm2() > NavCell::SIZE.x*NavCell::SIZE.y)
+  {
+    for(int i = N_PREVIOUS_POSITIONS-2; i >= 0; i--)
+      previous_positions[i+1] = previous_positions[i];
+    previous_positions[0] = position;
+  }
 
 
   //! update each member of the group
@@ -128,11 +108,8 @@ int Group::update(float t_delta)
     // cache current object
     GameObject* member = (*it);
 
-    // push the members towards the centroid of the group
-    fV3 reform = (getIdealPosition(i) - member->getPosition());
-    float norm = reform.normalise();
-    if(norm > max_member_radius)
-      member->push(reform);
+    // move the members with the group
+    tryMoveMember(member, i, position);
 
     // push members away from eachother
     gobject_container_it j = it;
@@ -173,4 +150,46 @@ void Group::draw()
 float Group::getRadius() const
 {
   return radius;
+}
+
+//!-----------------------------------------------------------------------------
+//! SUBROUTINES -- REFORMATION
+//!-----------------------------------------------------------------------------
+
+fV3 Group::getIdealPosition(size_t member_i, fV3 const& centre) const
+{
+  //! if we have no formation we are forced to use the centroid
+  if(!formation)
+    return centre;
+
+  fV3 formationPosition = centre + formation->getOffset(direction, member_i);
+
+  //! move to the centre of the group if the formation possible is blocked
+  if(grid->isObstacle(formationPosition))
+    return centre;
+
+
+  //! use the formation position whenever possible
+  else
+    return formationPosition;
+
+}
+
+bool Group::tryMoveMember(GameObject* member, size_t member_i, fV3 const& centre)
+{
+  // check where the formation wants the object
+  fV3 current_position = getIdealPosition(member_i, position),
+      desired_position = member->getPosition();
+
+  // make sure there's a clear line-of-sight
+  if(!grid->isLineOfSight(current_position, desired_position))
+    return false;
+
+  // push the members towards where the formation wants them
+  fV3 reform = (current_position - desired_position);
+  float norm = reform.normalise();
+  if(norm > max_member_radius)
+    member->push(reform);
+
+  return true;
 }

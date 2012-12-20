@@ -51,9 +51,6 @@ public:
   void setDirection(fV3 direction_);
   void addMember();
 
-  // accessors
-  fV3 getIdealPosition(size_t i) const;
-
   // overrides GameObject
   void push(fV3 direction);
   int update(float t_delta);
@@ -63,6 +60,12 @@ public:
   // interface
 protected:
   virtual GameObject* spawnMember(fV3 spawn_position) const = 0;
+
+
+  //! SUBROUTINES
+private:
+  fV3 getIdealPosition(size_t member_i, fV3 const& centre) const;
+  bool tryMoveMember(GameObject* member, size_t member_i, fV3 const& centre);
 };
 
 #endif // GROUP_HPP_INCLUDED

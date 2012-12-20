@@ -27,8 +27,8 @@ bool blocked(float x, float y, size_t radius, NavGrid const* grid)
 {
   if(x < radius
  || y < radius
- || x >= (int)grid->n_cells.x * NavCell::size.x - radius
- || y >= (int)grid->n_cells.y * NavCell::size.y - radius)
+ || x >= (int)grid->n_cells.x * NavCell::SIZE.x - radius
+ || y >= (int)grid->n_cells.y * NavCell::SIZE.y - radius)
     return true;
   else
   {

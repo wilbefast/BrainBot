@@ -62,11 +62,15 @@ void GameObject::push(fV3 direction)
 void GameObject::repulse(GameObject* other, float spring_factor)
 {
   fV3 to_other = other->position - this->position;
-  float distance2 = to_other.getNorm2();
+  float distance2 = to_other.getNorm2(), radius = getRadius();
 
-  spring_factor /= distance2;
-  this->push(-to_other * spring_factor);
-  other->push(to_other * spring_factor);
+
+  if(distance2 < radius*radius*4)
+  {
+    spring_factor /= distance2;
+    this->push(-to_other * spring_factor);
+    other->push(to_other * spring_factor);
+  }
 }
 
 

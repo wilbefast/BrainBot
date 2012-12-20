@@ -75,7 +75,7 @@ bool NavGrid::isObstacle(uV2 grid_position) const
 
 bool NavGrid::isObstacle(fV3 position) const
 {
-  return isObstacle(iV2(position.x / NavCell::size.x, position.y / NavCell::size.y));
+  return isObstacle(iV2(position.x / NavCell::SIZE.x, position.y / NavCell::SIZE.y));
 }
 
 bool NavGrid::isValidGridPos(iV2 position) const
@@ -91,13 +91,13 @@ bool NavGrid::isValidGridPos(iV2 position) const
 
 uV2 NavGrid::vertexToGridPos(fV2 position) const
 {
-	return uV2(position.x/NavCell::size.x, position.y/NavCell::size.y);
+	return uV2(position.x/NavCell::SIZE.x, position.y/NavCell::SIZE.y);
 }
 
 fV3 NavGrid::gridPosToVertex(uV2 position) const
 {
-  return fV3(origin.x + position.x*NavCell::size.x,
-             origin.y + position.y*NavCell::size.y,
+  return fV3(origin.x + position.x*NavCell::SIZE.x,
+             origin.y + position.y*NavCell::SIZE.y,
              origin.z);
 }
 
@@ -105,7 +105,7 @@ fV3 NavGrid::gridPosToSize(uV2 position) const
 {
   float h = (isValidGridPos(position))
           ? cells[position.y][position.x]->height : 0.0f;
-  return fV3(NavCell::size.x, NavCell::size.y, h);
+  return fV3(NavCell::SIZE.x, NavCell::SIZE.y, h);
 }
 
 //! ----------------------------------------------------------------------------
@@ -160,6 +160,6 @@ bool NavGrid::isLineOfSight(iV2 start, iV2 end) const
 
 bool NavGrid::isLineOfSight(fV3 start, fV3 end) const
 {
-  return isLineOfSight(iV2(start.x / NavCell::size.x, start.y / NavCell::size.y),
-                       iV2(end.x / NavCell::size.x, end.y / NavCell::size.y));
+  return isLineOfSight(iV2(start.x / NavCell::SIZE.x, start.y / NavCell::SIZE.y),
+                       iV2(end.x / NavCell::SIZE.x, end.y / NavCell::SIZE.y));
 }

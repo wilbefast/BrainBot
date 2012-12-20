@@ -24,7 +24,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define MIN_HEIGHT 50
 #define MAX_HEIGHT 100
 
-const fV2 NavCell::size = fV2(32, 32);
+const fV2 NavCell::SIZE = fV2(32, 32);
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
@@ -36,10 +36,8 @@ grid_position(grid_position_),
 cost(cost_),
 height(MIN_HEIGHT + rand() % (MAX_HEIGHT - MIN_HEIGHT))
 {
-  //ctor
 }
 
 NavCell::~NavCell()
 {
-  //dtor
 }

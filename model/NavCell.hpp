@@ -14,7 +14,7 @@ friend class SearchState;
 
   //! CONSTANTS
 public:
-  static const fV2 size;
+  static const fV2 SIZE;
 
   //! ATTRIBUTES
 public:

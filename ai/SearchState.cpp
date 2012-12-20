@@ -90,9 +90,6 @@ bool SearchState::operator==(SearchState const& other) const
 
 float SearchState::estimateCost(NavCell const* a, NavCell const* b)
 {
-
   fV2 remaining_vector = (fV2)(a->grid_position) - (fV2)(b->grid_position);
-  //remaining_vector.x *= NavCell::size.x;
-  //remaining_vector.y *= NavCell::size.y;
   return remaining_vector.getNorm();
 }
