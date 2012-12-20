@@ -82,11 +82,19 @@ void Group::addMember()
 
 fV3 Group::getIdealPosition(size_t i) const
 {
+  //! if we have no formation we are forced to use the centroid
   if(!formation)
     return position;
 
-  fV3 idealPosition = position + formation->getOffset(direction, i);
-  return idealPosition;
+  fV3 formationPosition = position + formation->getOffset(direction, i);
+
+  //! move to the centre of the group if the formation possible is blocked
+  if(grid->isObstacle(formationPosition))
+    return position;
+
+  //! use the formation position whenever possible
+  else
+    return formationPosition;
 
 }
 
