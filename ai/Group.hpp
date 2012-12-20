@@ -22,16 +22,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../model/GameObject.hpp"
 #include "../ai/Formation.hpp"
 
-#include <vector>
-typedef std::vector<GameObject*> members_container;
-typedef members_container::iterator members_container_it;
-
 //! **ABSTRACT**
 class Group : public GameObject
 {
   //! ATTRIBUTES
 private:
-  members_container members;
+  gobject_container members;
   Formation *formation;
   fV3 direction;
   float radius;
@@ -50,13 +46,11 @@ public:
   void setDirection(fV3 direction_);
   void addMember();
 
-  // accessors
-  fV3 getDesiredMemberPosition(size_t member_i) const;
-
   // overrides GameObject
   void push(fV3 direction);
   int update(float t_delta);
   void draw();
+  float getRadius() const;
 
   // interface
 protected:

@@ -124,3 +124,8 @@ float GridCollider::getRadius() const
 {
   return radius;
 }
+
+void GridCollider::setRadius(float radius_)
+{
+  radius = radius_;
+}

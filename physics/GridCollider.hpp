@@ -39,6 +39,7 @@ public:
   // implements -- CollisionMask
   int update(fV3& position, float t_delta);
   void push(fV3 const& direction);
+  void setRadius(float radius_);
   float getRadius() const;
 };
 

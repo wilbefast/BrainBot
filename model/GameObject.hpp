@@ -23,6 +23,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../view/ObjectView.hpp"
 #include "../engine/math/V3.hpp"
 
+#include <vector>
+
+class GameObject;
+
+typedef std::vector<GameObject*> gobject_container;
+typedef gobject_container::iterator gobject_container_it;
+
 class GameObject
 {
 //! VARIABLES

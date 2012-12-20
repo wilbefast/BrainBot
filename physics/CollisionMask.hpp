@@ -31,6 +31,7 @@ public:
   // mutators
   virtual int update(fV3& position, float t_delta) = 0;
   virtual void push(fV3 const& direction) = 0;
+  virtual void setRadius(float radius_) = 0;
   // accessors
   virtual float getRadius() const = 0;
 };

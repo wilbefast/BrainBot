@@ -37,4 +37,6 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 int nextpwr2(int n);
 
+int isqrt(double x);
+
 #endif // WJD_MATH_HPP_INCLUDED

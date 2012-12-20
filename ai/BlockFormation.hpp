@@ -23,11 +23,21 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 class BlockFormation : public Formation
 {
+  //! ATTRIBUTES
+private:
+  size_t n_ranks, incomplete_rank, n_files, strength;
+  float file_middle, rank_middle;
 
   //! METHODS
 public:
+  // constructors, destrucotrs
+  BlockFormation();
+
+  // mutators
+  void setStrength(size_t strength_);
+
   // implements -- Formation
-  void form(fV3 centre, fV3 direction, GameObject* first_member) const;
+  void form(fV3 centre, fV3 direction, gobject_container& objs);
 };
 
 #endif // BLOCKFORMATION_HPP_INCLUDED

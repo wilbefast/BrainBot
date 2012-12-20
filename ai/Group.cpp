@@ -35,20 +35,8 @@ grid(grid_)
 
 Group::~Group()
 {
-  for(members_container_it i = members.begin(); i != members.end(); i++)
+  for(gobject_container_it i = members.begin(); i != members.end(); i++)
     delete (*i);
-}
-
-//!-----------------------------------------------------------------------------
-//! ACCESSORS
-//!-----------------------------------------------------------------------------
-
-fV3 Group::getDesiredMemberPosition(size_t member_i) const
-{
-  return /*(formation)
-        ? position + formation->getMemberRelativePosition(member_i)
-        : */position + fV3(rand() % 32, rand() % 32, 0);
-
 }
 
 //!-----------------------------------------------------------------------------
@@ -64,11 +52,14 @@ void Group::setDirection(fV3 direction_)
 void Group::addMember()
 {
   // add member
-  GameObject* newbie = spawnMember(getDesiredMemberPosition(members.size()));
-  members.push_back(newbie);
+  fV3 spawn_position = position;
+  if((int)radius > 0)
+    spawn_position += iV3(rand()%(int)radius, rand()%(int)radius, 0);
+  GameObject* spawn = spawnMember(spawn_position);
+  members.push_back(spawn);
 
   // group becomes bigger
-  radius += newbie->getRadius();
+  radius += spawn->getRadius();
 }
 
 //!-----------------------------------------------------------------------------
@@ -86,25 +77,28 @@ int Group::update(float t_delta)
   GameObject::update(t_delta);
 
   //! update each member of the group
-  for(members_container_it i = members.begin(); i != members.end(); i++)
+  for(gobject_container_it i = members.begin(); i != members.end(); i++)
   {
     // cache current object
     GameObject* member = (*i);
 
     // push the members towards the centroid of the group
-    fV3 reform = (position - member->getPosition());
+    /*fV3 reform = (position - member->getPosition());
     float norm = reform.normalise();
     if(norm > radius)
-      member->push(reform);
+      member->push(reform);*/
 
     // push members away from eachother
-    members_container_it j = i;
+    /*gobject_container_it j = i;
     for(j++; j != members.end(); j++)
-      member->repulse((*j));
+      member->repulse((*j));*/
 
     // call the member's update function
     member->update(t_delta);
   }
+
+  if(formation)
+    formation->form(position, direction, members);
 
   //! group is still alive (return 0)
   return 0;
@@ -116,7 +110,7 @@ void Group::draw()
   glLoadName(id);
 
   //! draw each member of the group
-  for(members_container_it i = members.begin(); i != members.end(); i++)
+  for(gobject_container_it i = members.begin(); i != members.end(); i++)
     (*i)->draw();
 
   //! debug draw position and direction
@@ -130,4 +124,9 @@ void Group::draw()
 
   //! unbind group identifier
   glLoadName(0);
+}
+
+float Group::getRadius() const
+{
+  return radius;
 }

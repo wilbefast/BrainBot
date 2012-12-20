@@ -16,15 +16,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "BrainBotGroup.hpp"
+#include "BlockFormation.hpp"
 
 #include "../model/BrainBot.hpp"
+
 
 //!-----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //!-----------------------------------------------------------------------------
 
 BrainBotGroup::BrainBotGroup(fV3 position_, NavGrid* grid_) :
-Group(position_, grid_) //! TODO BrainBotFormation
+Group(position_, grid_, new BlockFormation())
 {
   //! Create all the members of the group
   for(size_t i = 0; i < (size_t)INIT_SIZE; i++)
