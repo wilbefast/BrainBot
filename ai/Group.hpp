@@ -30,7 +30,7 @@ private:
   gobject_container members;
   Formation *formation;
   fV3 direction;
-  float radius;
+  float radius, max_member_radius;
 
 public:
   NavGrid const* grid;
@@ -45,6 +45,9 @@ public:
   // mutators
   void setDirection(fV3 direction_);
   void addMember();
+
+  // accessors
+  fV3 getIdealPosition(size_t i) const;
 
   // overrides GameObject
   void push(fV3 direction);

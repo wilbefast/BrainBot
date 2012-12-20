@@ -11,7 +11,8 @@ class Formation
   //! METHODS
 public:
   // interface
-  virtual void form(fV3 centre, fV3 direction, gobject_container& objs) = 0;
+  virtual void setStrength(size_t strength_) = 0;
+  virtual fV3 getOffset(fV3 direction, size_t member_i) const = 0;
 };
 
 #endif // FORMATION_HPP_INCLUDED

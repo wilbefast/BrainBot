@@ -33,16 +33,13 @@ public:
   // constructors, destrucotrs
   BlockFormation();
 
-  // mutators
-  void setStrength(size_t strength_);
-
   // implements -- Formation
-  void form(fV3 centre, fV3 direction, gobject_container& objs);
+  void setStrength(size_t strength_);
+  fV3 getOffset(fV3 direction, size_t member_i) const;
 
   //! SUBROUTINES
 private:
   fV3 getOffset(fV3 direction, size_t rank, size_t file) const;
-  fV3 getOffset(fV3 direction, size_t member_i) const;
 };
 
 #endif // BLOCKFORMATION_HPP_INCLUDED

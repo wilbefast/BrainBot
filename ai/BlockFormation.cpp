@@ -35,7 +35,7 @@ rank_middle(0.0f)
 }
 
 //!-----------------------------------------------------------------------------
-//! MUTATORS
+//! IMPLEMENTS FORMATION
 //!-----------------------------------------------------------------------------
 
 void BlockFormation::setStrength(size_t strength_)
@@ -49,11 +49,33 @@ void BlockFormation::setStrength(size_t strength_)
   incomplete_rank = strength - (n_files * n_ranks);
 }
 
+fV3 BlockFormation::getOffset(fV3 direction, size_t member_i) const
+{
+
+  size_t rank = member_i / n_files,
+          file = member_i % (rank >= n_ranks ? incomplete_rank : n_files);
+  return getOffset(direction, rank, file);
+}
+
 //!-----------------------------------------------------------------------------
-//! IMPLEMENTS FORMATION
+//! SUBROUTINES
 //!-----------------------------------------------------------------------------
 
-void BlockFormation::form(fV3 centre, fV3 direction, gobject_container& objs)
+fV3 BlockFormation::getOffset(fV3 direction, size_t rank, size_t file) const
+{
+  fV3 left(-direction.y, direction.x, direction.z),
+      rank_offset(direction * (rank_middle - (rank * SPACING))),
+      file_offset(left * ((file * SPACING) - file_middle));
+
+  return (rank_offset + file_offset);
+}
+
+
+
+
+
+
+/*void BlockFormation::form(fV3 centre, fV3 direction, gobject_container& objs)
 {
   //! reset formation size
   size_t strength_ = objs.size();
@@ -83,24 +105,5 @@ void BlockFormation::form(fV3 centre, fV3 direction, gobject_container& objs)
     }
   }
 }
+*/
 
-//!-----------------------------------------------------------------------------
-//! SUBROUTINES
-//!-----------------------------------------------------------------------------
-
-fV3 BlockFormation::getOffset(fV3 direction, size_t member_i) const
-{
-
-  size_t rank = member_i / n_files,
-          file = member_i % (rank >= n_ranks ? incomplete_rank : n_files);
-  return getOffset(direction, rank, file);
-}
-
-fV3 BlockFormation::getOffset(fV3 direction, size_t rank, size_t file) const
-{
-  fV3 left(-direction.y, direction.x, direction.z),
-      rank_offset(direction * (rank_middle - (rank * SPACING))),
-      file_offset(left * ((file * SPACING) - file_middle));
-
-  return (rank_offset + file_offset);
-}

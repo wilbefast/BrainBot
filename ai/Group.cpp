@@ -28,7 +28,9 @@ GameObject(position_),
 members(),
 formation(formation_),
 direction(1, 0, 0), // face right
-grid(grid_)
+grid(grid_),
+radius(0.0f),
+max_member_radius(0.0f)
 {
 
 }
@@ -59,7 +61,28 @@ void Group::addMember()
   members.push_back(spawn);
 
   // group becomes bigger
+  float spawn_radius = spawn->getRadius();
+  if(spawn_radius > max_member_radius)
+    max_member_radius = spawn_radius;
   radius += spawn->getRadius();
+
+  // inform the formation
+  if(formation)
+    formation->setStrength(members.size());
+}
+
+//!-----------------------------------------------------------------------------
+//! ACCESSORS
+//!-----------------------------------------------------------------------------
+
+fV3 Group::getIdealPosition(size_t i) const
+{
+  if(!formation)
+    return position;
+
+  fV3 idealPosition = position + formation->getOffset(direction, i);
+  if(grid->getCell(idealPosition).)
+
 }
 
 //!-----------------------------------------------------------------------------
@@ -77,28 +100,26 @@ int Group::update(float t_delta)
   GameObject::update(t_delta);
 
   //! update each member of the group
-  for(gobject_container_it i = members.begin(); i != members.end(); i++)
+  size_t i = 0;
+  for(gobject_container_it it = members.begin(); it != members.end(); it++, i++)
   {
     // cache current object
-    GameObject* member = (*i);
+    GameObject* member = (*it);
 
     // push the members towards the centroid of the group
-    /*fV3 reform = (position - member->getPosition());
+    fV3 reform = (getIdealPosition(i) - member->getPosition());
     float norm = reform.normalise();
-    if(norm > radius)
+    if(norm > max_member_radius)
       member->push(reform);
 
     // push members away from eachother
-    gobject_container_it j = i;
+    gobject_container_it j = it;
     for(j++; j != members.end(); j++)
-      member->repulse((*j));*/
+      member->repulse((*j));
 
     // call the member's update function
     member->update(t_delta);
   }
-
-  if(formation)
-    formation->form(position, direction, members);
 
   //! group is still alive (return 0)
   return 0;
