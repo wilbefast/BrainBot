@@ -19,7 +19,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define BLOCKFORMATION_HPP_INCLUDED
 
 #include "Formation.hpp"
-#include "../model/GameObject.hpp"
+#include "../game_objects/GameObject.hpp"
 
 class BlockFormation : public Formation
 {

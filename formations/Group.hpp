@@ -18,9 +18,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef GROUP_HPP_INCLUDED
 #define GROUP_HPP_INCLUDED
 
-#include "../model/NavGrid.hpp"
-#include "../model/GameObject.hpp"
-#include "../ai/Formation.hpp"
+#include "../pathing/NavGrid.hpp"
+#include "../game_objects/GameObject.hpp"
+#include "../formations/Formation.hpp"
 
 //! **ABSTRACT**
 class Group : public GameObject

@@ -20,7 +20,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "CollisionMask.hpp"
 #include "PhysicalProperties.hpp"
-#include "../model/NavGrid.hpp"
+#include "../pathing/NavGrid.hpp"
 
 class GridCollider : public CollisionMask
 {

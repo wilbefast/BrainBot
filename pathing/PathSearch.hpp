@@ -19,8 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef PATHSEARCH_HPP_INCLUDED
 #define PATHSEARCH_HPP_INCLUDED
 
-#include "../model/NavCell.hpp"
-#include "../model/NavGrid.hpp"
+#include "NavCell.hpp"
+#include "NavGrid.hpp"
 
 class PathSearch;
 

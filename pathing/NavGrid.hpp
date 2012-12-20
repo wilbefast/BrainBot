@@ -23,7 +23,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../engine/math/V3.hpp"
 #include "../engine/math/Rect.hpp"
 
-#include "GameObject.hpp"
+#include "../game_objects/GameObject.hpp"
 #include "NavCell.hpp"
 
 

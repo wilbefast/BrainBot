@@ -2,7 +2,7 @@
 #define BRAINBOT_HPP_INCLUDED
 
 #include "GameObject.hpp"
-#include "NavGrid.hpp"
+#include "../pathing/NavGrid.hpp"
 
 class BrainBot : public GameObject
 {

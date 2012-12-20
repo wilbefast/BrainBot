@@ -16,7 +16,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
 #include "NavGrid.hpp"
-#include "../ai/PathSearch.hpp"
+#include "PathSearch.hpp"
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS

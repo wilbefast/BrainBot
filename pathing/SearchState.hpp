@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef SEARCHSTATE_HPP_INCLUDED
 #define SEARCHSTATE_HPP_INCLUDED
 
-#include "../model/NavCell.hpp"
+#include "NavCell.hpp"
 
 class SearchState
 {

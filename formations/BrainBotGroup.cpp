@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "BrainBotGroup.hpp"
 #include "BlockFormation.hpp"
 
-#include "../model/BrainBot.hpp"
+#include "../game_objects/BrainBot.hpp"
 
 
 //!-----------------------------------------------------------------------------
