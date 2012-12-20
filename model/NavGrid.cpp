@@ -85,6 +85,42 @@ bool NavGrid::isValidGridPos(iV2 position) const
           && position.x < (int)n_cells.x && position.y < (int)n_cells.y);
 }
 
+bool NavGrid::isLineOfSight(iV2 start, iV2 end) const
+{
+	// http://en.wikipedia.org/wiki/Bresenham's_line_algorithm
+  int dx = abs(end.x - start.x),
+      dy = abs(end.y - start.y),
+      sx = (start.x < end.x) ? 1 : -1,
+      sy = (start.x < end.x) ? 1 : -1,
+      err = dx - dy;
+
+  while(start.x != end.x || start.y != end.y)
+  {
+    if(getCell(start).obstacle)
+      // the way is shut (it was made by those who are dead)
+      return false;
+
+    int err2 = 2*err;
+
+    //  move horizontally
+    if(err2 > -dy)
+    {
+      err -= dy;
+      start.x += sx;
+    }
+
+    // move vertically
+    if(err2 < dx)
+    {
+      err += dx;
+      start.y += sy;
+    }
+  }
+
+  // made it - the way is clear!
+  return true;
+}
+
 //! ----------------------------------------------------------------------------
 //! PATHING
 //! ----------------------------------------------------------------------------

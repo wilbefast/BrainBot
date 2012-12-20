@@ -66,19 +66,15 @@ void BlockFormation::form(fV3 centre, fV3 direction, gobject_container& objs)
   //! push each soldier towards where they're meant to be
   gobject_container_it i = objs.begin();
   // for each rank
-  for (size_t r = 0; r < (n_ranks + 1); r++)
+  for(size_t member_i = 0; member_i < strength; member_i++, i++)
+  //size_t member_i = 0;
+  //for (size_t r = 0; r < (n_ranks + 1); r++)
   {
-    // rank offset
-    fV3 r_offset(direction * (rank_middle - (r * SPACING)));
-
     // for each file
-    for (size_t f = 0; f < ((r < n_ranks) ? n_files : incomplete_rank); f++, i++)
+    //for (size_t f = 0; f < ((r < n_ranks) ? n_files : incomplete_rank); f++, i++, member_i++)
     {
-      // file offset
-      fV3 f_offset(left * ((f * SPACING) - file_middle));
-
       // calculate absolute position and move there
-      fV3 desired_position = centre + r_offset + f_offset,
+      fV3 desired_position = centre + getOffset(direction, member_i),
           reformation_direction = desired_position - (*i)->getPosition();
       float distance = reformation_direction.normalise();
 
@@ -86,4 +82,25 @@ void BlockFormation::form(fV3 centre, fV3 direction, gobject_container& objs)
         (*i)->push(reformation_direction);
     }
   }
+}
+
+//!-----------------------------------------------------------------------------
+//! SUBROUTINES
+//!-----------------------------------------------------------------------------
+
+fV3 BlockFormation::getOffset(fV3 direction, size_t member_i) const
+{
+
+  size_t rank = member_i / n_files,
+          file = member_i % (rank >= n_ranks ? incomplete_rank : n_files);
+  return getOffset(direction, rank, file);
+}
+
+fV3 BlockFormation::getOffset(fV3 direction, size_t rank, size_t file) const
+{
+  fV3 left(-direction.y, direction.x, direction.z),
+      rank_offset(direction * (rank_middle - (rank * SPACING))),
+      file_offset(left * ((file * SPACING) - file_middle));
+
+  return (rank_offset + file_offset);
 }

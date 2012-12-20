@@ -86,10 +86,10 @@ int Group::update(float t_delta)
     /*fV3 reform = (position - member->getPosition());
     float norm = reform.normalise();
     if(norm > radius)
-      member->push(reform);*/
+      member->push(reform);
 
     // push members away from eachother
-    /*gobject_container_it j = i;
+    gobject_container_it j = i;
     for(j++; j != members.end(); j++)
       member->repulse((*j));*/
 

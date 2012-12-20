@@ -38,6 +38,11 @@ public:
 
   // implements -- Formation
   void form(fV3 centre, fV3 direction, gobject_container& objs);
+
+  //! SUBROUTINES
+private:
+  fV3 getOffset(fV3 direction, size_t rank, size_t file) const;
+  fV3 getOffset(fV3 direction, size_t member_i) const;
 };
 
 #endif // BLOCKFORMATION_HPP_INCLUDED
