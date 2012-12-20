@@ -63,6 +63,7 @@ public:
   // pathing
   std::deque<NavCell*>* getPath(uV2 source, uV2 destination);
   bool isLineOfSight(iV2 start, iV2 end) const;
+  bool isLineOfSight(fV3 start, fV3 end) const;
 };
 
 #endif // NAVGRID_HPP_INCLUDED

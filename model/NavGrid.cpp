@@ -121,11 +121,14 @@ path* NavGrid::getPath(uV2 source, uV2 destination)
 
 bool NavGrid::isLineOfSight(iV2 start, iV2 end) const
 {
+  if(!isValidGridPos(start) || !isValidGridPos(end))
+    return false;
+
 	// http://en.wikipedia.org/wiki/Bresenham's_line_algorithm
   int dx = abs(end.x - start.x),
       dy = abs(end.y - start.y),
       sx = (start.x < end.x) ? 1 : -1,
-      sy = (start.x < end.x) ? 1 : -1,
+      sy = (start.y < end.y) ? 1 : -1,
       err = dx - dy;
 
   while(start.x != end.x || start.y != end.y)
@@ -153,4 +156,10 @@ bool NavGrid::isLineOfSight(iV2 start, iV2 end) const
 
   // made it - the way is clear!
   return true;
+}
+
+bool NavGrid::isLineOfSight(fV3 start, fV3 end) const
+{
+  return isLineOfSight(iV2(start.x / NavCell::size.x, start.y / NavCell::size.y),
+                       iV2(end.x / NavCell::size.x, end.y / NavCell::size.y));
 }

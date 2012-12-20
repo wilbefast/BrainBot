@@ -24,7 +24,7 @@ class BrainBotGroup : public Group
 {
   //! CONSTANTS
 public:
-  static const int INIT_SIZE = 5*5;
+  static const int INIT_SIZE = 1;//5*5;
 
 
   //! METHODS

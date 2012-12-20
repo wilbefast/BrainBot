@@ -25,12 +25,17 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! **ABSTRACT**
 class Group : public GameObject
 {
+  //! CONSTANTS
+private:
+  static const size_t N_PREVIOUS_POSITIONS = 10;
+
   //! ATTRIBUTES
 private:
   gobject_container members;
   Formation *formation;
   fV3 direction;
   float radius, max_member_radius;
+  fV3 previous_positions[N_PREVIOUS_POSITIONS];
 
 public:
   NavGrid const* grid;

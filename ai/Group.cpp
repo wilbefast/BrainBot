@@ -32,7 +32,9 @@ radius(0.0f),
 max_member_radius(0.0f),
 grid(grid_)
 {
-
+  // previous position are initialised to this position
+  for(size_t i = 0; i < N_PREVIOUS_POSITIONS; i++)
+    previous_positions[i] = position_;
 }
 
 Group::~Group()
@@ -92,6 +94,7 @@ fV3 Group::getIdealPosition(size_t i) const
   if(grid->isObstacle(formationPosition))
     return position;
 
+
   //! use the formation position whenever possible
   else
     return formationPosition;
@@ -118,6 +121,8 @@ int Group::update(float t_delta)
   {
     // cache current object
     GameObject* member = (*it);
+
+    std::cout << grid->isLineOfSight(member->getPosition(), position) << std::endl;
 
     // push the members towards the centroid of the group
     fV3 reform = (getIdealPosition(i) - member->getPosition());
