@@ -21,13 +21,14 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine/math/V3.hpp"
 #include "engine/scenes/GameState.hpp"
 
-#include "model/NavGridMaze.hpp"
-#include "model/BrainBot.hpp"
+#include "pathing/NavGridMaze.hpp"
+
+#include "game_objects/BrainBot.hpp"
 
 #include "view/NavGridView.hpp"
 #include "view/StrategyCamera.hpp"
 
-#include "ai/Group.hpp"
+#include "formations/Group.hpp"
 
 
 class MassMovement : public GameState

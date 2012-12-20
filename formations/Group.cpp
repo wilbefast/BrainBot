@@ -19,6 +19,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "../engine/opengl.h"
 
+#include "../engine/math/vector_angles.hpp"
+
 //!-----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //!-----------------------------------------------------------------------------
@@ -32,6 +34,9 @@ radius(0.0f),
 max_member_radius(0.0f),
 grid(grid_)
 {
+  // slightly above ground
+  position.z = -1;
+
   // previous position are initialised to this position
   for(size_t i = 0; i < N_PREVIOUS_POSITIONS; i++)
     previous_positions[i] = position_;
@@ -49,8 +54,14 @@ Group::~Group()
 
 void Group::setDirection(fV3 direction_)
 {
+  direction_.normalise();
   direction = direction_;
-  direction.normalise();
+
+  /*fV2 direction2d(direction.x, direction.y),
+      new_direction2d(direction_.x, direction_.y);
+  turn(direction2d, new_direction2d, 0.1);
+  direction.x = direction2d.x;
+  direction.y = direction2d.y;*/
 }
 
 void Group::addMember()
@@ -84,13 +95,15 @@ void Group::addMember()
 
 void Group::push(fV3 push_direction)
 {
-  GameObject::push(push_direction * 5.0f); //! TODO FIXME
+  GameObject::push(push_direction * 5.0f); //! FIXME
 }
 
 int Group::update(float t_delta)
 {
   //! update position
   GameObject::update(t_delta);
+
+  //! update direction
 
   //! update previous position
   if((previous_positions[0] - position).getNorm2() > NavCell::SIZE.x*NavCell::SIZE.y)
@@ -119,7 +132,7 @@ int Group::update(float t_delta)
     gobject_container_it j = it;
     for(j++; j != members.end(); j++)
     {
-      member->repulse((*j));
+      member->repulse((*j), 2.0f);
       member->cohere((*j));
     }
 
@@ -143,10 +156,13 @@ void Group::draw()
     (*i)->draw();
 
   //! debug draw position and direction
+  fV3 front_position = position + direction*30.0f;
   glDisable(GL_LIGHTING);
-  glColor3f(1.0f, 1.0f, 0.0f);
     glBegin(GL_LINE_STRIP);
+        glColor3f(0.5f, 0.5f, 1.0f);
+      glVertex3fv(front_position.front());
       glVertex3fv(position.front());
+      glColor3f(1.0f, 1.0f, 0.0f);
       for(size_t i = 0; i < N_PREVIOUS_POSITIONS; i++)
         glVertex3fv(previous_positions[i].front());
     glEnd();
@@ -198,7 +214,7 @@ bool Group::tryMoveMember(GameObject* member, size_t member_i, fV3 const& centre
   fV3 reform = (current_position - desired_position);
   float norm = reform.normalise();
   if(norm > max_member_radius)
-    member->push(reform);
+    member->push(reform * 2.0f);
 
   return true;
 }

@@ -15,7 +15,6 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-
 #include "GameObject.hpp"
 
 #include "../engine/opengl.h" // for glLoadName
@@ -78,7 +77,7 @@ void GameObject::cohere(GameObject* other, float spring_factor)
   float distance2 = to_other.getNorm2(), radius = getRadius();
 
   float radius2 = radius*radius;
-  if(distance2 > radius2*16 && distance2 < radius2*32)
+  if(distance2 > radius2*8 && distance2 < radius2*16)
   {
     spring_factor /= distance2;
     this->push(to_other * spring_factor);

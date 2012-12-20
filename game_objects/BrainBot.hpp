@@ -6,6 +6,11 @@
 
 class BrainBot : public GameObject
 {
+  //! FUNCTIONS
+public:
+  static CollisionMask* createMask(NavGrid const* grid_);
+  static ObjectView* createView(fV3 position_);
+
   //! ATTRIBUTES
 private:
 

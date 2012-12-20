@@ -24,8 +24,8 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "engine/io/MeshManager.hpp"
 #include "engine/graphics/draw.hpp"
 
-#include "model/GameObject.hpp"
-#include "ai/BrainBotGroup.hpp"
+#include "game_objects/GameObject.hpp"
+#include "formations/BrainBotGroup.hpp"
 
 #include "engine/math/V3.hpp"
 

@@ -1,7 +1,7 @@
 #ifndef NAVGRIDVIEW_HPP_INCLUDED
 #define NAVGRIDVIEW_HPP_INCLUDED
 
-#include "../model/NavGrid.hpp"
+#include "../pathing/NavGrid.hpp"
 
 class NavGridView
 {

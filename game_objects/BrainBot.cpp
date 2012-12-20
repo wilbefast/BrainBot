@@ -11,12 +11,25 @@
 #define FRICTION 0.9f
 
 //! ----------------------------------------------------------------------------
+//! FUNCTIONS
+//! ----------------------------------------------------------------------------
+CollisionMask* BrainBot::createMask(NavGrid const* grid_)
+{
+  return
+    new GridCollider(10, grid_, PhysicalProperties(MAX_SPEED, FRICTION, ACCELERATION));
+}
+
+ObjectView* BrainBot::createView(fV3 position_)
+{
+  return
+    new Mesh3DView(position_, 3.0f, "spider");
+}
+
+//! ----------------------------------------------------------------------------
 //! CONSTRUCTOR
 //! ----------------------------------------------------------------------------
-BrainBot::BrainBot(fV3 position_, NavGrid const* grid) :
-GameObject(position_, new Mesh3DView(position_, 3.0f, "spider"),
-                      new GridCollider(10, grid,
-                         PhysicalProperties(MAX_SPEED, FRICTION, ACCELERATION)))
+BrainBot::BrainBot(fV3 position_, NavGrid const* grid_) :
+GameObject(position_, createView(position_), createMask(grid_))
 {
 
 }

@@ -253,6 +253,8 @@
 		<Unit filename="math/numerise.inl" />
 		<Unit filename="math/opengl_matrix.cpp" />
 		<Unit filename="math/opengl_matrix.hpp" />
+		<Unit filename="math/vector_angles.cpp" />
+		<Unit filename="math/vector_angles.hpp" />
 		<Unit filename="math/wjd_math.cpp" />
 		<Unit filename="math/wjd_math.h" />
 		<Unit filename="opengl.h" />
