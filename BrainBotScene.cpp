@@ -15,7 +15,7 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#include "MassMovement.hpp"
+#include "BrainBotScene.hpp"
 
 #include "engine/debug/assert.h"
 #include "engine/debug/log.h"
@@ -51,7 +51,7 @@ static std::deque<NavCell*>* testpath = NULL;
 
 /// CREATION, DESTRUCTION
 
-MassMovement::MassMovement() :
+BrainBotScene::BrainBotScene() :
 GameState(),
 // grid
 grid(GRID_ORIGIN, GRID_SIZE, MAZE_TUNNEL_SIZE, MAZE_PERCENT_BROKEN_WALLS),
@@ -69,11 +69,11 @@ backward(false)
 {
 }
 
-int MassMovement::startup()
+int BrainBotScene::startup()
 {
   // basic startup
   ASSERT(GameState::startup() == EXIT_SUCCESS,
-        "MassMovement starting GameState");
+        "BrainBotScene starting GameState");
 
   // load the 3D scene
   draw::use3D();
@@ -101,11 +101,11 @@ int MassMovement::startup()
   return EXIT_SUCCESS;
 }
 
-int MassMovement::shutdown()
+int BrainBotScene::shutdown()
 {
   // basic shutdown
   ASSERT(GameState::shutdown() == EXIT_SUCCESS,
-        "MassMovement stopping GameState");
+        "BrainBotScene stopping GameState");
 
   // free memory
   delete player;
@@ -116,7 +116,7 @@ int MassMovement::shutdown()
 
 /// OVERRIDES GAMESTATE
 
-int MassMovement::update(float t_delta)
+int BrainBotScene::update(float t_delta)
 {
   // move camera
   static fV3 camera_move, player_move;
@@ -162,7 +162,7 @@ int MassMovement::update(float t_delta)
   return CONTINUE;
 }
 
-int MassMovement::trigger(int which, bool pressed)
+int BrainBotScene::trigger(int which, bool pressed)
 {
   switch(which)
   {
@@ -180,7 +180,7 @@ int MassMovement::trigger(int which, bool pressed)
 }
 
 
-void MassMovement::draw()
+void BrainBotScene::draw()
 {
   // clear and reset
   glPushMatrix();

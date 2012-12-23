@@ -21,12 +21,12 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../debug/assert.h"      // ASSERT
 #include "MainMenu.hpp"           // previous scene
 
-#include "../../MassMovement.hpp"
+#include "../../BrainBotScene.hpp"
 
 /// CREATION & DESTRUCTION
 
 Game::Game(bool tutorial) :
-Scene(new MassMovement())
+Scene(new BrainBotScene())
 {
 }
 

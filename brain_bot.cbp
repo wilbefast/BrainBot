@@ -1,0 +1,332 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="brain_bot" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="LIN_Debug_SDL_2_0">
+				<Option output="bin/Debug/brain_bot" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DSDL_NO_COMPAT" />
+					<Add option="-DSDL2" />
+					<Add option="-DDEBUG" />
+					<Add directory="/usr/local/include/SDL2" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL2" />
+					<Add option="-lSDL2_image" />
+					<Add option="-lGL" />
+					<Add directory="/usr/local/lib" />
+				</Linker>
+			</Target>
+			<Target title="LIN_Release_SDL_2_0">
+				<Option output="bin/Release/brain_bot" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add option="-DSDL_NO_COMPAT" />
+					<Add option="-DSDL2" />
+					<Add directory="/usr/local/include/SDL2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lSDL2" />
+					<Add option="-lSDL2_image" />
+					<Add option="-lGL" />
+					<Add option="-lGLEW" />
+					<Add directory="/usr/local/lib" />
+				</Linker>
+			</Target>
+			<Target title="LIN_Debug_SDL_1_2">
+				<Option output="bin/Debug/brain_bot" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+					<Add directory="/usr/include/SDL/" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL" />
+					<Add option="-lSDL_image" />
+					<Add option="-lGL" />
+					<Add directory="/usr/local/lib" />
+				</Linker>
+			</Target>
+			<Target title="LIN_Release_SDL_1_2">
+				<Option output="bin/Release/brain_bot" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="/usr/include/SDL/" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lSDL" />
+					<Add option="-lSDL_image" />
+					<Add option="-lGL" />
+					<Add directory="/usr/local/lib" />
+				</Linker>
+			</Target>
+			<Target title="WIN_Debug_SDL_1_2">
+				<Option output="bin/Debug/brain_bot" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+					<Add directory="C:/Program Files (x86)/- Software -/SDL/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL_image" />
+					<Add library="mingw32" />
+					<Add library="SDLmain" />
+					<Add library="SDL.dll" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="winmm" />
+					<Add library="dxguid" />
+					<Add library="opengl32" />
+					<Add directory="C:/Program Files (x86)/- Software -/SDL/lib" />
+				</Linker>
+			</Target>
+			<Target title="WIN_Release_SDL_1_2">
+				<Option output="bin/Release/brain_bot" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+					<Add directory="C:/Program Files (x86)/- Software -/SDL/include" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+					<Add option="-lSDL_image" />
+					<Add library="mingw32" />
+					<Add library="SDLmain" />
+					<Add library="SDL.dll" />
+					<Add library="user32" />
+					<Add library="gdi32" />
+					<Add library="winmm" />
+					<Add library="dxguid" />
+					<Add library="opengl32" />
+					<Add directory="C:/Program Files (x86)/- Software -/SDL/lib" />
+				</Linker>
+			</Target>
+			<Target title="LIN_Debug_SDL_1_2_FAC">
+				<Option output="bin/Debug/brain_bot" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+					<Add option="-DDEBUG" />
+					<Add directory="/auto_home/wdyce/include/SDL/" />
+				</Compiler>
+				<Linker>
+					<Add option="-lSDL" />
+					<Add option="-lSDL_image" />
+					<Add option="-lGL" />
+					<Add directory="/auto_home/wdyce/lib" />
+				</Linker>
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+		</Compiler>
+		<Unit filename="Android.mk" />
+		<Unit filename="BrainBotScene.cpp" />
+		<Unit filename="BrainBotScene.hpp" />
+		<Unit filename="assets/Island_001.mtl" />
+		<Unit filename="assets/Island_001.obj" />
+		<Unit filename="assets/knight.mtl" />
+		<Unit filename="assets/knight.obj" />
+		<Unit filename="assets/rubik.obj" />
+		<Unit filename="engine/Application.cpp" />
+		<Unit filename="engine/Application.hpp" />
+		<Unit filename="engine/debug/assert.h" />
+		<Unit filename="engine/debug/log.cpp" />
+		<Unit filename="engine/debug/log.h" />
+		<Unit filename="engine/debug/warn.h" />
+		<Unit filename="engine/gameplay/things/Thing.cpp" />
+		<Unit filename="engine/gameplay/things/Thing.hpp" />
+		<Unit filename="engine/gameplay/things/elements/AnimatedElement.cpp" />
+		<Unit filename="engine/gameplay/things/elements/AnimatedElement.hpp" />
+		<Unit filename="engine/gameplay/things/elements/AsymetricalMovementElement.cpp" />
+		<Unit filename="engine/gameplay/things/elements/AsymetricalMovementElement.hpp" />
+		<Unit filename="engine/gameplay/things/elements/ColliderElement.cpp" />
+		<Unit filename="engine/gameplay/things/elements/ColliderElement.hpp" />
+		<Unit filename="engine/gameplay/things/elements/GraphicElement.cpp" />
+		<Unit filename="engine/gameplay/things/elements/GraphicElement.hpp" />
+		<Unit filename="engine/gameplay/things/elements/MovementElement.cpp" />
+		<Unit filename="engine/gameplay/things/elements/MovementElement.hpp" />
+		<Unit filename="engine/gameplay/things/elements/ResourceElement.cpp" />
+		<Unit filename="engine/gameplay/things/elements/ResourceElement.hpp" />
+		<Unit filename="engine/gameplay/things/elements/SymetricalMovementElement.cpp" />
+		<Unit filename="engine/gameplay/things/elements/SymetricalMovementElement.hpp" />
+		<Unit filename="engine/gameplay/things/elements/ThingElement.cpp" />
+		<Unit filename="engine/gameplay/things/elements/ThingElement.hpp" />
+		<Unit filename="engine/gameplay/things/elements/TimerElement.cpp" />
+		<Unit filename="engine/gameplay/things/elements/TimerElement.hpp" />
+		<Unit filename="engine/gameplay/things/events/BoundaryEvent.cpp" />
+		<Unit filename="engine/gameplay/things/events/BoundaryEvent.hpp" />
+		<Unit filename="engine/gameplay/things/events/CollisionEvent.cpp" />
+		<Unit filename="engine/gameplay/things/events/CollisionEvent.hpp" />
+		<Unit filename="engine/gameplay/things/events/ThingEvent.cpp" />
+		<Unit filename="engine/gameplay/things/events/ThingEvent.hpp" />
+		<Unit filename="engine/global.cpp" />
+		<Unit filename="engine/global.hpp" />
+		<Unit filename="engine/graphics/2D/Animation.cpp" />
+		<Unit filename="engine/graphics/2D/Animation.hpp" />
+		<Unit filename="engine/graphics/2D/AnimationIncarnation.cpp" />
+		<Unit filename="engine/graphics/2D/AnimationIncarnation.hpp" />
+		<Unit filename="engine/graphics/2D/Graphic.cpp" />
+		<Unit filename="engine/graphics/2D/Graphic.hpp" />
+		<Unit filename="engine/graphics/2D/GraphicIncarnation.cpp" />
+		<Unit filename="engine/graphics/2D/GraphicIncarnation.hpp" />
+		<Unit filename="engine/graphics/2D/HeightMesh.cpp" />
+		<Unit filename="engine/graphics/2D/HeightMesh.hpp" />
+		<Unit filename="engine/graphics/2D/Mesh2D.cpp" />
+		<Unit filename="engine/graphics/2D/Mesh2D.hpp" />
+		<Unit filename="engine/graphics/3D/Camera.cpp" />
+		<Unit filename="engine/graphics/3D/Camera.hpp" />
+		<Unit filename="engine/graphics/3D/Joint.cpp" />
+		<Unit filename="engine/graphics/3D/Joint.hpp" />
+		<Unit filename="engine/graphics/3D/Material.cpp" />
+		<Unit filename="engine/graphics/3D/Material.hpp" />
+		<Unit filename="engine/graphics/3D/MaterialLibrary.cpp" />
+		<Unit filename="engine/graphics/3D/MaterialLibrary.hpp" />
+		<Unit filename="engine/graphics/3D/Mesh3D.cpp" />
+		<Unit filename="engine/graphics/3D/Mesh3D.hpp" />
+		<Unit filename="engine/graphics/3D/Shader.cpp" />
+		<Unit filename="engine/graphics/3D/Shader.hpp" />
+		<Unit filename="engine/graphics/3D/Texture.hpp" />
+		<Unit filename="engine/graphics/3D/vertex.hpp" />
+		<Unit filename="engine/graphics/Colour.cpp" />
+		<Unit filename="engine/graphics/Colour.hpp" />
+		<Unit filename="engine/graphics/Texture.cpp" />
+		<Unit filename="engine/graphics/Texture.hpp" />
+		<Unit filename="engine/graphics/draw.cpp" />
+		<Unit filename="engine/graphics/draw.hpp" />
+		<Unit filename="engine/io/GraphicsManager.cpp" />
+		<Unit filename="engine/io/GraphicsManager.hpp" />
+		<Unit filename="engine/io/MeshManager.cpp" />
+		<Unit filename="engine/io/MeshManager.hpp" />
+		<Unit filename="engine/io/ResourceManager.cpp" />
+		<Unit filename="engine/io/ResourceManager.hpp" />
+		<Unit filename="engine/io/file.cpp" />
+		<Unit filename="engine/io/file.hpp" />
+		<Unit filename="engine/io/tinyxml/tinystr.cpp" />
+		<Unit filename="engine/io/tinyxml/tinystr.h" />
+		<Unit filename="engine/io/tinyxml/tinyxml.cpp" />
+		<Unit filename="engine/io/tinyxml/tinyxml.h" />
+		<Unit filename="engine/io/tinyxml/tinyxml_dump.cpp" />
+		<Unit filename="engine/io/tinyxml/tinyxml_dump.h" />
+		<Unit filename="engine/io/tinyxml/tinyxmlerror.cpp" />
+		<Unit filename="engine/io/tinyxml/tinyxmlparser.cpp" />
+		<Unit filename="engine/jni_glue.cpp" />
+		<Unit filename="engine/main.cpp" />
+		<Unit filename="engine/math/Angle.cpp" />
+		<Unit filename="engine/math/Angle.hpp" />
+		<Unit filename="engine/math/M44.hpp" />
+		<Unit filename="engine/math/M44.inl" />
+		<Unit filename="engine/math/Rect.hpp" />
+		<Unit filename="engine/math/Rect.inl" />
+		<Unit filename="engine/math/V2.hpp" />
+		<Unit filename="engine/math/V2.inl" />
+		<Unit filename="engine/math/V3.hpp" />
+		<Unit filename="engine/math/V3.inl" />
+		<Unit filename="engine/math/V4.hpp" />
+		<Unit filename="engine/math/V4.inl" />
+		<Unit filename="engine/math/numerise.h" />
+		<Unit filename="engine/math/numerise.inl" />
+		<Unit filename="engine/math/opengl_matrix.cpp" />
+		<Unit filename="engine/math/opengl_matrix.hpp" />
+		<Unit filename="engine/math/vector_angles.cpp" />
+		<Unit filename="engine/math/vector_angles.hpp" />
+		<Unit filename="engine/math/wjd_math.cpp" />
+		<Unit filename="engine/math/wjd_math.h" />
+		<Unit filename="engine/opengl.h" />
+		<Unit filename="engine/scenes/Button.cpp" />
+		<Unit filename="engine/scenes/Button.hpp" />
+		<Unit filename="engine/scenes/Game.cpp" />
+		<Unit filename="engine/scenes/Game.hpp" />
+		<Unit filename="engine/scenes/GameState.cpp" />
+		<Unit filename="engine/scenes/GameState.hpp" />
+		<Unit filename="engine/scenes/Input.cpp" />
+		<Unit filename="engine/scenes/Input.hpp" />
+		<Unit filename="engine/scenes/MainMenu.cpp" />
+		<Unit filename="engine/scenes/MainMenu.hpp" />
+		<Unit filename="engine/scenes/ModelViewState.cpp" />
+		<Unit filename="engine/scenes/ModelViewState.hpp" />
+		<Unit filename="engine/scenes/Scene.cpp" />
+		<Unit filename="engine/scenes/Scene.hpp" />
+		<Unit filename="engine/scenes/SceneState.cpp" />
+		<Unit filename="engine/scenes/SceneState.hpp" />
+		<Unit filename="engine/utils/Bounded.hpp" />
+		<Unit filename="engine/utils/Bounded.inl" />
+		<Unit filename="engine/utils/IntrusiveLinked.cpp" />
+		<Unit filename="engine/utils/IntrusiveLinked.hpp" />
+		<Unit filename="formations/BlockFormation.cpp" />
+		<Unit filename="formations/BlockFormation.hpp" />
+		<Unit filename="formations/BrainBotGroup.cpp" />
+		<Unit filename="formations/BrainBotGroup.hpp" />
+		<Unit filename="formations/Formation.hpp" />
+		<Unit filename="formations/Group.cpp" />
+		<Unit filename="formations/Group.hpp" />
+		<Unit filename="game_objects/BrainBot.cpp" />
+		<Unit filename="game_objects/BrainBot.hpp" />
+		<Unit filename="game_objects/GameObject.cpp" />
+		<Unit filename="game_objects/GameObject.hpp" />
+		<Unit filename="licence-gpl-3.0.txt" />
+		<Unit filename="math/M44.inl" />
+		<Unit filename="math/Rect.inl" />
+		<Unit filename="math/V2.inl" />
+		<Unit filename="math/V3.inl" />
+		<Unit filename="math/V4.inl" />
+		<Unit filename="math/numerise.inl" />
+		<Unit filename="pathing/NavCell.cpp" />
+		<Unit filename="pathing/NavCell.hpp" />
+		<Unit filename="pathing/NavGrid.cpp" />
+		<Unit filename="pathing/NavGrid.hpp" />
+		<Unit filename="pathing/NavGridMaze.cpp" />
+		<Unit filename="pathing/NavGridMaze.hpp" />
+		<Unit filename="pathing/Path.hpp" />
+		<Unit filename="pathing/PathSearch.cpp" />
+		<Unit filename="pathing/PathSearch.hpp" />
+		<Unit filename="pathing/SearchState.cpp" />
+		<Unit filename="pathing/SearchState.hpp" />
+		<Unit filename="physics/CollisionMask.hpp" />
+		<Unit filename="physics/GridCollider.cpp" />
+		<Unit filename="physics/GridCollider.hpp" />
+		<Unit filename="physics/PhysicalProperties.hpp" />
+		<Unit filename="readme.txt" />
+		<Unit filename="utils/Bounded.inl" />
+		<Unit filename="view/BillboardView.cpp" />
+		<Unit filename="view/BillboardView.hpp" />
+		<Unit filename="view/Mesh3DView.cpp" />
+		<Unit filename="view/Mesh3DView.hpp" />
+		<Unit filename="view/NavGridView.cpp" />
+		<Unit filename="view/NavGridView.hpp" />
+		<Unit filename="view/ObjectView.hpp" />
+		<Unit filename="view/StrategyCamera.cpp" />
+		<Unit filename="view/StrategyCamera.hpp" />
+		<Extensions>
+			<code_completion />
+			<debugger />
+			<envvars />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>

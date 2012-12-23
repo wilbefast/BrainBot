@@ -15,8 +15,8 @@ You should have received a copy of the GNU General Public License
 along with this program.  If not, see <http://www.gnu.org/licenses/>.
 */
 
-#ifndef MASSMOVEMENT_HPP_INCLUDED
-#define MASSMOVEMENT_HPP_INCLUDED
+#ifndef BRAINBOTSCENE_HPP_INCLUDED
+#define BRAINBOTSCENE_HPP_INCLUDED
 
 #include "engine/math/V3.hpp"
 #include "engine/scenes/GameState.hpp"
@@ -31,7 +31,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "formations/Group.hpp"
 
 
-class MassMovement : public GameState
+class BrainBotScene : public GameState
 {
   /// ATTRIBUTES
 private:
@@ -49,7 +49,7 @@ private:
   /// METHODS
 public:
   // Creation, destruction
-  MassMovement();
+  BrainBotScene();
   int startup();
   int shutdown();
   // Overrides GameState
@@ -58,4 +58,4 @@ public:
   void draw();
 };
 
-#endif // MASSMOVEMENTSCENE_HPP_INCLUDED
+#endif // BRAINBOTSCENE_HPP_INCLUDED
