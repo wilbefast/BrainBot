@@ -21,7 +21,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! CONSTRUCTORS, DESTRUCTORS
 //! ----------------------------------------------------------------------------
 
-PathSearch::PathSearch(NavGrid *grid_, uV2 start_coord, uV2 end_coord) :
+PathSearch::PathSearch(NavGrid const* grid_, uV2 start_coord, uV2 end_coord) :
 grid(grid_),
 start(new SearchState(grid->cells[start_coord.y][start_coord.x], grid->cells[end_coord.y][end_coord.x])),
 end(new SearchState(grid->cells[end_coord.y][end_coord.x], grid->cells[end_coord.y][end_coord.x])),
@@ -42,9 +42,19 @@ has_result(false)
 //! QUERY
 //! ----------------------------------------------------------------------------
 
-path* PathSearch::getPath()
+path_t* PathSearch::getPath()
 {
-  path *result = new path();
+
+  if(!has_result)
+    return NULL;
+
+
+
+  //! FIXME
+
+
+
+  path_t *result = new path_t();
 
   // start at the end, trace backwards adding vertices
   SearchState const* current = has_result ? end : fallback_plan;

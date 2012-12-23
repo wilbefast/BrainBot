@@ -21,6 +21,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 #include "../engine/math/vector_angles.hpp"
 
+
+#define USE_A_STAR 1
+
 //!-----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
 //!-----------------------------------------------------------------------------
@@ -38,8 +41,8 @@ grid(grid_)
   position.z = -1;
 
   // previous position are initialised to this position
-  for(size_t i = 0; i < N_PREVIOUS_POSITIONS; i++)
-    previous_positions[i] = position_;
+  for(size_t prev_i = 0; prev_i < N_PREVIOUS_POSITIONS; prev_i++)
+    previous_positions[prev_i] = position_;
 }
 
 Group::~Group()
@@ -73,6 +76,9 @@ void Group::addMember()
   GameObject* spawn = spawnMember(spawn_position);
   members.push_back(spawn);
 
+  // add path for this member
+  object_paths.push_back(NULL);
+
   // remember the size of the largest object in the group
   float spawn_radius = spawn->getRadius();
   if(spawn_radius > max_member_radius)
@@ -95,7 +101,7 @@ void Group::addMember()
 
 void Group::push(fV3 push_direction)
 {
-  GameObject::push(push_direction * 5.0f); //! FIXME
+  GameObject::push(push_direction * 10.0f); //! FIXME
 }
 
 int Group::update(float t_delta)
@@ -113,7 +119,6 @@ int Group::update(float t_delta)
     previous_positions[0] = position;
   }
 
-
   //! update each member of the group
   size_t member_i = 0;
   for(gobject_container_it it = members.begin(); it != members.end();
@@ -124,9 +129,60 @@ int Group::update(float t_delta)
 
     // move the members with the group
     if(!tryMoveMember(member, member_i, position))
-      for(size_t prev_i = 0; prev_i < N_PREVIOUS_POSITIONS; prev_i++)
+    {
+      // if current position fails, try previous positions
+      size_t prev_i;
+      for(prev_i = 0; prev_i < N_PREVIOUS_POSITIONS; prev_i++)
         if(tryMoveMember(member, member_i, previous_positions[prev_i]))
           break;
+
+//! ----------------------------------------------------------------------------
+#ifdef USE_A_STAR
+//! ----------------------------------------------------------------------------
+
+      // if all positions fail, use a custom path
+      if(prev_i == N_PREVIOUS_POSITIONS)
+      {
+
+        // get a new path if we don't have one yet
+        if(!object_paths[member_i])
+          object_paths[member_i] = grid->getPath(member->getPosition(),
+                                   getIdealPosition(member_i, position));
+
+        // delete path if it is empty
+        path_t* p = object_paths[member_i];
+        if(p->empty())
+        {
+          delete p;
+          object_paths[member_i] = NULL;
+        }
+
+        // move towards the next cell in the path
+        else
+        {
+          fV3 follow = (grid->gridPosToVertex(p->front()->grid_position)
+                        - member->getPosition());
+          follow.x += NavCell::SIZE.x/2;
+          follow.y += NavCell::SIZE.y/2;
+          float distance = follow.normalise();
+
+          if(distance < member->getRadius())
+            p->pop_front();
+          else
+            member->push(follow);
+        }
+      }
+      else
+      {
+        delete object_paths[member_i];
+        object_paths[member_i] = NULL;
+      }
+
+//! ----------------------------------------------------------------------------
+#endif //USE_A_STAR
+//! ----------------------------------------------------------------------------
+
+    }
 
     // keep members at a given distance from eachother
     gobject_container_it j = it;
@@ -135,8 +191,6 @@ int Group::update(float t_delta)
       member->repulse((*j), 2.0f);
       member->cohere((*j));
     }
-
-
 
     // call the member's update function
     member->update(t_delta);
@@ -159,13 +213,39 @@ void Group::draw()
   fV3 front_position = position + direction*30.0f;
   glDisable(GL_LIGHTING);
     glBegin(GL_LINE_STRIP);
-        glColor3f(0.5f, 0.5f, 1.0f);
+      glColor3f(0.5f, 0.5f, 1.0f);
       glVertex3fv(front_position.front());
       glVertex3fv(position.front());
       glColor3f(1.0f, 1.0f, 0.0f);
       for(size_t i = 0; i < N_PREVIOUS_POSITIONS; i++)
         glVertex3fv(previous_positions[i].front());
     glEnd();
+
+//! ----------------------------------------------------------------------------
+#ifdef USE_A_STAR
+//! ----------------------------------------------------------------------------
+    glColor3f(0.5f, 1.0f, 0.5f);
+    for(path_container_it path_i = object_paths.begin();
+        path_i != object_paths.end(); path_i++)
+    if((*path_i))
+    {
+      path_t* p = (*path_i);
+      glBegin(GL_LINE_STRIP);
+      for(path_it cell_i = p->begin(); cell_i != p->end(); cell_i++)
+      {
+        fV3 vertex = grid->gridPosToVertex((*cell_i)->grid_position);
+        vertex.x += NavCell::SIZE.x / 2;
+        vertex.y += NavCell::SIZE.y / 2;
+        vertex.z -= 10.0f;
+
+        glVertex3fv(vertex.front());
+      }
+
+      glEnd();
+    }
+//! ----------------------------------------------------------------------------
+#endif //USE_A_STAR
+//! ----------------------------------------------------------------------------
   glEnable(GL_LIGHTING);
 
   //! unbind group identifier

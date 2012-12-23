@@ -25,13 +25,13 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 class PathSearch;
 
 #include "SearchState.hpp"
+#include "Path.hpp"
 
-#include <deque>
 #include <map>
 #include <queue>
 #include <vector>
 
-typedef std::deque<NavCell*> path;
+
 typedef std::map<NavCell*, SearchState*> state_map_t;
 typedef std::priority_queue<SearchState*, std::vector<SearchState*>, SearchState::compare_t>
           state_queue_t;
@@ -40,7 +40,7 @@ class PathSearch
 {
   //! ATTRIBUTES
 private:
-  NavGrid *grid;
+  NavGrid const* grid;
   SearchState *start, *end, *fallback_plan;
   state_map_t states;
   state_queue_t open;
@@ -49,10 +49,10 @@ private:
   //! METHODS
 public:
   // constructors, destructors
-  PathSearch(NavGrid *grid_, uV2 start_coord, uV2 end_coord);
+  PathSearch(NavGrid const* grid_, uV2 start_coord, uV2 end_coord);
 
   // query
-  path* getPath();
+  path_t* getPath();
 
 
   //! SUBROUTINES

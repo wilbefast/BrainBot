@@ -38,7 +38,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #define GRID_ORIGIN fV3(0, 0, 0)
 
 #define MAZE_TUNNEL_SIZE 5
-#define MAZE_PERCENT_BROKEN_WALLS 20
+#define MAZE_PERCENT_BROKEN_WALLS 33
 
 #define START_N_MINIONS 2
 

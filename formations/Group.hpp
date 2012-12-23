@@ -22,6 +22,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "../game_objects/GameObject.hpp"
 #include "../formations/Formation.hpp"
 
+#include <vector>
+
+typedef std::vector<path_t*> path_container;
+typedef path_container::iterator path_container_it;
+
 //! **ABSTRACT**
 class Group : public GameObject
 {
@@ -36,6 +41,7 @@ private:
   fV3 direction;
   float radius, max_member_radius;
   fV3 previous_positions[N_PREVIOUS_POSITIONS];
+  path_container object_paths;
 
 public:
   NavGrid const* grid;

@@ -18,7 +18,7 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #ifndef NAVGRID_HPP_INCLUDED
 #define NAVGRID_HPP_INCLUDED
 
-#include <deque>
+#include "Path.hpp"
 
 #include "../engine/math/V3.hpp"
 #include "../engine/math/Rect.hpp"
@@ -61,7 +61,8 @@ public:
   fV3 gridPosToSize(uV2 grid_position) const;
 
   // pathing
-  std::deque<NavCell*>* getPath(uV2 source, uV2 destination);
+  path_t* getPath(iV2 source, iV2 destination) const;
+  path_t* getPath(fV3 source, fV3 destination) const;
   bool isLineOfSight(iV2 start, iV2 end) const;
   bool isLineOfSight(fV3 start, fV3 end) const;
 };

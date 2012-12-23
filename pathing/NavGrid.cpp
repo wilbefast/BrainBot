@@ -112,12 +112,19 @@ fV3 NavGrid::gridPosToSize(uV2 position) const
 //! PATHING
 //! ----------------------------------------------------------------------------
 
-
-path* NavGrid::getPath(uV2 source, uV2 destination)
+path_t* NavGrid::getPath(iV2 source, iV2 destination) const
 {
   PathSearch s(this, source, destination);
   return s.getPath();
 }
+
+path_t* NavGrid::getPath(fV3 source, fV3 destination) const
+{
+  iV2 isource(source.x / NavCell::SIZE.x, source.y / NavCell::SIZE.y),
+      idest(destination.x / NavCell::SIZE.x, destination.y / NavCell::SIZE.y);
+  return getPath(isource, idest);
+}
+
 
 bool NavGrid::isLineOfSight(iV2 start, iV2 end) const
 {

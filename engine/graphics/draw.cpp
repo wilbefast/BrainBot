@@ -29,11 +29,11 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! PRIVATE SUBROUTINES
 
 // This function is adapted from NeHe: it replaces gluPerspective.
-void glPerspective(GLdouble fov, GLdouble aspect, GLdouble near, GLdouble far)
+void glPerspective(GLdouble fov, GLdouble aspect, GLdouble _near, GLdouble _far)
 {
-  GLdouble height = tan(fov / 360 * PI) * near,
-         width = height * aspect;
-  glFrustum(-width, width, -height, height, near, far);
+  GLdouble height = tan(fov / 360 * PI) * _near;
+  GLdouble width = height * aspect;
+  glFrustum(-width, width, -height, height, _near, _far);
 }
 
 // The public line-drawing functions are just adaptors for this one
@@ -99,7 +99,7 @@ void draw::use3D()
   // Set up camera frustrum
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity();
-  glPerspective(VIEW_FIELD, global::viewport.x/global::viewport.y, NEAR, FAR);
+  glPerspective(GL_VIEW_FIELD, global::viewport.x/global::viewport.y, GL_Z_NEAR, GL_Z_FAR);
 
   // Clean the slate
   glMatrixMode(GL_MODELVIEW);
