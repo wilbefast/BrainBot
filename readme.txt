@@ -1,6 +1,27 @@
-Troopix
-================
+Brain Bot
 
-A university project focused on collective movements, hence formations.
+A 3D strategy-game featuring robots with brains.
 
-Use the 3D fork of the SDL/OpenGL game engine "Arrogance".
+********************************************************************************
+
+Copyright (C) 2012  William Dyce
+
+This program is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+
+This program is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+
+You should have received a copy of the GNU General Public License
+along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+********************************************************************************
+
+This started out as a university project but I'd like to turn it into something
+playable in due course :)
+
+It's based on my (very) WIP "Arrogance" engine, written in C++ for SDL/OpenGLES.
