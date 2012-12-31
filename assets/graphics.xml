@@ -3,6 +3,7 @@
   <texture_list>
     <texture name="concrete" />
     <texture name="asphalt" />
+    <texture name="city" />
     <texture name="alien_bot1" />
     <texture name="alien_bot2" />
   </texture_list>

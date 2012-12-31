@@ -25,25 +25,9 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 //! GLOBAL VARIABLES
 //! ----------------------------------------------------------------------------
 
-static Texture *building_tex = NULL, *road_tex = NULL;
+static Texture *texture = NULL;
 
 static fV3  left(-1,0,0), right(1,0,0), up(0,0,-1), forward(0,1,0), back(0,-1,0);
-
-static Colour road_ambient(0.15f, 0.1f, 0.2f),
-              road_diffuse(0.6f, 0.5f, 0.7f),
-              road_specular(0.3f, 0.3f, 0.6f),
-              road_emission(0.0f, 0.0f, 0.0f);
-static float road_shine = 64;
-
-
-static Colour building_ambient(0.4f, 0.2f, 0.2f),
-              building_diffuse(0.8f, 0.7f, 0.7f),
-              building_specular(0.0f, 0.0f, 0.0f),
-              building_emission(0.0f, 0.0f, 0.0f);
-static float building_shine = 128;
-
-static Colour roof_ambient(0.4f, 0.2f, 0.2f),
-              roof_diffuse(0.4f, 0.2f, 0.2f);
 
 //! ----------------------------------------------------------------------------
 //! CONSTRUCTORS, DESTRUCTORS
@@ -63,15 +47,16 @@ NavGridView::~NavGridView()
 
 void NavGridView::draw()
 {
-  //! get texture handles if not already done
-  if(building_tex == NULL)
-   building_tex = GraphicsManager::getInstance()->get_texture("concrete");
-  if(road_tex == NULL)
-   road_tex = GraphicsManager::getInstance()->get_texture("asphalt");
+  //! get texture handle if not already done
+  if(texture == NULL)
+   texture = GraphicsManager::getInstance()->get_texture("city");
 
+  /*
   //! draw roads and buildings separetly to avoid too much binding/unbinding
   draw_all_buildings();
   draw_all_roads();
+  */
+  draw_all();
 }
 
 //! ----------------------------------------------------------------------------
@@ -81,7 +66,7 @@ void NavGridView::draw()
 inline void draw_building(fV3 position, fV3 const& size)
 {
     // left face
-    glTexCoord2f(0.0f, 1.0f);
+    glTexCoord2f(0.5f, 1.0f);
     glNormal3fv(left.front());
     glVertex3fv(position.front()); // back bottom left
   position.y += size.y;
@@ -93,7 +78,7 @@ inline void draw_building(fV3 position, fV3 const& size)
     glNormal3fv(left.front());
     glVertex3fv(position.front()); // front top left
   position.y -= size.y;
-    glTexCoord2f(0.0f, 0.0f);
+    glTexCoord2f(0.5f, 0.0f);
     glNormal3fv(left.front());
     glVertex3fv(position.front()); // back top left
 
@@ -102,11 +87,11 @@ inline void draw_building(fV3 position, fV3 const& size)
     glNormal3fv(back.front());
     glVertex3fv(position.front()); // back top left
   position.x += size.x;
-    glTexCoord2f(0.0f, 0.0f);
+    glTexCoord2f(0.5f, 0.0f);
     glNormal3fv(back.front());
     glVertex3fv(position.front()); // back top right
   position.z += size.z;
-    glTexCoord2f(0.0f, 1.0f);
+    glTexCoord2f(0.5f, 1.0f);
     glNormal3fv(back.front());
     glVertex3fv(position.front()); // back bottom right
   position.x -= size.x;
@@ -124,11 +109,11 @@ inline void draw_building(fV3 position, fV3 const& size)
     glNormal3fv(right.front());
     glVertex3fv(position.front()); // back top right
   position.y += size.y;
-    glTexCoord2f(0.0f, 0.0f);
+    glTexCoord2f(0.5f, 0.0f);
     glNormal3fv(right.front());
     glVertex3fv(position.front()); // front top right
   position.z += size.z;
-    glTexCoord2f(0.0f, 1.0f);
+    glTexCoord2f(0.5f, 1.0f);
     glNormal3fv(right.front());
     glVertex3fv(position.front());  // front bottom right
 
@@ -141,17 +126,17 @@ inline void draw_building(fV3 position, fV3 const& size)
     glNormal3fv(forward.front());
     glVertex3fv(position.front()); // front top right
   position.x -= size.x;
-    glTexCoord2f(0.0f, 0.0f);
+    glTexCoord2f(0.5f, 0.0f);
     glNormal3fv(forward.front());
     glVertex3fv(position.front()); // front top left
   position.z += size.z;
-    glTexCoord2f(0.0f, 1.0f);
+    glTexCoord2f(0.5f, 1.0f);
     glNormal3fv(forward.front());
     glVertex3fv(position.front()); // front bottom left
 
   // top face
   position.z -= size.z;
-    glTexCoord2f(0.0f, 1.0f);
+    glTexCoord2f(0.5f, 1.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());  // front top left
   position.x += size.x;
@@ -163,39 +148,9 @@ inline void draw_building(fV3 position, fV3 const& size)
     glNormal3fv(up.front());
     glVertex3fv(position.front()); // back top right
   position.x -= size.x;
-    glTexCoord2f(0.0f, 0.0f);
+    glTexCoord2f(0.5f, 0.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front()); // back top left
-}
-
-void NavGridView::draw_all_buildings()
-{
-  static uV2 grid_pos;
-
-  //! activate the material
-  glMaterialfv(GL_FRONT, GL_AMBIENT, building_ambient.front());
-  glMaterialfv(GL_FRONT, GL_SPECULAR, building_specular.front());
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, building_diffuse.front());
-  glMaterialfv(GL_FRONT, GL_EMISSION, building_emission.front());
-  glMaterialfv(GL_FRONT, GL_SHININESS, &building_shine);
-
-  //! activate the texture BEFORE glBegin
-  glBindTexture(GL_TEXTURE_2D, building_tex->getHandle());
-  glBegin(GL_QUADS);
-  for(grid_pos.x = 0; grid_pos.x < grid->n_cells.x; grid_pos.x++)
-  {
-    for(grid_pos.y = 0; grid_pos.y < grid->n_cells.y; grid_pos.y++)
-    {
-      // check that the cell is a building
-      if(!grid->isObstacle(grid_pos))
-        continue;
-
-      // draw the building
-      draw_building(grid->gridPosToVertex(grid_pos), grid->gridPosToSize(grid_pos));
-    }
-  }
-  glEnd();
-  glBindTexture(GL_TEXTURE_2D, 0);
 }
 
 //! ----------------------------------------------------------------------------
@@ -212,44 +167,39 @@ inline void draw_road(fV3 position, fV3 const& size)
     glNormal3fv(up.front());
     glVertex3fv(position.front());
   position.x += size.x;
-    glTexCoord2f(1.0f, 1.0f);
+    glTexCoord2f(0.5f, 1.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
   position.y -= size.y;
-    glTexCoord2f(1.0f, 0.0f);
+    glTexCoord2f(0.5f, 0.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
 }
 
-void NavGridView::draw_all_roads()
+//! ----------------------------------------------------------------------------
+//! DRAW EVERYTHING
+//! ----------------------------------------------------------------------------
+
+void NavGridView::draw_all()
 {
   static uV2 grid_pos;
 
-  //! activate the material
-  glMaterialfv(GL_FRONT, GL_AMBIENT, road_ambient.front());
-  glMaterialfv(GL_FRONT, GL_SPECULAR, road_specular.front());
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, road_diffuse.front());
-  glMaterialfv(GL_FRONT, GL_EMISSION, road_emission.front());
-  glMaterialfv(GL_FRONT, GL_SHININESS, &road_shine);
-
   //! activate the texture BEFORE glBegin
-  glBindTexture(GL_TEXTURE_2D, road_tex->getHandle());
+  glBindTexture(GL_TEXTURE_2D, texture->getHandle());
   glBegin(GL_QUADS);
   for(grid_pos.x = 0; grid_pos.x < grid->n_cells.x; grid_pos.x++)
   {
     for(grid_pos.y = 0; grid_pos.y < grid->n_cells.y; grid_pos.y++)
     {
-      // check that the cell is a road
+      // check that the cell is a building or a road
       if(grid->isObstacle(grid_pos))
-        continue;
-
-      // draw the building
-      draw_road(grid->gridPosToVertex(grid_pos), grid->gridPosToSize(grid_pos));
+        // draw a building
+        draw_building(grid->gridPosToVertex(grid_pos), grid->gridPosToSize(grid_pos));
+      else
+        // draw a road
+        draw_road(grid->gridPosToVertex(grid_pos), grid->gridPosToSize(grid_pos));
     }
   }
   glEnd();
   glBindTexture(GL_TEXTURE_2D, 0);
 }
-
-
-

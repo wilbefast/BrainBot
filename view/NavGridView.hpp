@@ -19,8 +19,7 @@ public:
 
   //! SUBROUTINES
 private:
-  void draw_all_roads();
-  void draw_all_buildings();
+  void draw_all();
 };
 
 #endif // NAVGRIDVIEW_HPP_INCLUDED
