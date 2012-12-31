@@ -159,19 +159,19 @@ inline void draw_building(fV3 position, fV3 const& size)
 
 inline void draw_road(fV3 position, fV3 const& size)
 {
-    glTexCoord2f(0.0f, 0.0f);
+    glTexCoord2f(0.01f, 0.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
   position.y += size.y;
-    glTexCoord2f(0.0f, 1.0f);
+    glTexCoord2f(0.01f, 1.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
   position.x += size.x;
-    glTexCoord2f(0.5f, 1.0f);
+    glTexCoord2f(0.49f, 1.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
   position.y -= size.y;
-    glTexCoord2f(0.5f, 0.0f);
+    glTexCoord2f(0.49f, 0.0f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
 }
