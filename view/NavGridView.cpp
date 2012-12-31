@@ -42,24 +42,6 @@ NavGridView::~NavGridView()
 }
 
 //! ----------------------------------------------------------------------------
-//! DRAW
-//! ----------------------------------------------------------------------------
-
-void NavGridView::draw()
-{
-  //! get texture handle if not already done
-  if(texture == NULL)
-   texture = GraphicsManager::getInstance()->get_texture("city");
-
-  /*
-  //! draw roads and buildings separetly to avoid too much binding/unbinding
-  draw_all_buildings();
-  draw_all_roads();
-  */
-  draw_all();
-}
-
-//! ----------------------------------------------------------------------------
 //! DRAW BUILDINGS
 //! ----------------------------------------------------------------------------
 
@@ -77,23 +59,23 @@ inline void left_face(fV3& position, fV3 const& size)
   glNormal3fv(left.front());
 
   // 1. back bottom left
-  glTexCoord2f(0.5f, 1.0f);
+  glTexCoord2f(0.51f, 0.99f);
     glVertex3fv(position.front());
 
   // 2. front bottom left
   position.y += size.y;
-    glTexCoord2f(1.0f, 1.0f);
+    glTexCoord2f(0.99f, 0.99f);
     glVertex3fv(position.front());
 
   // 3. back top left
   position.y -= size.y;
   position.z -= size.z;
-    glTexCoord2f(0.5f, 0.0f);
+    glTexCoord2f(0.51f, 0.5f);
     glVertex3fv(position.front());
 
   // 4. back top left
   position.y += size.y;
-    glTexCoord2f(1.0f, 0.0f);
+    glTexCoord2f(1.0f, 0.5f);
     glVertex3fv(position.front());
 }
 
@@ -111,17 +93,18 @@ inline void top_face(fV3& position, fV3 const& size)
   // 3. back top right
   position.x += size.x;
   position.y -= size.y;
-    glTexCoord2f(0.5f, 1.0f);
+    glTexCoord2f(0.51f, 0.1f);
     glVertex3fv(position.front());
 
   // 4. front top right
   position.y += size.y;
-    glTexCoord2f(1.0f, 1.0f);
+    glTexCoord2f(1.0f, 0.1f);
     glVertex3fv(position.front());
 }
 
 inline void right_face(fV3& position, fV3 const& size)
 {
+  glTexCoord2f(0.5f, 0.5f);
   glColor3f(0, 0, 1);
   /*! RIGHT FACE
        (1)
@@ -133,15 +116,25 @@ inline void right_face(fV3& position, fV3 const& size)
   */
   glNormal3fv(right.front());
 
+  // 1. back top right
+  position.y -= size.y;
+    glTexCoord2f(0.99f, 0.51f);
+    glVertex3fv(position.front());
+
+  // 2. front top right
+  position.y += size.y;
+    glTexCoord2f(0.51f, 0.51f);
+    glVertex3fv(position.front());
+
   // 3. back bottom right
   position.y -= size.y;
   position.z += size.z;
-    glTexCoord2f(0.5f, 0.0f);
+    glTexCoord2f(0.99f, 0.99f);
     glVertex3fv(position.front());
 
   // 4. front bottom right
   position.y += size.y;
-    glTexCoord2f(1.0f, 0.0f);
+    glTexCoord2f(0.51f, 0.99f);
     glVertex3fv(position.front());
 
 }
@@ -163,7 +156,7 @@ inline void front_face(fV3& position, fV3 const& size)
 
   // 2. front top right
   position.z -= size.z;
-    glTexCoord2f(1.0f, 0.0f);
+    glTexCoord2f(1.0f, 0.5f);
     glVertex3fv(position.front());
 
   // 3. front bottom left
@@ -174,7 +167,7 @@ inline void front_face(fV3& position, fV3 const& size)
 
   // 4. front bottom left
   position.z -= size.z;
-    glTexCoord2f(0.5f, 0.0f);
+    glTexCoord2f(0.5f, 0.5f);
     glVertex3fv(position.front());
 }
 
@@ -207,14 +200,14 @@ inline void draw_road(fV3 position, fV3 const& size)
 
   // top left
   glColor3f(1, 1, 1);
-    glTexCoord2f(0.01f, 0.0f);
+    glTexCoord2f(0.01f, 0.01f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
 
   // bottom left
   glColor3f(0, 1, 1);
   position.y += size.y;
-    glTexCoord2f(0.01f, 1.0f);
+    glTexCoord2f(0.01f, 0.49f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
 
@@ -222,23 +215,27 @@ inline void draw_road(fV3 position, fV3 const& size)
     glColor3f(1, 0, 1);
   position.y -= size.y;
   position.x += size.x;
-    glTexCoord2f(0.49f, 0.0f);
+    glTexCoord2f(0.49f, 0.01f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
 
   // bottom right
   position.y += size.y;
-    glTexCoord2f(0.49f, 1.0f);
+    glTexCoord2f(0.49f, 0.49f);
     glNormal3fv(up.front());
     glVertex3fv(position.front());
 }
 
 //! ----------------------------------------------------------------------------
-//! DRAW EVERYTHING
+//! DRAW
 //! ----------------------------------------------------------------------------
 
-void NavGridView::draw_all()
+void NavGridView::draw()
 {
+  //! get texture handle if not already done
+  if(texture == NULL)
+   texture = GraphicsManager::getInstance()->get_texture("city");
+
   static uV2 grid_pos;
   static fV3 vertex_pos;
   //! activate the texture BEFORE glBegin

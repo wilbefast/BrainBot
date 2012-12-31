@@ -188,7 +188,7 @@ int Group::update(float t_delta)
     gobject_container_it j = it;
     for(j++; j != members.end(); j++)
     {
-      member->repulse((*j), 2.0f);
+      member->repulse((*j), 8.0f);
       member->cohere((*j));
     }
 

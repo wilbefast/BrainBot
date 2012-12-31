@@ -16,10 +16,6 @@ public:
   virtual ~NavGridView();
   // mutators
   void draw();
-
-  //! SUBROUTINES
-private:
-  void draw_all();
 };
 
 #endif // NAVGRIDVIEW_HPP_INCLUDED
