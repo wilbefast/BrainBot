@@ -63,148 +63,133 @@ void NavGridView::draw()
 //! DRAW BUILDINGS
 //! ----------------------------------------------------------------------------
 
-inline void draw_building(fV3 position, fV3 const& size)
+inline void left_face(fV3& position, fV3 const& size)
 {
   glColor3f(1, 0, 0);
-  //! left face
+  /*! LEFT FACE
+    3
+    |\ \
+    | \  4
+    1  \ |
+     \ \ |
+        2
+  */
   glNormal3fv(left.front());
 
-    /*
-    4
-    | \
-    |   2
-    3 / |
-      \ |
-        1
-    */
+  // 1. back bottom left
+  glTexCoord2f(0.5f, 1.0f);
+    glVertex3fv(position.front());
 
-  // 1. front bottom left
+  // 2. front bottom left
   position.y += size.y;
     glTexCoord2f(1.0f, 1.0f);
     glVertex3fv(position.front());
 
-  // 2. front top left
-  position.z -= size.z;
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex3fv(position.front());
-
-  // 3. back bottom left
+  // 3. back top left
   position.y -= size.y;
-  position.z += size.z;
-    glTexCoord2f(0.5f, 1.0f);
+  position.z -= size.z;
+    glTexCoord2f(0.5f, 0.0f);
     glVertex3fv(position.front());
 
   // 4. back top left
-  position.z -= size.z;
-    glTexCoord2f(0.5f, 0.0f);
+  position.y += size.y;
+    glTexCoord2f(1.0f, 0.0f);
     glVertex3fv(position.front());
+}
 
+inline void top_face(fV3& position, fV3 const& size)
+{
   glColor3f(0, 1, 0);
-  //! back face
-  glNormal3fv(back.front());
-  /*
-    (*2)--4
-     |  \ |
-    (1)---3
+  /*! TOP FACE
+   (1)---3
+    \   / \
+     \ /   \
+     (*2)---4
   */
+  glNormal3fv(up.front());
 
-  // 3. back bottom right
+  // 3. back top right
   position.x += size.x;
-  position.z += size.z;
-    glTexCoord2f(0.5f, 0.0f);
-    glVertex3fv(position.front());
-
-  // 4. back top right
-  position.z -= size.z;
+  position.y -= size.y;
     glTexCoord2f(0.5f, 1.0f);
     glVertex3fv(position.front());
 
-
-  glColor3f(0, 0, 1);
-
-  //! top face
-  glNormal3fv(up.front());
-  /*
-       2---(*1)
-      / \   /
-     /   \ /
-    4-----3
-  */
-
-  // -- break previous strip --
-  glTexCoord2f(1.0f, 0.0f);
-  glVertex3fv(position.front());
-
-  // 2. back top left
-  position.x -= size.x;
-    glTexCoord2f(0.5f, 0.0f);
-    glVertex3fv(position.front());
-
-  // 3. front top right
-  position.x += size.x;
+  // 4. front top right
   position.y += size.y;
     glTexCoord2f(1.0f, 1.0f);
     glVertex3fv(position.front());
+}
 
-  // 4. front top left
-  position.x -= size.x;
-    glTexCoord2f(0.5f, 1.0f);
-    glVertex3fv(position.front());
-
-
-  glColor3f(1, 0, 1);
-  //! front face
-  glNormal3fv(forward.front());
-  /* NB - texture is upside-down for this face!
-     (*2)-(1)
-     |  \  |
-     4-----3
-  */
-
-  // 3. front bottom right
-  position.z += size.z;
-  position.x += size.x;
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex3fv(position.front());
-
-  // 4. front bottom left
-  position.x -= size.x;
-    glTexCoord2f(0.5f, 0.0f);
-    glVertex3fv(position.front());
-
-  glColor3f(1, 1, 1);
-  //! right face
-  glNormal3fv(right.front());
-  /*
-       (*1)
+inline void right_face(fV3& position, fV3 const& size)
+{
+  glColor3f(0, 0, 1);
+  /*! RIGHT FACE
+       (1)
       /  |
-     2 \ |
-     |   3
+    (*2) |
+     |  `3
      |  /
       4
   */
-
-  // -- break previous strip --
-  position.x += size.x;
-  position.y -= size.y;
-  position.z -= size.z;
-    glTexCoord2f(1.0f, 0.0f);
-    glVertex3fv(position.front());
-
-  // 2. front top right
-  position.y += size.y;
-    glTexCoord2f(0.5f, 0.0f);
-    glVertex3fv(position.front());
+  glNormal3fv(right.front());
 
   // 3. back bottom right
   position.y -= size.y;
   position.z += size.z;
-    glTexCoord2f(1.0f, 1.0f);
+    glTexCoord2f(0.5f, 0.0f);
     glVertex3fv(position.front());
 
   // 4. front bottom right
   position.y += size.y;
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3fv(position.front());
+
+}
+
+inline void front_face(fV3& position, fV3 const& size)
+{
+  glColor3f(1, 0, 1);
+  /*! FRONT FACE
+  4-----2
+  |   / |
+  | /   |
+  3----(*1)
+  */
+  glNormal3fv(forward.front());
+
+  // 1. front bottom right (degenerate)
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3fv(position.front());
+
+  // 2. front top right
+  position.z -= size.z;
+    glTexCoord2f(1.0f, 0.0f);
+    glVertex3fv(position.front());
+
+  // 3. front bottom left
+  position.x -= size.x;
+  position.z += size.z;
     glTexCoord2f(0.5f, 1.0f);
+    glVertex3fv(position.front());
+
+  // 4. front bottom left
+  position.z -= size.z;
+    glTexCoord2f(0.5f, 0.0f);
+    glVertex3fv(position.front());
+}
+
+inline void draw_building(fV3& position, fV3 const& size)
+{
+  // draw faces with triangle strip
+  left_face(position, size);
+  top_face(position, size);
+  right_face(position, size);
+  front_face(position, size);
+
+  // "teleport" the triangle strip
+    glVertex3fv(position.front());
+  position.x += size.x;
+  position.z += size.z;
     glVertex3fv(position.front());
 }
 
@@ -214,10 +199,10 @@ inline void draw_building(fV3 position, fV3 const& size)
 
 inline void draw_road(fV3 position, fV3 const& size)
 {
-  /*
-        1---3
-        | / |
-        2---4
+  /*!
+  1---3
+  | / |
+  2---4
   */
 
   // top left
@@ -257,16 +242,16 @@ void NavGridView::draw_all()
   static uV2 grid_pos;
   static fV3 vertex_pos;
   //! activate the texture BEFORE glBegin
+  //glDisable(GL_LIGHTING);
   glBindTexture(GL_TEXTURE_2D, texture->getHandle());
   glBegin(GL_TRIANGLE_STRIP);
-  for(grid_pos.y = 0; grid_pos.y <  grid->n_cells.y; grid_pos.y++)
+  for(grid_pos.y = 0; grid_pos.y < grid->n_cells.y; grid_pos.y++)
   {
     for(grid_pos.x = 0; grid_pos.x < grid->n_cells.x; grid_pos.x++)
     {
       vertex_pos = grid->gridPosToVertex(grid_pos);
 
-      // check that the cell is a building or a road
-
+      // check if the cell is a building or a road
       if(grid->isObstacle(grid_pos))
         // draw a building
         draw_building(vertex_pos, grid->gridPosToSize(grid_pos));
