@@ -119,11 +119,9 @@ inline void draw_building(fV3 position, fV3 const& size)
     glTexCoord2f(0.5f, 1.0f);
     glVertex3fv(position.front());
 
-  // -- break strip --
-  glVertex3fv(position.front());
-
 
   glColor3f(0, 0, 1);
+
   //! top face
   glNormal3fv(up.front());
   /*
@@ -132,6 +130,10 @@ inline void draw_building(fV3 position, fV3 const& size)
      /   \ /
     4-----3
   */
+
+  // -- break previous strip --
+  glTexCoord2f(1.0f, 0.0f);
+  glVertex3fv(position.front());
 
   // 2. back top left
   position.x -= size.x;
@@ -170,41 +172,39 @@ inline void draw_building(fV3 position, fV3 const& size)
     glTexCoord2f(0.5f, 0.0f);
     glVertex3fv(position.front());
 
-  // -- break strip --
-  position.x += size.x;
-    glVertex3fv(position.front());
-
   glColor3f(1, 1, 1);
   //! right face
   glNormal3fv(right.front());
   /*
-        4
+       (*1)
       /  |
-     3 \ |
-     |   2
+     2 \ |
+     |   3
      |  /
-    (*1)
+      4
   */
 
-  // 2. back bottom right
+  // -- break previous strip --
+  position.x += size.x;
   position.y -= size.y;
-    glTexCoord2f(1.0f, 1.0f);
-    glVertex3fv(position.front());
-
-  // 3. front top right
-  position.y += size.y;
   position.z -= size.z;
-    glTexCoord2f(0.5f, 0.0f);
-    glVertex3fv(position.front());
-
-  // 4. back top right
-  position.y -= size.y;
     glTexCoord2f(1.0f, 0.0f);
     glVertex3fv(position.front());
 
-  // -- break strip --
-  position.z += size.z;
+  // 2. front top right
+  position.y += size.y;
+    glTexCoord2f(0.5f, 0.0f);
     glVertex3fv(position.front());
+
+  // 3. back bottom right
+  position.y -= size.y;
+  position.z += size.z;
+    glTexCoord2f(1.0f, 1.0f);
+    glVertex3fv(position.front());
+
+  // 4. front bottom right
+  position.y += size.y;
+    glTexCoord2f(0.5f, 1.0f);
     glVertex3fv(position.front());
 }
 
@@ -257,10 +257,9 @@ void NavGridView::draw_all()
   static uV2 grid_pos;
   static fV3 vertex_pos;
   //! activate the texture BEFORE glBegin
-  //glDisable(GL_LIGHTING);
   glBindTexture(GL_TEXTURE_2D, texture->getHandle());
   glBegin(GL_TRIANGLE_STRIP);
-  for(grid_pos.y = 0; grid_pos.y < grid->n_cells.y; grid_pos.y++)
+  for(grid_pos.y = 0; grid_pos.y <  grid->n_cells.y; grid_pos.y++)
   {
     for(grid_pos.x = 0; grid_pos.x < grid->n_cells.x; grid_pos.x++)
     {
