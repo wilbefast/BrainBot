@@ -23,21 +23,24 @@ along with this program.  If not, see <http://www.gnu.org/licenses/>.
 #include "V3.hpp"
 #include "M44.hpp"
 
+typedef M44<GLfloat> glM44;
+
+
 // debug
 void printGLMatrix(GLenum which_matrix);
-M44<GLfloat> const* getGLMatrix(GLenum which_matrix);
+glM44 const* getGLMatrix(GLenum which_matrix);
 
 // render
-void applyTransform(M44<GLfloat> const& transform);
+void applyTransform(glM44 const& transform);
 
 // reset
-void setTranslation(M44<GLfloat>& transform, fV3 trans);
+void setTranslation(glM44& transform, fV3 trans);
 
 // compose
-void addTranslation(M44<GLfloat>& transform, fV3 trans);
-void addRotationX(M44<GLfloat>& transform, float angle);
-void addRotationY(M44<GLfloat>& transform, float angle);
-void addRotationZ(M44<GLfloat>& transform, float angle);
-void addScale(M44<GLfloat>& transform, fV3 scale);
+void addTranslation(glM44& transform, fV3 trans);
+void addRotationX(glM44& transform, float angle);
+void addRotationY(glM44& transform, float angle);
+void addRotationZ(glM44& transform, float angle);
+void addScale(glM44& transform, fV3 scale);
 
 #endif // OPENGL_MATRIX_HPP_INCLUDED

@@ -29,7 +29,6 @@ class ColliderElement : public ThingElement
     /// ATTRIBUTES
     private:
     fRect hitbox;
-    float vertical_pos, height;
 
     /// METHODS
     public:

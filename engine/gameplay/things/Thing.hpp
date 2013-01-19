@@ -47,7 +47,6 @@ protected:
   // main attributes
   fV2 position;
   ColliderElement* body;
-protected:
   // asynchronous messages
   EventList events;
 

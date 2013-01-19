@@ -60,10 +60,6 @@ int MeshManager::load()
 {
   // load meshes and materials
 
-  //! FIXME
-  //ASSERT(mesh.load_obj(GET_ASSET("rubik.obj")) == EXIT_SUCCESS, "Loading mesh");
-
-  //! TODO
   ASSERT(load_xml(GET_ASSET("objects3D.xml")) == EXIT_SUCCESS,
         "Loading 3D assets based on 'objects3D.xml'");
 
